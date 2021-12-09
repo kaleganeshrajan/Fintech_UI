@@ -23,41 +23,41 @@ export class CompanySettingsPage implements OnInit {
   /*same as resume */
 	ionViewDidEnter() {
     
-		this.postapicall();
+		// this.postapicall();
 	}  
 
-  async getNotificationTotal1() {
+//   async getNotificationTotal1() {
     
-		this.apiService
-			.getApiwithoutauthencticate(
-				'GetDistributors/ganeshk@pharmarack.com'
-			)
-			.subscribe((result) => {
-				// console.log(JSON.stringify(result));
-				if (result['status'] === 200) {
-					alert("hello")
-				} else {
-					alert("hello")
-				}
-			});
-	}
+// 		this.apiService
+// 			.getApiwithoutauthencticate(
+// 				'GetDistributors/ganeshk@pharmarack.com'
+// 			)
+// 			.subscribe((result) => {
+// 				// console.log(JSON.stringify(result));
+// 				if (result['status'] === 200) {
+// 					alert("hello")
+// 				} else {
+// 					alert("hello")
+// 				}
+// 			});
+// 	}
 
-  async postapicall(){
-    let postData;
-    postData = {
-			USERNAME: 'ganeshk@pharmarack.com',
-			PASSWORD: 'ganesh',
-			IP: '192.168.1.23'
-		};
+//   async postapicall(){
+//     let postData;
+//     postData = {
+// 			USERNAME: 'ganeshk@pharmarack.com',
+// 			PASSWORD: 'ganesh',
+// 			IP: '192.168.1.23'
+// 		};
 
-    this.apiService
-			.postApiOnlyWithContentType(
-				'SignIn',
-				postData
-			)
-			.subscribe((result) => {
-          debugger
-			});
-  }
+//     this.apiService
+// 			.postApiOnlyWithContentType(
+// 				'SignIn',
+// 				postData
+// 			)
+// 			.subscribe((result) => {
+//           debugger
+// 			});
+//   }
 
 }

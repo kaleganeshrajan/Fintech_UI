@@ -5,8 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { DistributorSettingsPage } from './distributor-settings.page';
 
-
-
 const routes: Routes = [
 	{
 		path: '',
