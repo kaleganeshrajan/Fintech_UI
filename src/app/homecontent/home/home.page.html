@@ -1,0 +1,48 @@
+
+<ion-content class="blue-background">
+  <ion-grid class="padding-small">
+    <ion-row>
+      <ion-col>
+        <ion-text class="pageTitle margin-small-top" [color]="colorVar"> Home </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-slides (ionSlidesDidLoad)="slidesDidLoad(slides)" #slides  *ngIf="bannerList.length > 0"
+         effect="flip"
+        pager="true" class="banner" speed="500" autoplay="5000" loop="true">
+        <ion-slide *ngFor="let banner of bannerList;">
+          <img [src]="banner.FileName" *ngIf="banner.Status==1"  alt="" srcset="" (click)="selectBanner(banner.PageId);">
+        </ion-slide>
+      </ion-slides>
+    </ion-row>
+  </ion-grid>
+  <ion-row *ngIf="isTablet">
+    <ion-col size-md="4" size-lg="3" *ngFor="let opt of options; let i = index">
+      <ion-card class="home-menu" (click)="launchPage(opt.MenuIndex.PageId,opt.MenuIndex.PermissionName,opt.MenuIndex.ArrayIndex)"
+        *ngIf="opt.IsBlockMenu === 1 ">
+        <div class="menuIndex">
+          <ion-img src="assets/icon/{{ opt['optionIcon'] }}" class="dashboard-icons"></ion-img>
+
+          <div class="optionName">
+            {{ opt["optionName"] }}
+          </div>
+        </div>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-col size-sm="12" size-xs="12" *ngIf="isAndroid || isIphone">
+      <ion-row center text-center>
+        <ion-col size="6" *ngFor="let opt of options; let i = index">
+          <ion-card class="home-menu" (click)="launchPage(opt.MenuIndex.PageId,opt.MenuIndex.PermissionName,opt.MenuIndex.ArrayIndex)"
+            *ngIf="opt.IsBlockMenu === 1 ">
+            <div class="menuIndex">
+              <ion-img src="assets/icon/{{ opt['optionIcon'] }}" class="dashboard-icons"></ion-img>
+              <div class="optionName">
+                {{ opt["optionName"] }}
+              </div>
+            </div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+  </ion-col>
+</ion-content>

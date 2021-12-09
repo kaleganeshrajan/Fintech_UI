@@ -1,0 +1,102 @@
+<ion-content padding="true" class="background-white">
+  
+  <form [formGroup]="formGroup" class="panel-body">
+   
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+            <ion-item lines="none" class="position-left" color="transparent">
+              <ion-back-button defaultHref="/tabs"></ion-back-button>
+              <ion-text class="pageTitle">Distributor Payment Settings</ion-text>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <ion-grid>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="3" class="ion-no-padding">
+            <ion-item>
+              <ion-label>Select Distributor</ion-label>
+              <ion-select value="{{formGroup['DistributorCode']}}" interface="popover" formControlName="DistributorCode">
+              <ion-select-option *ngFor="let item of distributorList" value={{item.AwacsCode}}>
+                {{ item.DistributorName }}
+              </ion-select-option>
+              </ion-select>
+              <!-- <ion-select [value]="formGroup.DistributorCode" formControlName="DistributorCode" interface="popover">
+                <ion-select-option value="AIOCD001">NES</ion-select-option>
+                <ion-select-option value="AIOCD002">Nintendo64</ion-select-option>
+                <ion-select-option value="AIOCD003">PlayStation</ion-select-option>
+                <ion-select-option value="AIOCD004">Sega Genesis</ion-select-option>
+                <ion-select-option value="AIOCD005">Sega Saturn</ion-select-option>
+                <ion-select-option value="AIOCD006">SNES</ion-select-option>
+              </ion-select> -->
+            </ion-item>
+          </ion-col>
+          <ion-col size-xs="1" size-sm="1" size-md="1" size-lg="1"></ion-col>
+          <ion-col size-xs="2" size-sm="2" size-md="2" size-lg="2">
+            <ion-button (click)="getdistributorsetting()">
+              <ion-icon slot="end" name="search"></ion-icon>
+              <small>Search</small>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <ion-grid class="form-card margin-large-top">
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Account Number</ion-label>
+              <ion-input [value]="formGroup.AccountNumber" type="number" formControlName="AccountNumber"></ion-input>
+              <p *ngIf="formGroup.controls['AccountNumber'].errors && formGroup.controls['AccountNumber'].dirty"
+              style="color: red;">Account Number is required</p>
+            </ion-item>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Bank Name</ion-label>
+              <ion-input [value]="formGroup.BankName" type="text" formControlName="BankName"></ion-input>
+              <p *ngIf="formGroup.controls['BankName'].errors && formGroup.controls['BankName'].dirty"
+              style="color: red;">Bank Name is required</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Bank Account Name</ion-label>
+              <ion-input [value]="formGroup.BankAccountName" type="text" formControlName="BankAccountName"></ion-input>
+              <p *ngIf="formGroup.controls['BankAccountName'].errors && formGroup.controls['BankAccountName'].dirty"
+              style="color: red;">Bank Account Name is required</p>
+            </ion-item>
+          </ion-col>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">IFSC Code</ion-label>
+              <ion-input [value]="formGroup.IFSCCode" type="text" formControlName="IFSCCode"></ion-input>
+              <p *ngIf="formGroup.controls['IFSCCode'].errors && formGroup.controls['IFSCCode'].dirty"
+              style="color: red;">IFSC Code is required</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">UPI</ion-label>
+              <ion-input [value]="formGroup.UPI" type="text" formControlName="UPI"></ion-input>
+              <!-- <ion-input type="text"></ion-input> -->
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <ion-grid class="margin-large-top margin-small-left">
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+            <ion-button (click)="createandupdate()"><ion-icon slot="start" name="save"></ion-icon>{{saveEditButton}}</ion-button>            
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </form>
+</ion-content>

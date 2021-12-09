@@ -1,0 +1,115 @@
+<ion-app >
+  <ion-header *ngIf="session !== null">
+    <ion-toolbar [color]="colorVar" >
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-buttons class="pointer" (click)="menuOpenClose()"
+      *ngIf="isTablet" ion-button icon-only slot="start" style="margin-left: 10px;">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-buttons>
+      <ion-buttons *ngIf="isTablet" slot="start">
+        <span class="logo-size logo-border"><img class="img-align" [src]="companyLogo ? companyLogo:''" alt="" srcset=""></span>
+      </ion-buttons>
+      <ion-buttons *ngIf="!isTablet" slot="start">
+        <ion-img
+          *ngIf="companyObject !== null && companyObject.Logo !== null && companyObject.Logo !== ''"
+          class="imgIcon" [src]="companyObject.Logo" alt=""
+          onError="this.src='./assets/img/default-logo.png';"></ion-img>
+        <ion-img *ngIf="companyObject === null" src="./assets/icon/drawer_logo.svg"
+          class="imgIcon1" onError="this.src='./assets/img/default-logo.png';"></ion-img>
+        <ion-img
+          *ngIf="companyObject !== null && (companyObject.Logo === null || companyObject.Logo === '')"
+          src="./assets/icon/drawer_logo.svg" class="imgIcon1"
+          onError="this.src='./assets/img/default-logo.png';"></ion-img>
+  
+      </ion-buttons>
+      <ion-label class="ion-text-right" >
+        <p class="marginR4">Welcome, {{userName}}</p>
+      </ion-label>
+
+      <ion-buttons slot="end" ion-button icon-only
+      (click)="presentPopover($event)" class="btnStyle toolbar-icon-size">
+      <ion-icon slot="icon-only" name="contact"></ion-icon>
+    </ion-buttons>
+
+
+    <ion-buttons ion-button icon-only slot="end" class="toolbar-icon-size btnStyle"
+      (click)="showNotifications();" *ngIf="isOperationUser != 7">
+      <ion-label *ngIf="appConstants.notificationUnreadCount > 0" 
+        class="labelStyle count-orange">
+        {{appConstants.notificationUnreadCount}}</ion-label>
+      <ion-icon slot="icon-only" name="notifications"></ion-icon>
+    </ion-buttons>
+
+    <ion-buttons slot="end" class="btnStyle1 toolbar-icon-size"
+    (click)="openCart();" *ngIf="isPlaceOrderEnable && isOperationUser != 7">
+    <ion-icon slot="icon-only" name="cart" ></ion-icon> 
+    <ion-label *ngIf="appConstants.globalCartCount > 0" class="count-orange zindex">
+      {{appConstants.globalCartCount || 0}}</ion-label>
+  </ion-buttons>
+
+</ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-split-pane>
+
+    <ion-menu [ngClass]="menuWidth">
+      <!-- <ion-header> -->
+        <!-- <ion-toolbar class="textPossion" [color] = "colorVar"> -->
+          <!-- <ion-buttons (click)="menuOpenClose()" class="pointer"
+          *ngIf="isTablet" ion-button icon-only slot="start">
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
+          </ion-buttons> -->
+          <!-- <img class="imgHeight" [src]="companyLogo ? companyLogo:''" alt="" srcset=""> -->
+          <!-- <img
+          *ngIf="companyObject !== null && 
+          companyObject.Logo !== null && companyObject.Logo !== ''"
+          style="height: 30px;" [src]="companyObject.Logo" alt="" srcset="">
+        <ion-img *ngIf="companyObject === null"
+          src="/assets/icon/MERCK VIB_M_ORG.png"
+          style="height: 30px; margin: 3px;"></ion-img>
+        <ion-img
+          *ngIf="companyObject !== null &&
+           (companyObject.Logo === null || companyObject.Logo === '')"
+          src="/assets/icon/MERCK VIB_M_ORG.png"
+          style="height: 30px; margin: 3px;"></ion-img> -->
+
+
+          <!-- <ion-img src="./assets/icon/drawer_logo.svg" style="height: 30px; margin: 3px;"></ion-img> -->
+        <!-- </ion-toolbar> -->
+      <!-- </ion-header> -->
+      <ion-content #ionContent  [color] = "colorVar">
+        <div *ngIf="isShowCompanyList" class="padding">
+          <!-- <ion-select placeholder="Select Company" [(ngModel)]="selectedCompanyId" selected="selectedCompanyId"
+            (ionChange)="setSelectedCompany();">
+            <ion-select-option *ngFor="let company of companyList" [value]="company.CompanyId">
+              {{company.CompanyName}}</ ion-select-option>
+          </ion-select> -->
+
+
+
+        </div>
+        <div class="horizontal-black-line"></div>
+
+       
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet main>
+    </ion-router-outlet>
+  </ion-split-pane>
+</ion-content>
+  <div *ngIf="showSplash && session === null && isTablet" class="splash">
+    <div class="sk-cube-grid">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
+    </div>
+  </div>
+</ion-app>

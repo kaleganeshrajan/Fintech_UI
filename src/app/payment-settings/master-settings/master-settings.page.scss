@@ -1,0 +1,96 @@
+th {
+    text-align: center;
+    border: 1px solid #fff;
+}
+
+
+.item-border {
+    border: 1px solid rgb(202, 197, 197);
+}
+
+// ion-item:hover {
+//     border-bottom: 4px solid #2d89bc;
+//     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+// }
+
+tbody,
+tr,
+td:first-child {
+    text-align: left !important;
+}
+
+thead {
+    position: sticky;
+    top: 0px;
+    z-index: 1000;
+}
+
+.tableFixHead {
+    overflow: auto;
+    height: 54vh;
+    width: auto;
+    box-shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.28);
+    -webkit-box-shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.28);
+}
+
+.tableFixHead table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed !important;
+    font-size: 15px;
+}
+
+.tableFixHead th,
+.tableFixHead td {
+    padding: 8px 25px;
+    text-align: center;
+}
+
+th:nth-child(2) {
+    border: 1px solid #fff !important;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f1f2f3 !important;
+}
+
+.tableFixHead th {
+    position: sticky;
+    top: 0;
+    color: #fff;
+    background-color: rgb(40, 129, 194);
+    border: 1px solid #fff !important;
+    text-transform: uppercase;
+}
+
+.noscrollbar {
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+        width: 10px;
+        height: 9px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 20px;
+        background: rgb(202, 202, 202);
+    }
+}
+
+
+tbody tr:nth-child(odd) {
+    background-color: #f1f2f3 !important;
+}
+
+.ion-btn {
+    --background: none !important;
+    color: black !important;
+}
+
+.ion-btn:hover {
+    color: #fff !important;
+}

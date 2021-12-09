@@ -1,0 +1,189 @@
+.splash {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #ffffff;
+}
+
+.sk-cube-grid {
+	width: 40px;
+	height: 40px;
+	margin: 100px auto;
+}
+.logo-border{
+	border: 0.5px solid rgb(218, 215, 215);
+	border-radius: 2px;
+}
+
+.logo-size {
+	height: 39px !important;
+	display: inline-flex;
+	align-items: center;
+}
+
+.sk-cube-grid .sk-cube {
+	width: 33%;
+	height: 33%;
+	background-color: #2881c2;
+	float: left;
+	-webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+	animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+}
+
+.sk-cube-grid .sk-cube1 {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube2 {
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube3 {
+	-webkit-animation-delay: 0.4s;
+	animation-delay: 0.4s;
+}
+
+.sk-cube-grid .sk-cube4 {
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube5 {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+.sk-cube-grid .sk-cube6 {
+	-webkit-animation-delay: 0.3s;
+	animation-delay: 0.3s;
+}
+
+.sk-cube-grid .sk-cube7 {
+	-webkit-animation-delay: 0s;
+	animation-delay: 0s;
+}
+
+.sk-cube-grid .sk-cube8 {
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.sk-cube-grid .sk-cube9 {
+	-webkit-animation-delay: 0.2s;
+	animation-delay: 0.2s;
+}
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+
+	0%,
+	70%,
+	100% {
+		-webkit-transform: scale3D(1, 1, 1);
+		transform: scale3D(1, 1, 1);
+	}
+
+	35% {
+		-webkit-transform: scale3D(0, 0, 1);
+		transform: scale3D(0, 0, 1);
+	}
+}
+
+@keyframes sk-cubeGridScaleDelay {
+
+	0%,
+	70%,
+	100% {
+		-webkit-transform: scale3D(1, 1, 1);
+		transform: scale3D(1, 1, 1);
+	}
+
+	35% {
+		-webkit-transform: scale3D(0, 0, 1);
+		transform: scale3D(0, 0, 1);
+	}
+}
+
+ionic-selectable-modal ion-item ion-label {
+	font-size: 16px !important;
+}
+
+.imgHeight {
+	height: 25px;
+	margin-left: 15px;
+}
+
+.textPossion {
+	padding: 0px;
+	text-align: left;
+	padding-left: 15px;
+}
+
+.imgStyle {
+	height: 25px;
+	width: 24px;
+	margin-right: 20px;
+}
+
+.paddingBottom0 {
+	padding-bottom: 0px;
+}
+
+.toolbar-icon-size {
+	width: 24px;
+	height: 24px;
+}
+
+.imgIcon {
+	height: 30px;
+	max-width: 45px;
+}
+
+.imgIcon1 {
+	height: 30px;
+	margin: 3px;
+}
+
+.marginR4 {
+	margin-right: 4px;
+}
+
+.btnStyle {
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.btnStyle1 {
+	cursor: pointer;
+	margin-right: 12px;
+}
+
+.labelStyle {
+	position: absolute;
+	margin-top: -30px;
+	margin-left: 0px;
+	z-index: 100;
+	font-size: 10px;
+	font-weight: 600;
+}
+
+.zindex {
+	z-index: 100;
+}
+
+.close-sidebar-width {
+	min-width: 100px !important;
+	transition: min-width 0.5s;
+	transform: scaleX(1);
+}
+
+.open-sidebar-width {
+	min-width: 270px !important;
+	transition: min-width 0.5s;
+	transform: scaleX(1);
+}

@@ -1,0 +1,48 @@
+<!-- <ion-header>
+  <app-common-toolbar></app-common-toolbar>
+</ion-header> -->
+
+<ion-content class="background-white">
+  <ion-grid class="padding">
+    <ion-row class="rowData">
+      <ion-item lines="none" class="position-left" color="transparent">
+        <ion-back-button defaultHref="/tabs"></ion-back-button>
+        <ion-text class="pageTitle" [color]="colorVar">{{appConstants.notification}}</ion-text>
+      </ion-item>
+    </ion-row>
+    <ion-row *ngFor="let notification of notificationsList;" class="margin-left">
+      <ion-col size="12">
+        <ion-label [color]="colorVar">{{notification.NotificationTitle}}</ion-label>
+      </ion-col>
+      <ion-col size="12">
+        <ion-text class="fontStyle1">{{notification.NotificationDescription}}</ion-text>
+      </ion-col>
+      <ion-col *ngIf="notification.NotificationType=='campaign'; else showCreated" size="12" 
+        class="fontStyle">
+        <ion-text>{{notification.ScheduledTime | date:'d MMM y h:mm:ss a'}}</ion-text>
+      </ion-col>
+      <ng-template #showCreated>
+        <ion-col size="12" class="fontStyle">
+          <ion-text>{{notification.CreatedDate | date:'d MMM y h:mm:ss a'}}</ion-text>
+        </ion-col>
+      </ng-template>
+      <ion-col class="borderMargin">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="padding">
+    <ion-row
+      *ngIf="notificationsList.length === 0 && !isShowLoadMore"
+      class="noavailavedata-row">
+      <ion-col size="12">
+        <ion-text class="noavailavedata-text">
+          No data available.
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event,true)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

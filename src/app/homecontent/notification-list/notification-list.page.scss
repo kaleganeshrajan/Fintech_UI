@@ -1,0 +1,59 @@
+.card-white-background {
+	--background: white;
+}
+
+.notes-list-row-style {
+	ion-label {
+		font-size: 16px;
+		color: black;
+	}
+
+	ion-text {
+		font-size: 12px;
+	}
+}
+
+.blue-line-div {
+	height: 5px !important;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	width: 100%;
+	background: #d9efff;
+}
+
+.card1 {
+	background: #2880c5;
+
+	ion-img {
+		width: 25px;
+		height: 25px;
+		margin-top: 5px;
+	}
+
+	ion-text {
+		color: white;
+		margin-top: 5px;
+	}
+
+	ion-label {
+		color: #ffffff;
+	}
+}
+.pageTitle {
+	font-weight: bold;
+	font-size: 20px;
+}
+.borderMargin {
+	border-top:1px solid lightgray;margin-top: 10px;
+}
+.fontStyle {
+	font-size:12px;
+}
+.fontStyle1 {
+	font-size:14px;
+}
+.rowData {
+	margin-top: 10px;
+	margin-left: 10px;
+	margin-bottom:5px;
+}

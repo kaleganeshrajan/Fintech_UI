@@ -1,0 +1,7 @@
+{
+	"name": "Alkem",
+	"integrations": {
+		"cordova": {}
+	},
+	"type": "angular"
+}

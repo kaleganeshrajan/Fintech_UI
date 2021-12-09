@@ -1,0 +1,194 @@
+<ion-content padding="true" class="background-white">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+        <ion-item lines="none" class="position-left" color="transparent">
+          <ion-back-button defaultHref="/tabs"></ion-back-button>
+          <ion-text class="pageTitle">Company Payment Settings</ion-text>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="3" class="ion-no-padding">
+        <ion-item>
+          <ion-label>Select Company</ion-label>
+          <ion-select interface="popover">
+            <ion-select-option value="nes">NES</ion-select-option>
+            <ion-select-option value="n64">Nintendo64</ion-select-option>
+            <ion-select-option value="ps">PlayStation</ion-select-option>
+            <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+            <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+            <ion-select-option value="snes">SNES</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="1" size-sm="1" size-md="1" size-lg="1"></ion-col>
+      <ion-col size-xs="2" size-sm="2" size-md="2" size-lg="2">
+        <ion-button>
+          <ion-icon slot="end" name="search"></ion-icon>
+          <small>Search</small>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="form-card margin-large-top">
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">Account Number</ion-label>
+          <ion-input type="number"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">Bank Name</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">Bank Account Name</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">IFSC Code</ion-label>
+          <ion-input type="text" autocapitalize="characters"></ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
+        <ion-item>
+          <ion-label>Select account type</ion-label>
+          <ion-select interface="popover">
+            <ion-select-option value="nes">Saving</ion-select-option>
+            <ion-select-option value="n64">Nintendo64</ion-select-option>
+            <ion-select-option value="ps">PlayStation</ion-select-option>
+            <ion-select-option value="genesis">Sega Genesis</ion-select-option>
+            <ion-select-option value="saturn">Sega Saturn</ion-select-option>
+            <ion-select-option value="snes">SNES</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">UPI</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">Payment Period (for Pull based only)</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="margin-small-top">
+        <ion-item>
+          <ion-label>Is Beneficiary Active</ion-label>
+          <ion-checkbox color="primary" checked slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="margin-small-top">
+        <ion-item>
+          <ion-label>Allow Collection form digital Payment Mode</ion-label>
+          <ion-checkbox color="primary" checked slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="margin-small-top">
+        <ion-item>
+          <ion-label>Enable to receive E-Cheque</ion-label>
+          <ion-checkbox color="primary" checked slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4"  class="mt-13">
+        <ion-item>
+          <ion-label>E-Cheque Collection Type</ion-label>
+          <ion-select interface="popover">
+            <ion-select-option value="nes">Saving</ion-select-option>
+            <ion-select-option value="n64">Nintendo64</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">E-Cheque Collection settlement Value</ion-label>
+          <ion-input type="text" autocapitalize="characters"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="margin-small-top">
+        <ion-item>
+          <ion-label>Enable UPI Collection</ion-label>
+          <ion-checkbox color="primary" checked slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
+        <ion-item>
+          <ion-label>UPI Collection Type</ion-label>
+          <ion-select interface="popover">
+            <ion-select-option value="nes">Saving</ion-select-option>
+            <ion-select-option value="n64">Nintendo64</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">UPI Collection settlement Value</ion-label>
+          <ion-input type="text" autocapitalize="characters"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="margin-small-top">
+        <ion-item>
+          <ion-label>Enable To Receive Net-banking Payment</ion-label>
+          <ion-checkbox color="primary" checked slot="start"></ion-checkbox>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
+        <ion-item>
+          <ion-label>Net-banking Collection Type</ion-label>
+          <ion-select interface="popover">
+            <ion-select-option value="nes">Saving</ion-select-option>
+            <ion-select-option value="n64">Nintendo64</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
+        <ion-item>
+          <ion-label position="floating">Net-banking Collection settlement Value</ion-label>
+          <ion-input type="text" autocapitalize="characters"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="margin-small-top margin-small-left">
+    <ion-row class="padding-mini">
+      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+        <ion-button>
+          <ion-icon slot="start" name="save"></ion-icon>
+          <small>Save</small>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
