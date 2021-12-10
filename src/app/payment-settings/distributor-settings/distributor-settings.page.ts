@@ -33,6 +33,10 @@ export class DistributorSettingsPage implements OnInit {
 	ionViewDidEnter() {
 		this.getdistributorlist();
 	}  
+  
+  OnDistributorChange(){
+    this.getdistributorsetting()
+  }
 
   createForm(): any {
 		this.formGroup = this.formBuilder.group({
@@ -76,7 +80,6 @@ export class DistributorSettingsPage implements OnInit {
 			)
 			.subscribe((result) => {        
 				if (result!== null) {
-         debugger
 					 this.distributorList=result
 				} 
 			});

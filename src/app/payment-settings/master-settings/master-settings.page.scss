@@ -81,6 +81,15 @@ tbody tr:nth-child(odd) {
     }
 }
 
+.ion-select{
+    &::part(icon) {
+        display: none !important;
+       }
+}
+
+.ion-select::part(icon) {
+    display: none !important;
+   }
 
 tbody tr:nth-child(odd) {
     background-color: #f1f2f3 !important;
@@ -91,6 +100,16 @@ tbody tr:nth-child(odd) {
     color: black !important;
 }
 
+.ion-btn-change {
+    background-color: blue !important;
+    color: #fff !important;
+}
+
 .ion-btn:hover {
     color: #fff !important;
 }
+
+.in-item{
+    max-width: 100% !important;
+}
+

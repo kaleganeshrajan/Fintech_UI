@@ -21,6 +21,9 @@ export class MasterSettingsPage implements OnInit {
   public settlementList:any[];
   public paymentgatewayList:any[];
   public paymentSettingId=0
+  public saveEditButton="Save"
+  public bntbankStyle: string;
+  public bntpaymentStyle: string;
   constructor(
     public navController: NavController,
     private apiService: ApiService,
@@ -34,11 +37,19 @@ export class MasterSettingsPage implements OnInit {
   OnBanking() {
     this.isPayGateway = false;
     this.isBanking = true;    
+    this.bntbankStyle = 'ion-btn-change';
+    this.bntpaymentStyle = 'ion-btn';
   }
 
   OnPayGateway() {
     this.isPayGateway = true;
     this.isBanking = false;
+    this.bntpaymentStyle = 'ion-btn-change';
+    this.bntbankStyle = 'ion-btn';
+  }
+
+  OnCompanyChange(){
+    this.getmasterpaymentsetting()
   }
 
   /*same as resume */
@@ -46,7 +57,7 @@ export class MasterSettingsPage implements OnInit {
 		this.getcompanylist();
     this.getbanklist();
     this.getsettlementperiodlist();
-    this.getpaymentgatewaylist();
+    this.getpaymentgatewaylist();      
 	}  
 
   createForm(): any {
@@ -75,13 +86,15 @@ export class MasterSettingsPage implements OnInit {
       CDC_PaymentGateway:['']
 		});  
 
-    this.createandupdate()
+    this.bntbankStyle = 'ion-btn-change';
+    this.bntpaymentStyle = 'ion-btn';
+    this.insertandupdate()
 	}
   
   async getcompanylist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/master_payment_setting/CompanyList/'
+      'api/master_payment_setting/CompanyList'
     )
     .subscribe((result) => {        
       if (result!== null) {       
@@ -93,7 +106,7 @@ export class MasterSettingsPage implements OnInit {
   async getbanklist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/master_payment_setting/BankList/'
+      'api/master_payment_setting/BankList'
     )
     .subscribe((result) => {        
       if (result!== null) {       
@@ -105,7 +118,7 @@ export class MasterSettingsPage implements OnInit {
   async getsettlementperiodlist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/master_payment_setting/SettlementList/'
+      'api/master_payment_setting/SettlementList'
     )
     .subscribe((result) => {        
       if (result!== null) {       
@@ -117,7 +130,7 @@ export class MasterSettingsPage implements OnInit {
   async getpaymentgatewaylist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/master_payment_setting/PaymentGatewayList/'
+      'api/master_payment_setting/PaymentGatewayList'
     )
     .subscribe((result) => {        
       if (result!== null) {       
@@ -126,8 +139,7 @@ export class MasterSettingsPage implements OnInit {
     });
   }
   
-  async createandupdate() {
-    
+  async insertandupdate() {    
     if (this.formGroup.value.CompanyCode !== '') {
       
 		  let postData;
@@ -166,6 +178,7 @@ export class MasterSettingsPage implements OnInit {
           postData
         )
         .subscribe((result) => {
+          debugger
           if (result===true){
             if (this.paymentSettingId===0){
               this.alertDialogs.successAlert('', "Record Inserted successfully...!");
@@ -179,5 +192,54 @@ export class MasterSettingsPage implements OnInit {
         });
     }
 	}
+  
+  async getmasterpaymentsetting(){
+    if (this.formGroup.value.CompanyCode!=""){
+      this.apiService
+			.getApiwithoutauthencticate(
+				'api/master_payment_setting/get/'+this.formGroup.value.CompanyCode
+			)
+			.subscribe((result) => {        
+				if (result!== null) {          
+          this.paymentSettingId=result.ID
+          this.saveEditButton =result.ID==0?'Save': 'Update';
+
+          if (result.BankingPartners==true){
+            this.bntpaymentStyle = 'ion-btn';
+            this.bntbankStyle = 'ion-btn-change';
+            this.isBanking = true;
+            this.isPayGateway = false;
+          }else if (result.PaymentGateway==true){
+            this.isPayGateway = true;
+            this.isBanking = false;
+            this.bntpaymentStyle = 'ion-btn-change';
+            this.bntbankStyle = 'ion-btn';
+          }          
+          
+          this.formGroup['UPI_BankName'] = result.UPI_Bank
+          this.formGroup['ENACH_BankName'] = result.ENACH_Bank
+          this.formGroup['NETBANKING_BankName'] = result.NETBANKING_Bank
+          this.formGroup['INDIFI_BankName'] = result.INDIFI_Bank
+          this.formGroup['MINTIFI_BankName'] = result.MINTIFI_Bank
+          this.formGroup['INDIUM_BankName'] = result.INDIUM_Bank
+          this.formGroup['CDC_BankName'] = result.CDC_BankName
+          this.formGroup['UPI_SettlementPeriod'] = result.UPI_SettlementPeriod
+          this.formGroup['ENACH_SettlementPeriod'] = result.ENACH_SettlementPeriod
+          this.formGroup['NETBANKING_SettlementPeriod'] = result.NETBANKING_SettlementPeriod
+          this.formGroup['INDIFI_SettlementPeriod'] = result.INDIFI_SettlementPeriod
+          this.formGroup['MINTIFI_SettlementPeriod'] = result.MINTIFI_SettlementPeriod
+          this.formGroup['INDIUM_SettlementPeriod'] = result.INDIUM_SettlementPeriod
+          this.formGroup['CDC_SettlementPeriod'] = result.CDC_SettlementPeriod          
+          this.formGroup['UPI_PaymentGateway'] = result.UPI_PaymentGateway
+          this.formGroup['ENACH_PaymentGateway'] = result.ENACH_PaymentGateway
+          this.formGroup['NETBANKING_PaymentGateway'] = result.NETBANKING_PaymentGateway
+          this.formGroup['INDIFI_PaymentGateway'] = result.INDIFI_PaymentGateway
+          this.formGroup['MINTIFI_PaymentGateway'] = result.MINTIFI_PaymentGateway
+          this.formGroup['INDIUM_PaymentGateway'] = result.INDIUM_PaymentGateway
+          this.formGroup['CDC_PaymentGateway'] = result.CDC_PaymentGateway
+				} 
+			});
+    }      
+  }  
 
 }
