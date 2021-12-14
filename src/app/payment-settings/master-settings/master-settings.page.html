@@ -1,401 +1,336 @@
 <ion-content padding="true" class="background-white">
-  <ion-grid class="ion-no-padding">
-    <ion-row>
-      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
-        <ion-item lines="none" class="position-left" color="transparent">
-          <ion-back-button defaultHref="/tabs"></ion-back-button>
-          <ion-text class="pageTitle">Master Payment Settings</ion-text>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid class="">
-    <ion-row>
-      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="3" class="ion-no-padding">
-        <ion-item>
-          <ion-label>Choose Company</ion-label>
-          <ion-select interface="popover">
-            <ion-select-option value="nes">NES</ion-select-option>
-            <ion-select-option value="n64">Nintendo64</ion-select-option>
-            <ion-select-option value="ps">PlayStation</ion-select-option>
-            <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-            <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-            <ion-select-option value="snes">SNES</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row class="margin-small-top">
-      <ion-col size-xs="6" size-sm="6" size-md="5" size-lg="2">
-        <ion-button class="ion-btn" (click)="OnBanking()">Banking Partners</ion-button>
-      </ion-col>
-      <ion-col size-xs="6" size-sm="6" size-md="5" size-lg="3">
-        <ion-button class="ion-btn" (click)="OnPayGateway()">Payment Gateway</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid class="margin-mini-top" *ngIf="isBanking">
-    <ion-row>
-      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
-        <div class="tableFixHead noscrollbar">
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="textalign-left">Payment Mode</th>
-                <th>Selected Bank</th>
-                <th class="">Settlement period</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="font-700">UPI</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">E-Nach</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Netbanking</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Indifi</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Mintifi</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Indium</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Credit/Debit Card</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select Bank</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-  <ion-grid class="margin-mini-top" *ngIf="isPayGateway">
-    <ion-row>
-      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
-        <div class="tableFixHead noscrollbar">
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="textalign-left">Payment Mode</th>
-                <th>PAyment Gateway</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="font-700">UPI</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select</ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">E-Nach</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Netbanking</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Indifi</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Mintifi</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Indium</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-              <tr>
-                <td class="font-700">Credit/Debit Card</td>
-                <td>
-                  <ion-item class="item-border">
-                    <ion-label>Please Select </ion-label>
-                    <ion-select interface="popover">
-                      <ion-select-option value="nes">NES</ion-select-option>
-                      <ion-select-option value="n64">Nintendo64</ion-select-option>
-                      <ion-select-option value="ps">PlayStation</ion-select-option>
-                      <ion-select-option value="genesis">Sega Genesis</ion-select-option>
-                      <ion-select-option value="saturn">Sega Saturn</ion-select-option>
-                      <ion-select-option value="snes">SNES</ion-select-option>
-                    </ion-select>
-                  </ion-item>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <ion-grid>
-    <ion-row>
-      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
-        <ion-button>
-          <ion-icon slot="start" name="save"></ion-icon>
-          <small>Save</small>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
+  <form [formGroup]="formGroup" class="panel-body">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+          <ion-item lines="none" class="position-left" color="transparent">
+            <ion-back-button defaultHref="/tabs"></ion-back-button>
+            <ion-text class="pageTitle">Master Payment Settings</ion-text>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-no-padding">
+          <ion-item>
+            <!-- <ion-label>Choose Company</ion-label> -->
+            <ion-select placeholder="Choose Company" (ionChange)="OnCompanyChange()" value="{{formGroup['CompanyCode']}}"  interface="popover" formControlName="CompanyCode">
+              <ion-select-option *ngFor="let item of companyList" value={{item.CompanyCode}}>
+                {{ item.CompanyName }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="margin-small-top">
+        <ion-col size-xs="6" size-sm="6" size-md="5" size-lg="2">
+          <ion-button [ngClass]="bntbankStyle" (click)="OnBanking()">Banking Partners</ion-button>
+        </ion-col>
+        <ion-col size-xs="6" size-sm="6" size-md="5" size-lg="3">
+          <ion-button [ngClass]="bntpaymentStyle" (click)="OnPayGateway()">Payment Gateway</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="margin-mini-top" *ngIf="isBanking">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+          <div class="tableFixHead noscrollbar">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="textalign-left">Payment Mode</th>
+                  <th>Selected Bank</th>
+                  <th class="">Settlement period</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-700">UPI</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" appNoArrow value="{{formGroup['UPI_BankName']}}" interface="popover" formControlName="UPI_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                      <!-- <ion-icon color="primary" name="arrow-down" mode="ios" slot="end"></ion-icon> -->
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['UPI_SettlementPeriod']}}" interface="popover" formControlName="UPI_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">E-Nach</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" value="{{formGroup['ENACH_BankName']}}" interface="popover" formControlName="ENACH_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['ENACH_SettlementPeriod']}}" interface="popover" formControlName="ENACH_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Netbanking</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" value="{{formGroup['NETBANKING_BankName']}}" interface="popover" formControlName="NETBANKING_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['NETBANKING_SettlementPeriod']}}" interface="popover" formControlName="NETBANKING_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Indifi</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" value="{{formGroup['INDIFI_BankName']}}" interface="popover" formControlName="INDIFI_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['INDIFI_SettlementPeriod']}}" interface="popover" formControlName="INDIFI_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Mintifi</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" value="{{formGroup['MINTIFI_BankName']}}" interface="popover" formControlName="MINTIFI_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['MINTIFI_SettlementPeriod']}}" interface="popover" formControlName="MINTIFI_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Indium</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" value="{{formGroup['INDIUM_BankName']}}" interface="popover" formControlName="INDIUM_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['INDIUM_SettlementPeriod']}}" interface="popover" formControlName="INDIUM_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Credit/Debit Card</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select Bank</ion-label> -->
+                      <ion-select placeholder="Please Select Bank" value="{{formGroup['CDC_BankName']}}" interface="popover" formControlName="CDC_BankName">
+                        <ion-select-option *ngFor="let item of bankList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['CDC_SettlementPeriod']}}" interface="popover" formControlName="CDC_SettlementPeriod">
+                        <ion-select-option *ngFor="let item of settlementList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="margin-mini-top" *ngIf="isPayGateway">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+          <div class="tableFixHead noscrollbar">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="textalign-left">Payment Mode</th>
+                  <th>PAyment Gateway</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="font-700">UPI</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select</ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['UPI_PaymentGateway']}}" interface="popover" formControlName="UPI_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">E-Nach</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['ENACH_PaymentGateway']}}" interface="popover" formControlName="ENACH_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Netbanking</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['NETBANKING_PaymentGateway']}}" interface="popover" formControlName="NETBANKING_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Indifi</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['INDIFI_PaymentGateway']}}" interface="popover" formControlName="INDIFI_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Mintifi</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['MINTIFI_PaymentGateway']}}" interface="popover" formControlName="MINTIFI_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Indium</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['INDIUM_PaymentGateway']}}" interface="popover" formControlName="INDIUM_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>                      
+                    </ion-item>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="font-700">Credit/Debit Card</td>
+                  <td>
+                    <ion-item class="item-border">
+                      <!-- <ion-label>Please Select </ion-label> -->
+                      <ion-select placeholder="Please Select" value="{{formGroup['CDC_PaymentGateway']}}" interface="popover" formControlName="CDC_PaymentGateway">
+                        <ion-select-option *ngFor="let item of paymentgatewayList" value={{item.Code}}>
+                          {{ item.Name }}
+                        </ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+          <ion-button (click)="insertandupdate()">
+            <ion-icon slot="start" name="save"></ion-icon>
+            <small>{{saveEditButton}}</small>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
