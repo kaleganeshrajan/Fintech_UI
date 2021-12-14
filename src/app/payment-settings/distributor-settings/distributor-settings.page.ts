@@ -30,17 +30,12 @@ export class DistributorSettingsPage implements OnInit {
   }
 
   /*same as resume */
-<<<<<<< HEAD
-  ionViewDidEnter() {
-    this.getdistributorlist();
-=======
 	ionViewDidEnter() {
 		this.getdistributorlist();
 	}  
   
   OnDistributorChange(){
     this.getdistributorsetting()
->>>>>>> 8637539936311d6a3dabd61b286a32a7e3a65ee6
   }
 
   createForm(): any {
@@ -60,7 +55,6 @@ export class DistributorSettingsPage implements OnInit {
   async getdistributorsetting() {
     if (this.formGroup.value.DistributorCode != "") {
       this.apiService
-<<<<<<< HEAD
         .getApiwithoutauthencticate(
           'api/payment_setting/' + this.formGroup.value.DistributorCode
         )
@@ -90,16 +84,6 @@ export class DistributorSettingsPage implements OnInit {
           this.distributorList = result
         }
       });
-=======
-			.getApiwithoutauthencticate(
-				'api/payment_setting/'
-			)
-			.subscribe((result) => {        
-				if (result!== null) {
-					 this.distributorList=result
-				} 
-			});
->>>>>>> 8637539936311d6a3dabd61b286a32a7e3a65ee6
   }
 
   async createandupdate(event) {
