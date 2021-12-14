@@ -20,6 +20,11 @@ const routes: Routes = [
 		loadChildren: './payment-settings/company-settings/company-settings.module#CompanySettingsPageModule',
 
 	},
+	{
+		path: 'make-payment',
+		loadChildren: './payment-settings/make-payment/make-payment.module#MakePaymentPageModule',
+
+	},
 ];
 
 
