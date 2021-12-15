@@ -96,7 +96,8 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	updateInvoiceList(id, valueOf, value) {
-		this.InvoiceList[id - 1][valueOf] = value
+		let index = this.InvoiceList.findIndex((obj => obj.ID == id))
+		this.InvoiceList[index][valueOf] = value
 	}
 
 	async schedulePayment() {
@@ -161,7 +162,11 @@ export class MakePaymentPage implements OnInit {
 		this.scheduleSuccess = false;
 	}
 
-	verifyandconfirm() {
+	async verifyandconfirm() {
+		for (let i = 0; i < this.ScheduleInvList.length; i++) {
+			this.ScheduleInvList[i].ScheduledOn = new Date().toISOString();
+			this.ScheduleInvList[i].TransactionID = '' + new Date().getTime();
+		}
 		let postData = this.ScheduleInvList
 		this.apiService
 			.postApiOnlyWithContentType(

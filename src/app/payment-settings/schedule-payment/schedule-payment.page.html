@@ -10,7 +10,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
+    <!-- Search Box -->
     <ion-grid>
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
@@ -56,6 +56,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="3" class="ion-padding">
+          <br>
           <ion-button (click)="searchInvoice()" class="">
             <ion-icon slot="start" name="search"></ion-icon>
             <small>Search</small>
@@ -71,14 +72,11 @@
     <!-- All Invoices -->
     <ion-grid class="form-card margin-large-top" *ngIf="isSelectInv && InvoiceList?.length > 0">
       <ion-row class="bg-theme-blue">
-        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
           Total Invoices:
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
           Invoice Amount:
-        </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
-          Balance Amount:
         </ion-col>
       </ion-row>
       <ion-grid class="ion-margin">
@@ -86,34 +84,32 @@
           <table class="table">
             <thead>
               <tr>
-                <th>
-                  Select
-                </th>
-                <th>Invoice Details</th>
+                <th>Invoice No</th>
                 <th>Invoice Date</th>
-                <th>Order No</th>
                 <th>Amount</th>
-                <th>LR Date</th>
-                <th>Due Date</th>
+                <th>Payment Mode</th>
+                <th>Scheduled On</th>
+                <th>Cheque Date</th>
+                <th>Transaction ID</th>
+                <th>Payment Status</th>
+                <th></th>
               </tr>
             </thead>
             <tbody *ngFor="let item of InvoiceList">
-              <tr>  
-                <td>
-                  <ion-checkbox [checked]="item.IsScheduled"
-                    (ionChange)="updateInvoiceList(item.ID, 'IsScheduled', $event.target.checked)"></ion-checkbox>
-                </td>
-                <td>{{item.InvoiceDetails}}</td>
+              <tr>
+                <td><span class="clickable-item"
+                    (click)="viewDetailedInvoive(item.ID)"><b>{{item.InvoiceDetails}}</b></span></td>
                 <td>{{item.InvoiceDate}}</td>
                 <td>{{item.OrderNo}}</td>
                 <td>{{item.Amount}}</td>
                 <td>{{item.LRDate}}</td>
-                <td class="ion-no-padding">
-                  <ion-item>
-                    <ion-datetime [value]="item.DueDate"
-                      (ionChange)="updateInvoiceList(item.ID, 'DueDate', $event.target.value)" placeholder="Due Date"
-                      display-timezone="ist"></ion-datetime>
-                  </ion-item>
+                <td>{{item.DueDate}}</td>
+                <td>{{item.TransactionID}}</td>
+                <td>{{item.PaymentStatus}}</td>
+                <td>
+                  <span>
+                    <ion-icon class="download-icon" slot="start" name="download"></ion-icon>
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -122,127 +118,87 @@
       </ion-grid>
     </ion-grid>
     <!-- Selected Invoices -->
-    <ion-grid class="form-card margin-large-top" *ngIf="isScheduleInv || isOTPSent">
+    <ion-grid class="form-card margin-large-top" *ngIf="isViewInvDetails">
       <ion-row class="padding-mini">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Invoice Details</th>
-              <th>Invoice Date</th>
-              <th>Order No</th>
-              <th>Amount</th>
-              <th>LR Date</th>
-              <th>Due Date</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let item of ScheduleInvList">
-            <tr>
-              <td>{{item.InvoiceDetails}}</td>
-              <td>{{item.InvoiceDate}}</td>
-              <td>{{item.OrderNo}}</td>
-              <td>{{item.Amount}}</td>
-              <td>{{item.LRDate}}</td>
-              <td>{{item.DueDate}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </ion-row>
-    </ion-grid>
-    <!-- Payment Schedule Success -->
-    <ion-grid class="form-card margin-large-top" *ngIf="scheduleSuccess">
-      <ion-row class="padding-mini">
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-padding">
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" *ngFor="let item of InvoiceDetails">
+          <!--  -->
           <ion-row>
-            <ion-col size-xs="3" size-sm="3" size-md="3" size-lg="1" class="ion-padding">
-              <span>
-                <ion-icon class="success-icon" slot="start" name="checkmark-circle-outline"></ion-icon>
-              </span>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Invoice No:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.InvoiceDetails}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Inv Amount:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Amount}}</ion-col>
+          </ion-row>
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Distributor:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">TEST DISTRIBUTOR</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Inv Date:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ScheduledOn}}</ion-col>
+          </ion-row>
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>LR Number:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.LRNumber}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>LR Date:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.LRDate}}</ion-col>
+          </ion-row>
+          <!-- BOX -->
+          <ion-card>
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Transaction ID:</b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.TransactionID}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Payment Status:</b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.PaymentStatus}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Payment Mode:</b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.PaymentMode}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Scheduled On:</b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ScheduledOn}}</ion-col>
+            </ion-row>
+          </ion-card>
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6">
+              <ion-button color="danger" (click)="cancelCheque()">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+                <small>Cancel Cheque</small>
+              </ion-button>
+              <ion-button (click)="modifyDate()">
+                <ion-icon slot="start" name="create"></ion-icon>
+                <small>Modify Date</small>
+              </ion-button>
             </ion-col>
-            <ion-col size-xs="9" size-sm="9" size-md="9" size-lg="10" class="ion-padding">
-              <span class="success-text">
-                Payment Scheduled!
-              </span>
-              <br>
-              <span>Your payment has been scheduled! Details of the transaction are provided below.</span>
-            </ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Cheque Date:</b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DueDate}}</ion-col>
           </ion-row>
         </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-lg="1"></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Amount:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">₹12000/-</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-lg="1"></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Receipt ID:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">248422675</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-lg="1"></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Transaction Time:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">2021-11-01</ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size-lg="1"></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Payment Mode:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">E-Cheque</ion-col>
-      </ion-row>
-    </ion-grid>
-    <!-- Schedule Payment Button -->
-    <ion-grid class="margin-small-top margin-small-left" *ngIf="isSelectInv && InvoiceList?.length > 0">
-      <ion-row class="padding-mini">
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
-          <ion-button (click)="schedulePayment()" class="full-width">
-            <ion-icon slot="start" name="calendar"></ion-icon>
-            <small>Schedule Payment</small>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <!-- Send OTP Button -->
-    <ion-grid class="margin-small-top margin-small-left" *ngIf="isScheduleInv && !isOTPSent">
-      <ion-row class="padding-mini">
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
-          <ion-button (click)="sendOtp()" class="full-width">
-            <ion-icon slot="start" name="phone-portrait"></ion-icon>
-            <small>Send OTP for Verification</small>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <!-- Verify OTP Button -->
-    <ion-grid class="margin-small-top margin-small-left" *ngIf="isOTPSent">
-      <ion-row class="padding-mini">
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
-          <ion-input class="otp-input" type="number" #otp1 required="true" maxLength="1" [(ngModel)]="OTP[0]"
-            (keyup)="otpController($event,otp2,'')">
-          </ion-input>
-          <ion-input class="otp-input" type="number" #otp2 required="true" maxLength="1" [(ngModel)]="OTP[1]"
-            (keyup)="otpController($event,otp3,otp1)">
-          </ion-input>
-          <ion-input class="otp-input" type="number" #otp3 required="true" maxLength="1" [(ngModel)]="OTP[2]"
-            (keyup)="otpController($event,otp4,otp2)">
-          </ion-input>
-          <ion-input class="otp-input" type="number" #otp4 required="true" maxLength="1" [(ngModel)]="OTP[3]"
-            (keyup)="otpController($event,otp5,otp3)">
-          </ion-input>
-
-          <!-- <ion-input class="otp-input" type="number" #otp5 required="true" maxLength="1" [(ngModel)]="OTP[4]"
-            (keyup)="otpController($event,otp6,otp4)">
-          </ion-input>
-
-          <ion-input class="otp-input" type="number" #otp6 required="true" maxLength="1" [(ngModel)]="OTP[5]"
-            (keyup)="otpController($event,'',otp5)">
-          </ion-input> -->
-        </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
-          <ion-button (click)="verifyandconfirm()" class="full-width">
-            <ion-icon slot="start" name="checkmark"></ion-icon>
-            <small>Verify and Confirm</small>
-          </ion-button>
-          <small>Don't receive OTP? <span class="resend-otp">RESEND OTP.</span></small>
-        </ion-col>
+        <hr>
+        <!-- Invoice Details -->
+        <ion-grid *ngFor="let item of InvoiceDetails">
+          <ion-card>
+            <ion-row>
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+                <ion-text color="primary ion-no-padding">
+                  <h4>Product Name</h4>
+                </ion-text>
+              </ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Product Code:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Box Packing:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Batch No.:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Case Packing:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Packing:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">
+                <ion-text color="primary">PTD:</ion-text>
+              </ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Free:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Total Quantity:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">
+                <ion-text color="primary">Total Amount:</ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-grid>
       </ion-row>
     </ion-grid>
 

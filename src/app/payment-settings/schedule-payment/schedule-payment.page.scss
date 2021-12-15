@@ -55,12 +55,29 @@
     text-decoration-color: rgb(40, 129, 194);
 }
 
-.success-icon {
-    color: #5cb85c;
-    font: 5em sans-serif;
+.download-icon {
+    color: rgb(40, 129, 194);
+    font: 2em sans-serif;
+    cursor: pointer;
+}
+
+.download-icon:hover {
+    color: rgb(40, 129, 194);
+    font: 2em sans-serif;
+    cursor: pointer;
+    border: 1px grey;
 }
 
 .success-text {
     color: #5cb85c;
     font: 3em sans-serif;
+}
+
+.clickable-item {
+    color: rgb(40, 129, 194);
+}
+
+.clickable-item:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
