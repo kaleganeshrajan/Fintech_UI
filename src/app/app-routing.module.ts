@@ -20,6 +20,11 @@ const routes: Routes = [
 		loadChildren: './payment-settings/company-settings/company-settings.module#CompanySettingsPageModule',
 
 	},
+	{
+		path: 'add-lead',
+		loadChildren: './payment-settings/add-lead/add-lead.module#AddLeadPageModule'
+
+	},
 ];
 
 
