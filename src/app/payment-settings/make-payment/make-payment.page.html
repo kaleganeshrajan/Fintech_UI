@@ -98,7 +98,7 @@
               </tr>
             </thead>
             <tbody *ngFor="let item of InvoiceList">
-              <tr>
+              <tr>  
                 <td>
                   <ion-checkbox [checked]="item.IsScheduled"
                     (ionChange)="updateInvoiceList(item.ID, 'IsScheduled', $event.target.checked)"></ion-checkbox>
