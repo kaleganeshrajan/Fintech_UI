@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { CompanySettingsPage } from './company-settings.page';
+import { MakePaymentPage } from './make-payment.page';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: CompanySettingsPage
+		component: MakePaymentPage
 	}
 ];
 
@@ -20,6 +20,6 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		ReactiveFormsModule
 	],
-	declarations: [CompanySettingsPage]
+	declarations: [MakePaymentPage]
 })
-export class CompanySettingsPageModule { }
+export class MakePaymentPageModule { }

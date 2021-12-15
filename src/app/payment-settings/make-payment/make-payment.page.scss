@@ -1,0 +1,66 @@
+.form-card {
+    border: 1px solid;
+    border-radius: 14px;
+    box-shadow: 11px 4px 22px rgb(40, 129, 194);
+    // width: 60%;
+    margin-left: 8px;
+    padding: 18px;
+}
+
+.text-capital {
+    text-transform: uppercase !important;
+}
+.mt-13{
+    margin-top: 15px;
+}
+
+.dropdown-padding-btm {
+    padding-bottom: 13px !important;
+}
+
+.pb-34 {
+    padding-bottom: 13px !important;
+}
+
+.input-padding-btm {
+    padding-bottom: 1px !important;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.bg-theme-blue {
+    background-color: rgb(40, 129, 194) !important;
+    color: white;
+}
+
+.otp-input {
+    display:inline-block;
+    width:25px;
+    height:25px;
+    margin:5px;
+    border-radius: 50%;
+    --background:#e1e1e1;
+    --padding-start:7px;
+}
+
+.resend-otp {
+    color: rgb(40, 129, 194);
+    cursor: pointer;
+}
+
+.resend-otp:hover {
+    text-decoration: underline;
+    text-decoration-color: rgb(40, 129, 194);
+}
+
+.success-icon {
+    color: #5cb85c;
+    font: 5em sans-serif;
+}
+
+.success-text {
+    color: #5cb85c;
+    font: 3em sans-serif;
+}

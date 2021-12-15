@@ -22,7 +22,16 @@ const routes: Routes = [
 	},
 	{
 		path: 'add-lead',
-		loadChildren: './payment-settings/add-lead/add-lead.module#AddLeadPageModule'
+		loadChildren: './payment-settings/add-lead/add-lead.module#AddLeadPageModule'		
+
+	},
+	{
+		path: 'make-payment',
+		loadChildren: './payment-settings/make-payment/make-payment.module#MakePaymentPageModule'
+	},
+	{
+		path: 'schedule-payment',
+		loadChildren: './payment-settings/schedule-payment/schedule-payment.module#SchedulePaymentPageModule',
 
 	},
 ];
