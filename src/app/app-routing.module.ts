@@ -21,9 +21,13 @@ const routes: Routes = [
 
 	},
 	{
-		path: 'make-payment',
-		loadChildren: './payment-settings/make-payment/make-payment.module#MakePaymentPageModule',
+		path: 'add-lead',
+		loadChildren: './payment-settings/add-lead/add-lead.module#AddLeadPageModule'		
 
+	},
+	{
+		path: 'make-payment',
+		loadChildren: './payment-settings/make-payment/make-payment.module#MakePaymentPageModule'
 	},
 	{
 		path: 'schedule-payment',

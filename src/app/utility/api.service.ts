@@ -184,7 +184,7 @@ export class ApiService {
   postApiOnlyWithContentType(myUrl: String, postData: any): Observable<any> {
     
     this.httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json'})
+      headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data'})
     };
      
     return this.http
@@ -243,6 +243,29 @@ export class ApiService {
 
     return this.http
       .post<any>(this.url + myUrl, postData, this.httpOptions)
+      .pipe(
+        map(data => {
+          return data;
+        }),
+        catchError((error: HttpErrorResponse) => {
+          if (!this.utility.checkStringNullEmpty(error.error.message)) {
+            this.alerDialogs.alertDialog('', error.error.message);
+          }
+          // return an observable with a user-facing error message
+          return throwError(error.error.message);
+        })
+      );
+  }
+
+  
+  /****** Upload Image POST api without authentication call******/
+  uploadImagePostApiWithoutAuthentication(
+    myUrl: String,
+    postData: any
+  ): Observable<any> {        
+
+    return this.http
+      .post<any>(this.url + myUrl, postData)
       .pipe(
         map(data => {
           return data;
