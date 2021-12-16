@@ -3,19 +3,22 @@ import { Network } from '@ionic-native/network/ngx'
 import { NetworkProviderService } from 'src/app/utility/network-provider.service';
 import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 
 @Component({
-	selector: 'app-schedule-payment',
-	templateUrl: './schedule-payment.page.html',
-	styleUrls: ['./schedule-payment.page.scss'],
+	selector: 'app-payment-history',
+	templateUrl: './payment-history.page.html',
+	styleUrls: ['./payment-history.page.scss'],
 	providers: [NetworkProviderService, Network]
 })
-export class SchedulePaymentPage implements OnInit {
+export class PaymentHistoryPage implements OnInit {
 	formGroup!: FormGroup;
-	public DateFilterList: any[]
-	public SearchFilterList: any[];
+	public CompanyList: any[]
+	public PaymentModeList: any[]
+	public PaymentStatusList: any[]
+	public DateFilter: any[]
+	public SearchFilter: any[];
 	public InvoiceList: any[];
 	public DetailedInvoiceList: any[];
 	public InvoiceDetails: any[];
@@ -43,48 +46,72 @@ export class SchedulePaymentPage implements OnInit {
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
 			ID: [0],
-			SearchText: [''],
+			Company: [''],
 			FromDate: [''],
 			ToDate: [''],
-			SearchFilterType: [''],
-			DateFilterType: [''],
+			SearchByInvoiceNo: [''],
+			SearchByTransactionID: [''],
+			PaymentMode: [''],
+			PaymentStatus: [''],
 		});
 	}
 
+
 	async getAllList() {
-		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/masters/GetSearchFilter"
+				"api/master_payment_setting/CompanyList"
+			).subscribe((result) => {
+				if (result !== null) {
+					this.CompanyList = result
+				}
+			})
+		// Get Payment Mode Lists
+		this.apiService
+			.getApiwithoutauthencticate(
+				"api/masters/GetPaymentMode"
 			).subscribe((result) => {
 				if (result != null) {
-					this.SearchFilterList = result
+					this.PaymentModeList = result
 				}
 			}
 			)
-		// Get Date Filter Lists
+		// Get Payment Mode Lists
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/masters/GetDateFilter"
+				"api/masters/GetPaymentMode"
 			).subscribe((result) => {
 				if (result != null) {
-					this.DateFilterList = result
+					this.PaymentModeList = result
 				}
 			}
 			)
+		// Get Payment Mode Lists
+		this.apiService
+			.getApiwithoutauthencticate(
+				"api/masters/GetStatus"
+			).subscribe((result) => {
+				if (result != null) {
+					this.PaymentStatusList = result
+				}
+			}
+			)
+
 	}
 
 	async searchInvoice() {
 		let postData = {
-			SearchText: this.formGroup.value.SearchText,
+			Company: this.formGroup.value.Company,
 			FromDate: this.formGroup.value.FromDate,
 			ToDate: this.formGroup.value.ToDate,
-			SearchFilterType: this.formGroup.value.SearchFilterType,
-			DateFilterType: this.formGroup.value.DateFilterType,
+			SearchByInvoiceNo: this.formGroup.value.SearchByInvoiceNo,
+			SearchByTransactionID: this.formGroup.value.SearchByTransactionID,
+			PaymentMode: this.formGroup.value.PaymentMode,
+			PaymentStatus: this.formGroup.value.PaymentStatus,
 		}
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/schedule_payment/GetInvoiceData"
+				"api/payment_history/GetInvoiceData"
 			).subscribe((result) => {
 				this.InvoiceList = result;
 				this.isSelectInv = true;
@@ -93,7 +120,7 @@ export class SchedulePaymentPage implements OnInit {
 		console.log("PostData", postData)
 	}
 
-	viewDetailedInvoive(id){
+	viewDetailedInvoive(id) {
 		console.log(id)
 		this.InvoiceDetails = []
 		this.InvoiceDetails.push(this.InvoiceList.find(ele => ele.ID == id))
@@ -101,15 +128,16 @@ export class SchedulePaymentPage implements OnInit {
 		this.isViewInvDetails = true;
 	}
 
-	modifyDate(){
+	modifyDate() {
 		this.alertDialogs.alertDialog("Clicked", "Modify Date")
 	}
 
-	cancelCheque(){
+	cancelCheque() {
 		this.alertDialogs.alertDialog("Clicked", "Cancel Cheque")
 	}
 
-	downloadReport(){
+	downloadReport() {
 		this.alertDialogs.alertDialog("Clicked", "Download Report")
 	}
+
 }

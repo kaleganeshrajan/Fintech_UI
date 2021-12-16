@@ -18,8 +18,8 @@
             <ion-label position="floating">Select Search Filter</ion-label>
             <ion-select value="formGroup['SearchFilterType']" (ionChange)="getCompanySettings()"
               formControlName="SearchFilterType" interface="popover" class="pb-34">
-              <ion-select-option *ngFor="let item of CompanyList" value="{{item.SearchFilterType}}">
-                {{ item.SearchFilterType }}
+              <ion-select-option *ngFor="let item of SearchFilterList" value="{{item.Code}}">
+                {{ item.Name }}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -37,8 +37,8 @@
             <ion-label position="floating">Select Date Filter</ion-label>
             <ion-select value="formGroup['DateFilterType']" (ionChange)="getCompanySettings()"
               formControlName="DateFilterType" interface="popover" class="dropdown-padding-btm">
-              <ion-select-option *ngFor="let item of CompanyList" value="{{item.DateFilterType}}">
-                {{ item.DateFilterType }}
+              <ion-select-option *ngFor="let item of DateFilterList" value="{{item.Code}}">
+                {{ item.Name }}
               </ion-select-option>
             </ion-select>
           </ion-item>

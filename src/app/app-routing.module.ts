@@ -38,8 +38,12 @@ const routes: Routes = [
 		path: 'my-mandates',
 		loadChildren: './payment-settings/my-mandates/my-mandates.module#MyMandatesPageModule'
 	},
-];
+	{
+		path: 'payment-history',
+		loadChildren: './payment-settings/payment-history/payment-history.module#PaymentHistoryPageModule',
 
+	},
+];
 
 
 @NgModule({

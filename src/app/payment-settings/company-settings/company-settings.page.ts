@@ -22,10 +22,6 @@ export class CompanySettingsPage implements OnInit {
 	public AccountType: any[]
 	public saveUpdateButton = 'Save';
 	public activateBeneficiaryOption = false;
-	// public saveEditButton = 'Save';
-	// public paymentSettingId = 0;
-	// public DistributorCode: String;
-	// public companyList: any[];
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -46,7 +42,7 @@ export class CompanySettingsPage implements OnInit {
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
 			ID: [0, Validators.required],
-			CompanyName: ['', Validators.required],
+			CompanyName: [''],
 			AccountNumber: ['', Validators.required],
 			BankName: ['', Validators.required],
 			BankAccountName: ['', Validators.required],
@@ -133,7 +129,6 @@ export class CompanySettingsPage implements OnInit {
 			)
 	}
 
-
 	async getCompanySettings() {
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -145,7 +140,7 @@ export class CompanySettingsPage implements OnInit {
 					this.activateBeneficiaryOption = result.ID == 0 ? false : result.IsBeneficiaryActive
 					this.formGroup['ID'] = result.ID
 					this.formGroup['CompanyName'] = result.CompanyName
-					this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? "" : result.AccountNumber
+					this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? null : result.AccountNumber
 					this.formGroup['BankName'] = result.BankName
 					this.formGroup['BankAccountName'] = result.BankAccountName
 					this.formGroup['IFSCCode'] = result.IFSCCode
@@ -210,12 +205,13 @@ export class CompanySettingsPage implements OnInit {
 			)
 			.subscribe((result) => {
 				if (result.Success == true) {
-					this.alertDialogs.alertDialog('', result.Message);
+					this.alertDialogs.alertDialog('Success', result.Message);
 					this.createForm()
 				}
 				else {
-					this.alertDialogs.alertDialog('', result.Message);
+					this.alertDialogs.alertDialog('Failed', result.Message);
 				}
 			})
+			this.createForm();
 	}
 }

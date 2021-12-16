@@ -11,15 +11,15 @@
       </ion-row>
     </ion-grid>
     <!-- Search Box -->
-    <ion-grid>
+    <ion-grid *ngIf="!isViewInvDetails">
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Select Search Filter</ion-label>
-            <ion-select value="formGroup['SearchFilterType']" (ionChange)="getCompanySettings()"
-              formControlName="SearchFilterType" interface="popover" class="pb-34">
-              <ion-select-option *ngFor="let item of CompanyList" value="{{item.SearchFilterType}}">
-                {{ item.SearchFilterType }}
+            <ion-select value="formGroup['SearchFilterType']" formControlName="SearchFilterType" interface="popover"
+              class="pb-34">
+              <ion-select-option *ngFor="let item of SearchFilterList" value="{{item.Code}}">
+                {{ item.Name }}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -35,10 +35,10 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Select Date Filter</ion-label>
-            <ion-select value="formGroup['DateFilterType']" (ionChange)="getCompanySettings()"
-              formControlName="DateFilterType" interface="popover" class="dropdown-padding-btm">
-              <ion-select-option *ngFor="let item of CompanyList" value="{{item.DateFilterType}}">
-                {{ item.DateFilterType }}
+            <ion-select value="formGroup['DateFilterType']" formControlName="DateFilterType" interface="popover"
+              class="dropdown-padding-btm">
+              <ion-select-option *ngFor="let item of DateFilterList" value="{{item.Code}}">
+                {{ item.Name }}
               </ion-select-option>
             </ion-select>
           </ion-item>
@@ -61,7 +61,7 @@
             <ion-icon slot="start" name="search"></ion-icon>
             <small>Search</small>
           </ion-button>
-          <ion-button (click)="saveUpdateSetting()" class="">
+          <ion-button (click)="downloadReport()" class="">
             <ion-icon slot="start" name="download"></ion-icon>
             <small>Download Report</small>
           </ion-button>
