@@ -29,15 +29,15 @@ export class AlertDialogs {
 
 	// alert dialog
 	async alertDialog(headerTxt: any, msg: any) {
-		if (this.alertCtrl.getTop()) {
-			this.alertCtrl.dismiss();
-		}
+		// if (this.alertCtrl.getTop()) {
+		// 	this.alertCtrl.dismiss();
+		// }
 		const alert = await this.alertCtrl.create({
 			header: headerTxt,
 			message: msg,
 			buttons: [ {
 				cssClass: 'item-center',
-				text: 'OK',
+				text: 'OK'
 			} ]
 		});
 

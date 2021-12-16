@@ -1,0 +1,60 @@
+<ion-content padding="true" class="background-white">    
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+          <ion-item lines="none" class="position-left" color="transparent">
+            <ion-back-button defaultHref="/tabs" ></ion-back-button>
+            <ion-text class="pageTitle">{{pageTitle}}</ion-text>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <form class="panel-body" > 
+    <ion-grid class="form-card margin-large-top" *ngFor="let item of mandatesDetails">
+        <ion-row class="padding-mini">
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>UMRN No : </b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UMRNNo}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Account Number : </b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.AccountNumber}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Account Holder's Name : </b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.AccountHolderName}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Bank Name : </b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.BankName}}</ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>IFSC Code : </b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.IFSCCode}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Enabled On (Date) : </b></ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.EnabledOn.split("T")[0]}}</ion-col>
+            </ion-row>   
+            <ion-row>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Max Amount : </b></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.MaxAmount}}</ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Last Collection Date : </b></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.LastCollectionDate.split("T")[0]}}</ion-col>
+            </ion-row>    
+            <ion-row>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Status : </b></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Status}}</ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Mandate Registration Mode : </b></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.RegistrationMode}}</ion-col>
+            </ion-row>    
+            <ion-row>
+                <ion-col size-xs="6" size-sm="6" size-md="1" size-lg="1"><b><ion-checkbox #notificationSetting checked="{{item.NotificationSetting}}" color="primary" slot="start"></ion-checkbox></b></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="5" size-lg="5">Notification Setting</ion-col>
+            </ion-row>  
+            <ion-row>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6">Notify Me About Scheduled Due Payments <input #priorDays value="{{item.PriorDays}}" type="number" class="input-box" />  days prior</ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="2" size-lg="1" *ngIf="!item.CancelMandates"><ion-button (click)="update(1,item.ID,notificationSetting.checked,priorDays.value,item.NotificationSetting,item.CancelMandates,item.UMRNNo)" color="success"><small>Save</small></ion-button></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="2" size-lg="2" *ngIf="!item.CancelMandates"><ion-button (click)="update(2,item.ID,notificationSetting.checked,priorDays.value,item.NotificationSetting,item.CancelMandates,item.UMRNNo)" color="warning" *ngIf="!item.SetAsDefault"><small>Set As Default</small></ion-button></ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="2" size-lg="2" *ngIf="!item.CancelMandates"><ion-button (click)="update(3,item.ID,notificationSetting.checked,priorDays.value,item.NotificationSetting,item.CancelMandates,item.UMRNNo)" color="danger"><small>Cancel My Mandate</small></ion-button></ion-col>            
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </form>
+</ion-content>

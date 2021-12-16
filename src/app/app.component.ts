@@ -387,7 +387,7 @@ export class AppComponent {
 					this.companySettings = result['payload']['CompanySettings'];
 					this.setFlag();
 				} else {
-					this.alertDialogs.successAlert('', result['message']);
+					this.alertDialogs.alertDialog('', result['message']);
 				}
 			});
 	}
@@ -803,7 +803,7 @@ export class AppComponent {
 						this.setFlag();
 					}
 				} else {
-					this.alertDialogs.successAlert('', result['message']);
+					this.alertDialogs.alertDialog('', result['message']);
 				}
 			});
 	}

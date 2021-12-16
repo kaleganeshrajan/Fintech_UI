@@ -179,7 +179,7 @@ export class NotificationListPage implements OnInit {
 				if (result['status'] === 200) {
 					this.notificationTotal = result['payload'][0].TotalNotifications;
 				} else {
-					this.alertDialogs.successAlert('', result['message']);
+					this.alertDialogs.alertDialog('', result['message']);
 				}
 			});
 	}

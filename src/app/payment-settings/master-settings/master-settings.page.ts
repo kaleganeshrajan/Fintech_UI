@@ -178,14 +178,13 @@ export class MasterSettingsPage implements OnInit {
           postData
         )
         .subscribe((result) => {
-          debugger
           if (result===true){
             if (this.paymentSettingId===0){
-              this.alertDialogs.successAlert('', "Record Inserted successfully...!");
+              this.alertDialogs.alertDialog('', "Record Inserted successfully...!");
               this.createForm()
             }
             else{
-              this.alertDialogs.successAlert('', "Record Updated successfully...!");
+              this.alertDialogs.alertDialog('', "Record Updated successfully...!");
               this.createForm()
             }
           }

@@ -545,7 +545,7 @@ export class HomePage implements OnInit {
 
 
 				} else {
-					this.alertDialogs.successAlert('', result['message']);
+					this.alertDialogs.alertDialog('', result['message']);
 				}
 			});
 	}
@@ -614,7 +614,7 @@ export class HomePage implements OnInit {
 							this.showEconsentForm();
 					}
 				} else {
-					this.alertDialogs.successAlert('', result['message']);
+					this.alertDialogs.alertDialog('', result['message']);
 				}
 			});
 	}

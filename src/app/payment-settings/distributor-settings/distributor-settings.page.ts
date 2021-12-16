@@ -107,10 +107,10 @@ export class DistributorSettingsPage implements OnInit {
         .subscribe((result) => {
           if (result === true) {
             if (this.paymentSettingId === 0) {
-              this.alertDialogs.successAlert('', "Record Inserted successfully...!");
+              this.alertDialogs.alertDialog('', "Record Inserted successfully...!");
             }
             else {
-              this.alertDialogs.successAlert('', "Record Updated successfully...!");
+              this.alertDialogs.alertDialog('', "Record Updated successfully...!");
             }
           }
         });

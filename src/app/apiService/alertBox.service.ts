@@ -66,7 +66,7 @@ export class AlertBoxService {
 	}
 
 	// Close window on click success
-	// async successAlert(headerTxt: string, msg: string) {
+	// async alertDialog(headerTxt: string, msg: string) {
 
 	//   const alert = await this.alertCtrl.create({
 	//     header: headerTxt,

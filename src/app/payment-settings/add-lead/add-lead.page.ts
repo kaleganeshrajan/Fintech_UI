@@ -17,7 +17,7 @@ export class AddLeadPage implements OnInit {
   formGroup!: FormGroup;
   public AccountNumber: any;
   public saveEditButton = 'Save';
-  public paymentSettingId = 0;
+  public leadId = 0;
   public DistributorCode: String;
   public distributorList: any[];
   public mandateList: any[];
@@ -25,19 +25,24 @@ export class AddLeadPage implements OnInit {
   public accounttypeList: any[];
   public scannedFile:any;
   public confirmationFile:any;
-  public pageTitle:"E-cheque/E-nach Leads"
+  public pageTitle:any
+  public isAddLead:any
+  public isLeadFilter:any
+  public leadDetails:any
 
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
-    private alertDialogs: AlertDialogs,
-    private router: Router
+    private alertDialogs: AlertDialogs
 
   ) { }
 
   ngOnInit():void { 
     this.createForm();
     this.pageTitle="E-cheque/E-nach Leads"
+    this.isAddLead=false
+    this.isLeadFilter=true
+    this.saveEditButton = 'Save'
   }
 
   /*same as resume */
@@ -68,7 +73,13 @@ export class AddLeadPage implements OnInit {
       BankIFSCCode:['', Validators.required],
       Frequency:['', Validators.required],
       FirstCollectionDate:['', Validators.required],
-      LastCollectionDate:['', Validators.required]
+      LastCollectionDate:['', Validators.required],
+
+      FilterApproveStatus:[''],
+      FilterDistributorName:[''],
+      FilterNoEntry:[''],
+      FilterFromDate:[''],
+      FilterToDate:['']
 		});
 
     this.addlead();
@@ -110,14 +121,13 @@ export class AddLeadPage implements OnInit {
     });
   }
 
-  async addlead(){     
-    const ashbdf=this.formGroup.valid
-  
+  async addlead(){    
     if (this.formGroup.valid){   
       let postData;
       postData = {
+        ID:this.leadId,
         DistributorFirstName: this.formGroup.value.DistributorFirstName,
-        DistributorLastName:this.formGroup.value.DistributorFirstName,
+        DistributorLastName:this.formGroup.value.DistributorLastName,
         UserFirstName:this.formGroup.value.UserFirstName,
         UserLastName:this.formGroup.value.UserLastName,
         MobileNumber:this.formGroup.value.MobileNumber,
@@ -153,14 +163,40 @@ export class AddLeadPage implements OnInit {
             formData
           )
           .subscribe((result) => {
-            if (result===true){             
-              this.alertDialogs.successAlert('', "Record Inserted successfully...!");           
+            if (result===true){
+              if (this.leadId==0){
+                this.alertDialogs.alertDialog('Success', "Record Inserted successfully...!");     
+              }else{
+                this.leadId=0
+                this.alertDialogs.alertDialog('Success', "Record Updated successfully...!");     
+              }
+                    
               this.ngOnInit()   
+              this.getLeaddetails()
             }
           });
     }
-    
   }
+
+  async getLeaddetails() {  
+		  let postData;      
+      postData = {
+        recordLimit      :parseInt(this.formGroup.value.FilterNoEntry==""?0:this.formGroup.value.FilterNoEntry),
+        approvadStatus  			      :this.formGroup.value.FilterApproveStatus,						
+        distributorName              :this.formGroup.value.FilterDistributorName,  
+        fromDate                    :this.formGroup.value.FilterFromDate==""?"":this.formGroup.value.FilterFromDate.split("T")[0],  
+        toDate                  :this.formGroup.value.FilterToDate==""?"":this.formGroup.value.FilterToDate.split("T")[0],  
+      }      
+      
+      this.apiService
+        .postApiOnlyWithContentType(
+          'api/lead_details/GetLeads',
+          postData
+        )
+        .subscribe((result) => {
+          this.leadDetails=result
+        });
+	}  
 
   onconfirmationFileChange(fileChangeEvent) {
     this.confirmationFile = fileChangeEvent.target.files[0];    
@@ -168,5 +204,61 @@ export class AddLeadPage implements OnInit {
 
   onscannedFileChange(fileChangeEvent) {
     this.scannedFile = fileChangeEvent.target.files[0];    
+  }
+
+  oneditClick(clickevent){    
+    this.isAddLead=true
+    this.isLeadFilter=false
+    this.pageTitle="Add Lead"
+    this.saveEditButton="Update"
+    var filterleadDetails = this.leadDetails.filter(obj => obj.ID === clickevent)
+
+    this.leadId=clickevent
+
+    this.formGroup.patchValue({
+      DistributorFirstName: filterleadDetails[0].DistributorFirstName, 
+      DistributorLastName: filterleadDetails[0].DistributorLastName,
+      UserFirstName:filterleadDetails[0].UserFirstName			,
+      UserLastName:filterleadDetails[0].UserLastName              ,
+      MobileNumber:filterleadDetails[0].MobileNumber              ,
+      Region:filterleadDetails[0].Region                          ,
+      Email:filterleadDetails[0].Email                            ,
+      MandateType:filterleadDetails[0].MandateType                ,
+      ApplicationID:filterleadDetails[0].ApplicationID            ,
+      ApplicationDate:filterleadDetails[0].ApplicationDate        ,
+      UMRNNo:filterleadDetails[0].UMRNNo                          ,
+      ApprovalStatus:filterleadDetails[0].ApprovalStatus          ,
+      BankAccountNo:filterleadDetails[0].BankAccountNo            ,
+      AccountType:filterleadDetails[0].AccountType                ,
+      BankIFSCCode:filterleadDetails[0].BankIFSCCode              ,
+      Frequency:filterleadDetails[0].Frequency                    ,
+      FirstCollectionDate:filterleadDetails[0].FirstCollectionDate,
+      LastCollectionDate:filterleadDetails[0].LastCollectionDate
+    });
+      
+    this.formGroup['DistributorFirstName']=filterleadDetails[0].DistributorFirstName
+    this.formGroup['DistributorLastName']=filterleadDetails[0].DistributorLastName
+    this.formGroup['UserFirstName']=filterleadDetails[0].UserFirstName
+    this.formGroup['UserLastName']=filterleadDetails[0].UserLastName
+    this.formGroup['MobileNumber']=filterleadDetails[0].MobileNumber
+    this.formGroup['Region']=filterleadDetails[0].Region
+    this.formGroup['Email']=filterleadDetails[0].Email
+    this.formGroup['MandateType']=filterleadDetails[0].MandateType
+    this.formGroup['ApplicationID']=filterleadDetails[0].ApplicationID
+    this.formGroup['ApplicationDate']=filterleadDetails[0].ApplicationDate
+    this.formGroup['UMRNNo']=filterleadDetails[0].UMRNNo
+    this.formGroup['ApprovalStatus']=filterleadDetails[0].ApprovalStatus
+    this.formGroup['BankAccountNo']=filterleadDetails[0].BankAccountNo
+    this.formGroup['AccountType']=filterleadDetails[0].AccountType
+    this.formGroup['BankIFSCCode']=filterleadDetails[0].BankIFSCCode
+    this.formGroup['Frequency']=filterleadDetails[0].Frequency
+    this.formGroup['FirstCollectionDate']=filterleadDetails[0].FirstCollectionDate
+    this.formGroup['LastCollectionDate']=filterleadDetails[0].LastCollectionDate
+  }
+  
+  onaddLead() {
+    this.isAddLead=true
+    this.isLeadFilter=false
+    this.pageTitle="Add Lead"
   }
 }

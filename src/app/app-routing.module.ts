@@ -34,6 +34,10 @@ const routes: Routes = [
 		loadChildren: './payment-settings/schedule-payment/schedule-payment.module#SchedulePaymentPageModule',
 
 	},
+	{
+		path: 'my-mandates',
+		loadChildren: './payment-settings/my-mandates/my-mandates.module#MyMandatesPageModule'
+	},
 ];
 
 
