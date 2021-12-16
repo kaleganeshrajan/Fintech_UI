@@ -135,12 +135,12 @@ export class CompanySettingsPage implements OnInit {
 				"api/company_setting/" + this.formGroup.value.CompanyName
 			)
 			.subscribe((result) => {
-				if (result !== null && result.AccountNumber != 0) {
+				if (result !== null) {
 					this.saveUpdateButton = result.ID == 0 ? 'Save' : 'Update';
 					this.activateBeneficiaryOption = result.ID == 0 ? false : result.IsBeneficiaryActive
 					this.formGroup['ID'] = result.ID
 					this.formGroup['CompanyName'] = result.CompanyName
-					this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? "" : result.AccountNumber
+					this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? null : result.AccountNumber
 					this.formGroup['BankName'] = result.BankName
 					this.formGroup['BankAccountName'] = result.BankAccountName
 					this.formGroup['IFSCCode'] = result.IFSCCode
@@ -205,12 +205,13 @@ export class CompanySettingsPage implements OnInit {
 			)
 			.subscribe((result) => {
 				if (result.Success == true) {
-					this.alertDialogs.alertDialog('', result.Message);
+					this.alertDialogs.alertDialog('Success', result.Message);
 					this.createForm()
 				}
 				else {
-					this.alertDialogs.alertDialog('', result.Message);
+					this.alertDialogs.alertDialog('Failed', result.Message);
 				}
 			})
+			this.createForm();
 	}
 }

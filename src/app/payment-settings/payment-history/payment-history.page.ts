@@ -3,7 +3,7 @@ import { Network } from '@ionic-native/network/ngx'
 import { NetworkProviderService } from 'src/app/utility/network-provider.service';
 import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 
 @Component({
