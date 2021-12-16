@@ -1,0 +1,244 @@
+<ion-content padding="true" class="background-white">
+  <form [formGroup]="formGroup" class="panel-body">
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+          <ion-item lines="none" class="position-left" color="transparent">
+            <ion-back-button defaultHref="/tabs"></ion-back-button>
+            <ion-text class="pageTitle">Payment History</ion-text>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- Search Box -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="10" class="ion-padding">
+          <ion-row>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
+              <ion-item>
+                <ion-label position="floating">Select Company</ion-label>
+                <ion-select value="formGroup['Company']" (ionChange)="getCompanySettings()" formControlName="Company"
+                  interface="popover" class="pb-34">
+                  <ion-select-option *ngFor="let item of CompanyList" value="{{item.CompanyCode}}">
+                    {{ item.CompanyName }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
+              <ion-item>
+                <ion-label position="floating">From Date</ion-label>
+                <ion-datetime [value]="formGroup.FromDate" formControlName="FromDate" display-timezone="ist">
+                </ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding mt-13">
+              <ion-item>
+                <ion-label position="floating">To Date</ion-label>
+                <ion-datetime [value]="formGroup.ToDate" formControlName="ToDate" display-timezone="ist"></ion-datetime>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
+              <ion-item>
+                <ion-label position="floating">Search By Inv No</ion-label>
+                <ion-input [value]="formGroup.SearchByInvoiceNo" formControlName="SearchByInvoiceNo"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
+              <ion-item>
+                <ion-label position="floating">Search By Transaction ID</ion-label>
+                <ion-input [value]="formGroup.SearchByTransactionID" formControlName="SearchByTransactionID">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
+              <ion-item>
+                <ion-label position="floating">Select Payment Mode</ion-label>
+                <ion-select value="formGroup['PaymentMode']" (ionChange)="getCompanySettings()"
+                  formControlName="PaymentMode" interface="popover" class="pb-34">
+                  <ion-select-option *ngFor="let item of PaymentModeList" value="{{item.Code}}">
+                    {{ item.Name }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
+              <ion-item>
+                <ion-label position="floating">Select Payment Status</ion-label>
+                <ion-select value="formGroup['PaymentStatus']" (ionChange)="getCompanySettings()"
+                  formControlName="PaymentStatus" interface="popover" class="pb-34">
+                  <ion-select-option *ngFor="let item of PaymentStatusList" value="{{item.Code}}">
+                    {{ item.Name }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <!-- Buttons -->
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
+          <ion-row>
+            <ion-col>
+              <br>
+              <ion-button (click)="searchInvoice()" class="full-width">
+                <ion-icon slot="start" name="search"></ion-icon>
+                <small>Search</small>
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <br><br>
+              <ion-button (click)="downloadReport()" class="full-width">
+                <ion-icon slot="start" name="download"></ion-icon>
+                <small>Download Report</small>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- All Invoices -->
+    <ion-grid class="form-card margin-large-top" *ngIf="isSelectInv && InvoiceList?.length > 0">
+      <ion-row class="bg-theme-blue">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
+          Total Invoices:
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
+          Invoice Amount:
+        </ion-col>
+      </ion-row>
+      <ion-grid class="ion-margin">
+        <ion-row>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Invoice Details</th>
+                <th>Order No/Invoice Date</th>
+                <th>Amount</th>
+                <th>Payment Mode</th>
+                <th>Transaction ID</th>
+                <th>Transaction Date</th>
+                <th>Payment Status</th>
+                <th>Settelment Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of InvoiceList">
+              <tr>
+                <td>
+                  <span class="clickable-item" (click)="viewDetailedInvoive(item.ID)">
+                    <ion-text color="primary">Inv No:{{item.InvoiceDetails}}</ion-text>
+                  </span>
+                  <br>
+                  <ion-text color="medium">Distributor:CHAITANYA DISTRIBUTORS</ion-text>
+                </td>
+                <td>
+                  <ion-text color="medium">Order No:{{item.InvoiceDate}}</ion-text>
+                  <br>
+                  <ion-text color="medium">Inv Date:{{item.InvoiceDate}}</ion-text>
+                </td>
+                <td>
+                  <ion-text color="primary">Total Amount:{{item.Amount}}</ion-text>
+                  <br>
+                  <ion-text color="danger">Outstanding:{{item.Amount}}</ion-text>
+                </td>
+                <td>{{item.PaymentMode}}</td>
+                <td>{{item.TransactionID}}</td>
+                <td>{{item.ScheduledOn}}</td>
+                <td>{{item.PaymentStatus}}</td>
+                <td>{{item.SettelmentDate}}</td>
+                <td>
+                  <span>
+                    <ion-icon class="download-icon" slot="start" name="download"></ion-icon>
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ion-row>
+      </ion-grid>
+    </ion-grid>
+    <!-- Selected Invoices -->
+    <ion-grid class="form-card margin-large-top" *ngIf="isViewInvDetails">
+      <ion-row class="padding-mini">
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" *ngFor="let item of InvoiceDetails">
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4"><b>Invoice No: {{item.InvoiceDetails}}</b>
+            </ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Order Number:{{item.OrderNo}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">
+              <ion-text color="primary">Inv Amount: ₹{{item.Amount}}/-</ion-text>
+            </ion-col>
+          </ion-row>
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Distributor: TEST DISTRIBUTOR</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Order Status: Completely Processed</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Inv Date: {{item.ScheduledOn}}</ion-col>
+          </ion-row>
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">LR Number: {{item.LRNumber}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">LR Date: {{item.LRDate}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Due Date: {{item.DueDate}}</ion-col>
+          </ion-row>
+          <!-- BOX -->
+          <ion-card>
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Transaction ID: {{item.TransactionID}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Status: {{item.PaymentStatus}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date: {{item.SettelmentDate}}
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Mode: {{item.PaymentMode}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Cheque Date: {{item.DueDate}}</ion-col>
+            </ion-row>
+          </ion-card>
+          <!--  -->
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6">
+              <ion-button color="danger" (click)="cancelCheque()">
+                <ion-icon slot="start" name="close-circle"></ion-icon>
+                <small>Cancel Cheque</small>
+              </ion-button>
+              <ion-button (click)="modifyDate()">
+                <ion-icon slot="start" name="create"></ion-icon>
+                <small>Modify Date</small>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <hr>
+        <!-- Invoice Details -->
+        <ion-grid *ngFor="let item of InvoiceDetails">
+          <ion-card>
+            <ion-row>
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+                <ion-text color="primary ion-no-padding">
+                  <h4>Product Name</h4>
+                </ion-text>
+              </ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Product Code:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Box Packing:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Batch No.:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Case Packing:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Packing:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">
+                <ion-text color="primary">PTD:</ion-text>
+              </ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Free:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">Total Quantity:</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="4">
+                <ion-text color="primary">Total Amount:</ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-grid>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+</ion-content>
