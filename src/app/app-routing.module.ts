@@ -34,8 +34,12 @@ const routes: Routes = [
 		loadChildren: './payment-settings/schedule-payment/schedule-payment.module#SchedulePaymentPageModule',
 
 	},
-];
+	{
+		path: 'payment-history',
+		loadChildren: './payment-settings/payment-history/payment-history.module#PaymentHistoryPageModule',
 
+	},
+];
 
 
 @NgModule({

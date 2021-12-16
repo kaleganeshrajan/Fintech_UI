@@ -22,10 +22,6 @@ export class CompanySettingsPage implements OnInit {
 	public AccountType: any[]
 	public saveUpdateButton = 'Save';
 	public activateBeneficiaryOption = false;
-	// public saveEditButton = 'Save';
-	// public paymentSettingId = 0;
-	// public DistributorCode: String;
-	// public companyList: any[];
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -46,7 +42,7 @@ export class CompanySettingsPage implements OnInit {
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
 			ID: [0, Validators.required],
-			CompanyName: ['', Validators.required],
+			CompanyName: [''],
 			AccountNumber: ['', Validators.required],
 			BankName: ['', Validators.required],
 			BankAccountName: ['', Validators.required],
@@ -133,14 +129,13 @@ export class CompanySettingsPage implements OnInit {
 			)
 	}
 
-
 	async getCompanySettings() {
 		this.apiService
 			.getApiwithoutauthencticate(
 				"api/company_setting/" + this.formGroup.value.CompanyName
 			)
 			.subscribe((result) => {
-				if (result !== null) {
+				if (result !== null && result.AccountNumber != 0) {
 					this.saveUpdateButton = result.ID == 0 ? 'Save' : 'Update';
 					this.activateBeneficiaryOption = result.ID == 0 ? false : result.IsBeneficiaryActive
 					this.formGroup['ID'] = result.ID

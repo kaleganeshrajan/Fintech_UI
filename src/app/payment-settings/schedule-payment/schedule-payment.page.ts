@@ -14,8 +14,8 @@ import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 })
 export class SchedulePaymentPage implements OnInit {
 	formGroup!: FormGroup;
-	public DateFilter: any[]
-	public SearchFilter: any[];
+	public DateFilterList: any[]
+	public SearchFilterList: any[];
 	public InvoiceList: any[];
 	public DetailedInvoiceList: any[];
 	public InvoiceDetails: any[];
@@ -42,32 +42,33 @@ export class SchedulePaymentPage implements OnInit {
 
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
-			ID: [0, Validators.required],
-			SearchText: ['', Validators.required],
-			FromDate: ['', Validators.required],
-			ToDate: ['', Validators.required],
-			SearchFilterType: ['', Validators.required],
-			DateFilterType: ['', Validators.required],
+			ID: [0],
+			SearchText: [''],
+			FromDate: [''],
+			ToDate: [''],
+			SearchFilterType: [''],
+			DateFilterType: [''],
 		});
 	}
 
-
 	async getAllList() {
+		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/master_payment_setting/CompanyList"
-			).subscribe((result) => {
-				if (result !== null) {
-					console.log("true")
-				}
-			})
-		// Get Account Type Lists
-		this.apiService
-			.getApiwithoutauthencticate(
-				"api/company_setting/GetAccountTypeList"
+				"api/masters/GetSearchFilter"
 			).subscribe((result) => {
 				if (result != null) {
-					console.log("true")
+					this.SearchFilterList = result
+				}
+			}
+			)
+		// Get Date Filter Lists
+		this.apiService
+			.getApiwithoutauthencticate(
+				"api/masters/GetDateFilter"
+			).subscribe((result) => {
+				if (result != null) {
+					this.DateFilterList = result
 				}
 			}
 			)
@@ -100,4 +101,15 @@ export class SchedulePaymentPage implements OnInit {
 		this.isViewInvDetails = true;
 	}
 
+	modifyDate(){
+		this.alertDialogs.alertDialog("Clicked", "Modify Date")
+	}
+
+	cancelCheque(){
+		this.alertDialogs.alertDialog("Clicked", "Cancel Cheque")
+	}
+
+	downloadReport(){
+		this.alertDialogs.alertDialog("Clicked", "Download Report")
+	}
 }
