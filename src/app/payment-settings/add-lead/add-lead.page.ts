@@ -48,7 +48,6 @@ export class AddLeadPage implements OnInit {
     this.getDistributorList()
   }
 
-  /*same as resume */
 	ionViewDidEnter() {
 		this.getmandatelist();
     this.getstatuslist();

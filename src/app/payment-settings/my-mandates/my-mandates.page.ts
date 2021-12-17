@@ -58,7 +58,7 @@ export class MyMandatesPage implements OnInit {
         SetAsDefault:(type == 1 || type == 3)?setAsDefault:true,
         CancelMandates:(type == 1 || type == 2)? cancelMandates:true
       };
-
+      if (type==3){
       this.confirm_box=await this.alertCtrl.create({
         header: 'Prompt Alert',
         message: "You have Initiated mandate cancellation for UMRN "+UMRN_no+" Please confirm if you want to proceed. <b> Note: This action cannot be reversed.</b>",        
@@ -78,6 +78,10 @@ export class MyMandatesPage implements OnInit {
       });
 
       await this.confirm_box.present();
+    }
+    else{
+      this.updatemandate(type,postData);
+    }
   }
 
   async updatemandate(type,postData) { 
