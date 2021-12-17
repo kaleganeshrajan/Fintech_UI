@@ -3,7 +3,7 @@
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
           <ion-item lines="none" class="position-left" color="transparent">
-            <ion-back-button defaultHref="/tabs" ></ion-back-button>
+            <ion-back-button (click)="backClick()" defaultHref="/tabs" ></ion-back-button>
             <ion-text class="pageTitle">{{pageTitle}}</ion-text>
           </ion-item>
         </ion-col>
@@ -26,7 +26,7 @@
             <ion-item class="dropdown-style">
               <ion-label position="floating">Distributor Name</ion-label>
               <ion-select [value]="formGroup.FilterDistributorName" formControlName="FilterDistributorName" interface="popover">
-                <ion-select-option *ngFor="let item of leadDetails" value={{item.DistributorFirstName}}>
+                <ion-select-option *ngFor="let item of distributornameList" value={{item.DistributorFirstName}}>
                   {{ item.DistributorFirstName }} {{item.DistributorLastName}}
                 </ion-select-option>
                 </ion-select>
