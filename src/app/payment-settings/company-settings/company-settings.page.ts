@@ -90,7 +90,7 @@ export class CompanySettingsPage implements OnInit {
 		// Get Account Type
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/company_setting/GetAccountType"
+				"api/masters/GetAccountType"
 			).subscribe((result) => {
 				if (result != null) {
 					this.AccountType = result
@@ -100,7 +100,7 @@ export class CompanySettingsPage implements OnInit {
 		// Get ECheque Collection Type
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/company_setting/GetEChequeCollType"
+				"api/masters/GetEChequeCollType"
 			).subscribe((result) => {
 				if (result != null) {
 					this.EChequeCT = result
@@ -110,7 +110,7 @@ export class CompanySettingsPage implements OnInit {
 		// Get UPI Collection Type
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/company_setting/GetUPICollType"
+				"api/masters/GetUPICollType"
 			).subscribe((result) => {
 				if (result != null) {
 					this.UpiCT = result
@@ -120,7 +120,7 @@ export class CompanySettingsPage implements OnInit {
 		// Get Net Banking Collection Type
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/company_setting/GetNetBankingCollType"
+				"api/masters/GetNetBankingCollType"
 			).subscribe((result) => {
 				if (result != null) {
 					this.NBCT = result
@@ -212,6 +212,6 @@ export class CompanySettingsPage implements OnInit {
 					this.alertDialogs.alertDialog('Failed', result.Message);
 				}
 			})
-			this.createForm();
+		this.createForm();
 	}
 }
