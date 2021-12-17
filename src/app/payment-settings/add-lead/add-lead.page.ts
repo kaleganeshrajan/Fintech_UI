@@ -29,6 +29,7 @@ export class AddLeadPage implements OnInit {
   public isAddLead:any
   public isLeadFilter:any
   public leadDetails:any
+  public distributornameList:any
 
   constructor(
     private apiService: ApiService,
@@ -43,9 +44,10 @@ export class AddLeadPage implements OnInit {
     this.isAddLead=false
     this.isLeadFilter=true
     this.saveEditButton = 'Save'
+    this.getLeaddetails()
+    this.getDistributorList()
   }
 
-  /*same as resume */
 	ionViewDidEnter() {
 		this.getmandatelist();
     this.getstatuslist();
@@ -198,6 +200,18 @@ export class AddLeadPage implements OnInit {
         });
 	}  
 
+  async getDistributorList(){
+    this.apiService
+    .getApiwithoutauthencticate(
+      'api/lead_details/GetDistributor'
+    )
+    .subscribe((result) => {        
+      if (result!== null) {       
+         this.distributornameList=result
+      } 
+    });
+  }
+
   onconfirmationFileChange(fileChangeEvent) {
     this.confirmationFile = fileChangeEvent.target.files[0];    
   }
@@ -260,5 +274,11 @@ export class AddLeadPage implements OnInit {
     this.isAddLead=true
     this.isLeadFilter=false
     this.pageTitle="Add Lead"
+  }
+
+  backClick(){
+    this.isAddLead=false
+    this.isLeadFilter=true
+    this.pageTitle="E-cheque/E-nach Leads"
   }
 }

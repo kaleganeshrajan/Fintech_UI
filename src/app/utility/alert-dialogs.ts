@@ -10,6 +10,7 @@ export class AlertDialogs {
 
 	// Close window on click success
 	async successAlert(headerTxt: any, msg: any) {
+		debugger
 		const alert = await this.alertCtrl.create({
 			header: headerTxt,
 			message: msg,
@@ -38,6 +39,26 @@ export class AlertDialogs {
 			buttons: [ {
 				cssClass: 'item-center',
 				text: 'OK'
+			} ]
+		});
+
+		await alert.present();
+	}
+
+	// alert dialog
+	async alertDialogwithreload(headerTxt: any, msg: any) {
+		// if (this.alertCtrl.getTop()) {
+		// 	this.alertCtrl.dismiss();
+		// }
+		const alert = await this.alertCtrl.create({
+			header: headerTxt,
+			message: msg,
+			buttons: [ {
+				cssClass: 'item-center',
+				text: 'OK',
+				handler: async () => {
+					window.location.reload();
+				}
 			} ]
 		});
 

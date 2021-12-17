@@ -87,7 +87,7 @@ export class DistributorSettingsPage implements OnInit {
   }
 
   async createandupdate(event) {
-    if (this.formGroup.value.AccountNumber !== '') {
+    if (this.formGroup.valid) {
       let postData;
       postData = {
         ID: this.paymentSettingId,
@@ -107,11 +107,12 @@ export class DistributorSettingsPage implements OnInit {
         .subscribe((result) => {
           if (result === true) {
             if (this.paymentSettingId === 0) {
-              this.alertDialogs.alertDialog('', "Record Inserted successfully...!");
+              this.alertDialogs.alertDialogwithreload('', "Record Inserted successfully...!");
             }
             else {
-              this.alertDialogs.alertDialog('', "Record Updated successfully...!");
+              this.alertDialogs.alertDialogwithreload('', "Record Updated successfully...!");
             }
+            // this.ngOnInit()            
           }
         });
     }
