@@ -1,6 +1,6 @@
 <ion-content padding="true" class="background-white">
   <form [formGroup]="formGroup" class="panel-body">
-    <ion-grid class="ion-no-padding">
+    <ion-grid class="ion-no-padding" >
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
           <ion-item lines="none" class="position-left" color="transparent">
@@ -10,14 +10,13 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <ion-grid>
+<!-- Search Box -->
+    <ion-grid *ngIf="isSelectInv">
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Select Search Filter</ion-label>
-            <ion-select value="formGroup['SearchFilterType']" (ionChange)="getCompanySettings()"
-              formControlName="SearchFilterType" interface="popover" class="pb-34">
+            <ion-select value="formGroup['SearchFilterType']" formControlName="SearchFilterType" interface="popover" class="pb-34">
               <ion-select-option *ngFor="let item of SearchFilterList" value="{{item.Code}}">
                 {{ item.Name }}
               </ion-select-option>
@@ -35,8 +34,7 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Select Date Filter</ion-label>
-            <ion-select value="formGroup['DateFilterType']" (ionChange)="getCompanySettings()"
-              formControlName="DateFilterType" interface="popover" class="dropdown-padding-btm">
+            <ion-select value="formGroup['DateFilterType']" formControlName="DateFilterType" interface="popover" class="dropdown-padding-btm">
               <ion-select-option *ngFor="let item of DateFilterList" value="{{item.Code}}">
                 {{ item.Name }}
               </ion-select-option>
@@ -104,14 +102,14 @@
                     (ionChange)="updateInvoiceList(item.ID, 'IsScheduled', $event.target.checked)"></ion-checkbox>
                 </td>
                 <td>{{item.InvoiceDetails}}</td>
-                <td>{{item.InvoiceDate}}</td>
+                <td>{{parseDate(item.InvoiceDate)}}</td>
                 <td>{{item.OrderNo}}</td>
                 <td>{{item.Amount}}</td>
-                <td>{{item.LRDate}}</td>
+                <td>{{parseDate(item.LRDate)}}</td>
                 <td class="ion-no-padding">
                   <ion-item>
                     <ion-datetime [value]="item.DueDate"
-                      (ionChange)="updateInvoiceList(item.ID, 'DueDate', $event.target.value)" placeholder="Due Date"
+                      (ionChange)="updateInvoiceList(item.ID, 'DueDate', $event.target.value)" display-format="YYYY-MM-DD"  placeholder="Due Date"
                       display-timezone="ist"></ion-datetime>
                   </ion-item>
                 </td>
@@ -137,12 +135,12 @@
           </thead>
           <tbody *ngFor="let item of ScheduleInvList">
             <tr>
-              <td>{{item.InvoiceDetails}}</td>
-              <td>{{item.InvoiceDate}}</td>
+              <td>Inv no.{{item.InvoiceDetails}}</td>
+              <td>{{parseDate(item.InvoiceDate)}}</td>
               <td>{{item.OrderNo}}</td>
               <td>{{item.Amount}}</td>
-              <td>{{item.LRDate}}</td>
-              <td>{{item.DueDate}}</td>
+              <td>{{parseDate(item.LRDate)}}</td>
+              <td>{{parseDate(item.DueDate)}}</td>
             </tr>
           </tbody>
         </table>
@@ -215,16 +213,16 @@
     <ion-grid class="margin-small-top margin-small-left" *ngIf="isOTPSent">
       <ion-row class="padding-mini">
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
-          <ion-input class="otp-input" type="number" #otp1 required="true" maxLength="1" [(ngModel)]="OTP[0]"
+          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp1 required="true" maxLength="1" [(ngModel)]="OTP[0]"
             (keyup)="otpController($event,otp2,'')">
           </ion-input>
-          <ion-input class="otp-input" type="number" #otp2 required="true" maxLength="1" [(ngModel)]="OTP[1]"
+          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp2 required="true" maxLength="1" [(ngModel)]="OTP[1]"
             (keyup)="otpController($event,otp3,otp1)">
           </ion-input>
-          <ion-input class="otp-input" type="number" #otp3 required="true" maxLength="1" [(ngModel)]="OTP[2]"
+          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp3 required="true" maxLength="1" [(ngModel)]="OTP[2]"
             (keyup)="otpController($event,otp4,otp2)">
           </ion-input>
-          <ion-input class="otp-input" type="number" #otp4 required="true" maxLength="1" [(ngModel)]="OTP[3]"
+          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp4 required="true" maxLength="1" [(ngModel)]="OTP[3]"
             (keyup)="otpController($event,otp5,otp3)">
           </ion-input>
 

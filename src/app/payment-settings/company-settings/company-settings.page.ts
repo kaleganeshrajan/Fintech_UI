@@ -130,45 +130,48 @@ export class CompanySettingsPage implements OnInit {
 	}
 
 	async getCompanySettings() {
-		this.apiService
-			.getApiwithoutauthencticate(
-				"api/company_setting/" + this.formGroup.value.CompanyName
-			)
-			.subscribe((result) => {
-				if (result !== null) {
-					this.saveUpdateButton = result.ID == 0 ? 'Save' : 'Update';
-					this.activateBeneficiaryOption = result.ID == 0 ? false : result.IsBeneficiaryActive
-					this.formGroup['ID'] = result.ID
-					this.formGroup['CompanyName'] = result.CompanyName
-					this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? null : result.AccountNumber
-					this.formGroup['BankName'] = result.BankName
-					this.formGroup['BankAccountName'] = result.BankAccountName
-					this.formGroup['IFSCCode'] = result.IFSCCode
-					this.formGroup['AccountType'] = result.AccountType
-					this.formGroup['UPI'] = result.UPI
-					this.formGroup['PaymentPeriod'] = result.PaymentPeriod
-					this.formGroup['ECCollType'] = result.ECCollType
-					this.formGroup['ECCollValue'] = result.ECCollValue
-					this.formGroup['UCollType'] = result.UCollType
-					this.formGroup['UCollValue'] = result.UCollValue
-					this.formGroup['NBCollType'] = result.NBCollType
-					this.formGroup['NBCollValue'] = result.NBCollValue
-					this.formGroup['IsBeneficiaryActive'] = result.IsBeneficiaryActive
-					this.formGroup['IsAllowCollDigiPay'] = result.IsAllowCollDigiPay
-					this.formGroup['EnableECheque'] = result.EnableECheque
-					this.formGroup['EnableUPIColl'] = result.EnableUPIColl
-					this.formGroup['EnableNetBanking'] = result.EnableNetBanking
-					this.formGroup['ModifyECByDist'] = result.ModifyECByDist
-					this.formGroup['ModifyECByComp'] = result.ModifyECByComp
-					this.formGroup['CancelECByDist'] = result.CancelECByDist
-					this.formGroup['CancelECByComp'] = result.CancelECByComp
-					this.setBeneficiary();
-				}
-			})
+		// console.log("Called>>"+this.formGroup.value.CompanyName+"<<")
+		if (this.formGroup.value.CompanyName != '' && this.formGroup.value.CompanyName != null && typeof (this.formGroup.value.CompanyName) != 'undefined') {
+			this.apiService
+				.getApiwithoutauthencticate(
+					"api/company_setting/" + this.formGroup.value.CompanyName
+				)
+				.subscribe((result) => {
+					if (result !== null) {
+						this.saveUpdateButton = result.ID == 0 ? 'Save' : 'Update';
+						this.activateBeneficiaryOption = result.ID == 0 ? false : result.IsBeneficiaryActive
+						this.formGroup['ID'] = result.ID
+						this.formGroup['CompanyName'] = result.CompanyName
+						this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? null : result.AccountNumber
+						this.formGroup['BankName'] = result.BankName
+						this.formGroup['BankAccountName'] = result.BankAccountName
+						this.formGroup['IFSCCode'] = result.IFSCCode
+						this.formGroup['AccountType'] = result.AccountType
+						this.formGroup['UPI'] = result.UPI
+						this.formGroup['PaymentPeriod'] = result.PaymentPeriod
+						this.formGroup['ECCollType'] = result.ECCollType
+						this.formGroup['ECCollValue'] = result.ECCollValue
+						this.formGroup['UCollType'] = result.UCollType
+						this.formGroup['UCollValue'] = result.UCollValue
+						this.formGroup['NBCollType'] = result.NBCollType
+						this.formGroup['NBCollValue'] = result.NBCollValue
+						this.formGroup['IsBeneficiaryActive'] = result.IsBeneficiaryActive
+						this.formGroup['IsAllowCollDigiPay'] = result.IsAllowCollDigiPay
+						this.formGroup['EnableECheque'] = result.EnableECheque
+						this.formGroup['EnableUPIColl'] = result.EnableUPIColl
+						this.formGroup['EnableNetBanking'] = result.EnableNetBanking
+						this.formGroup['ModifyECByDist'] = result.ModifyECByDist
+						this.formGroup['ModifyECByComp'] = result.ModifyECByComp
+						this.formGroup['CancelECByDist'] = result.CancelECByDist
+						this.formGroup['CancelECByComp'] = result.CancelECByComp
+						this.setBeneficiary();
+					}
+				})
+		}
 	}
 
 	saveUpdateSetting() {
-		console.log(this.formGroup.value)
+		// console.log(this.formGroup.value)
 		let postData = {
 			ID: this.formGroup.value.ID,
 			CompanyName: this.formGroup.value.CompanyName,
@@ -212,6 +215,6 @@ export class CompanySettingsPage implements OnInit {
 					this.alertDialogs.alertDialog('Failed', result.Message);
 				}
 			})
-		this.createForm();
+		// this.createForm();
 	}
 }

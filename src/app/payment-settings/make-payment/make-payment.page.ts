@@ -15,6 +15,7 @@ import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 export class MakePaymentPage implements OnInit {
 	formGroup!: FormGroup;
 	public DateFilterList: any[]
+	public otp: any[]
 	public SearchFilterList: any[];
 	public InvoiceList: any[];
 	public ScheduleInvList: any[];
@@ -96,6 +97,10 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	updateInvoiceList(id, valueOf, value) {
+		if (valueOf == 'DueDate') {
+			value = new Date(value).toLocaleDateString()
+			// console.log(value)
+		}
 		let index = this.InvoiceList.findIndex((obj => obj.ID == id))
 		this.InvoiceList[index][valueOf] = value
 	}
@@ -141,7 +146,13 @@ export class MakePaymentPage implements OnInit {
 
 	// OTP Controller
 	otpController(event, next, prev, index) {
-		if (index == 6) {
+		// if(event.key == "Backspace"){
+		// 	this.otp.pop()
+		// }
+		// else{
+		// 	this.otp.push(event.key)
+		// }
+		if (index == 4) {
 			console.log("submit")
 		}
 		if (event.target.value.length < 1 && prev) {
@@ -163,8 +174,9 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async verifyandconfirm() {
+		// console.log(this.OTP)
 		for (let i = 0; i < this.ScheduleInvList.length; i++) {
-			this.ScheduleInvList[i].ScheduledOn = new Date().toISOString();
+			this.ScheduleInvList[i].ScheduledOn = new Date().toLocaleDateString();
 			this.ScheduleInvList[i].TransactionID = '' + new Date().getTime();
 		}
 		let postData = this.ScheduleInvList
@@ -184,5 +196,10 @@ export class MakePaymentPage implements OnInit {
 					this.alertDialogs.alertDialog("Payment Not Scheduled", result.Message)
 				}
 			})
+	}
+
+	// Parse Date
+	parseDate(dateStr) {
+		return new Date(dateStr).toLocaleDateString()
 	}
 }

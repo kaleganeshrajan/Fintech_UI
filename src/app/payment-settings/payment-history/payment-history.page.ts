@@ -121,7 +121,7 @@ export class PaymentHistoryPage implements OnInit {
 	}
 
 	viewDetailedInvoive(id) {
-		console.log(id)
+		// console.log(id)
 		this.InvoiceDetails = []
 		this.InvoiceDetails.push(this.InvoiceList.find(ele => ele.ID == id))
 		this.isSelectInv = false;
@@ -138,6 +138,11 @@ export class PaymentHistoryPage implements OnInit {
 
 	downloadReport() {
 		this.alertDialogs.alertDialog("Clicked", "Download Report")
+	}
+
+	// Parse Date
+	parseDate(dateStr) {
+		return new Date(dateStr).toLocaleDateString()
 	}
 
 }

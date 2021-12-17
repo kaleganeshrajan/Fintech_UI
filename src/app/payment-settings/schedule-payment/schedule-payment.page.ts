@@ -3,7 +3,7 @@ import { Network } from '@ionic-native/network/ngx'
 import { NetworkProviderService } from 'src/app/utility/network-provider.service';
 import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 
 @Component({
@@ -94,7 +94,7 @@ export class SchedulePaymentPage implements OnInit {
 	}
 
 	viewDetailedInvoive(id){
-		console.log(id)
+		// console.log(id)
 		this.InvoiceDetails = []
 		this.InvoiceDetails.push(this.InvoiceList.find(ele => ele.ID == id))
 		this.isSelectInv = false;
@@ -111,5 +111,9 @@ export class SchedulePaymentPage implements OnInit {
 
 	downloadReport(){
 		this.alertDialogs.alertDialog("Clicked", "Download Report")
+	}
+	
+	parseDate(dateStr) {
+		return new Date(dateStr).toLocaleDateString()
 	}
 }

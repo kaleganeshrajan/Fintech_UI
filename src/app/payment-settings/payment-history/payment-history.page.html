@@ -18,7 +18,7 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Select Company</ion-label>
-                <ion-select value="formGroup['Company']" (ionChange)="getCompanySettings()" formControlName="Company"
+                <ion-select value="formGroup['Company']" formControlName="Company"
                   interface="popover" class="pb-34">
                   <ion-select-option *ngFor="let item of CompanyList" value="{{item.CompanyCode}}">
                     {{ item.CompanyName }}
@@ -55,8 +55,7 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Select Payment Mode</ion-label>
-                <ion-select value="formGroup['PaymentMode']" (ionChange)="getCompanySettings()"
-                  formControlName="PaymentMode" interface="popover" class="pb-34">
+                <ion-select value="formGroup['PaymentMode']" formControlName="PaymentMode" interface="popover" class="pb-34">
                   <ion-select-option *ngFor="let item of PaymentModeList" value="{{item.Code}}">
                     {{ item.Name }}
                   </ion-select-option>
@@ -66,8 +65,7 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Select Payment Status</ion-label>
-                <ion-select value="formGroup['PaymentStatus']" (ionChange)="getCompanySettings()"
-                  formControlName="PaymentStatus" interface="popover" class="pb-34">
+                <ion-select value="formGroup['PaymentStatus']" formControlName="PaymentStatus" interface="popover" class="pb-34">
                   <ion-select-option *ngFor="let item of PaymentStatusList" value="{{item.Code}}">
                     {{ item.Name }}
                   </ion-select-option>
@@ -134,9 +132,9 @@
                   <ion-text color="medium">Distributor:CHAITANYA DISTRIBUTORS</ion-text>
                 </td>
                 <td>
-                  <ion-text color="medium">Order No:{{item.InvoiceDate}}</ion-text>
+                  <ion-text color="medium">Order No:{{item.OrderNo}}</ion-text>
                   <br>
-                  <ion-text color="medium">Inv Date:{{item.InvoiceDate}}</ion-text>
+                  <ion-text color="medium">Inv Date:{{parseDate(item.InvoiceDate)}}</ion-text>
                 </td>
                 <td>
                   <ion-text color="primary">Total Amount:{{item.Amount}}</ion-text>
@@ -145,9 +143,9 @@
                 </td>
                 <td>{{item.PaymentMode}}</td>
                 <td>{{item.TransactionID}}</td>
-                <td>{{item.ScheduledOn}}</td>
+                <td>{{parseDate(item.ScheduledOn)}}</td>
                 <td>{{item.PaymentStatus}}</td>
-                <td>{{item.SettelmentDate}}</td>
+                <td>{{parseDate(item.SettelmentDate)}}</td>
                 <td>
                   <span>
                     <ion-icon class="download-icon" slot="start" name="download"></ion-icon>
@@ -176,25 +174,25 @@
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Distributor: TEST DISTRIBUTOR</ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Order Status: Completely Processed</ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Inv Date: {{item.ScheduledOn}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Inv Date: {{parseDate(item.ScheduledOn)}}</ion-col>
           </ion-row>
           <!--  -->
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">LR Number: {{item.LRNumber}}</ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">LR Date: {{item.LRDate}}</ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Due Date: {{item.DueDate}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">LR Date: {{parseDate(item.LRDate)}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Due Date: {{parseDate(item.DueDate)}}</ion-col>
           </ion-row>
           <!-- BOX -->
           <ion-card>
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Transaction ID: {{item.TransactionID}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Status: {{item.PaymentStatus}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date: {{item.SettelmentDate}}
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date: {{parseDate(item.SettelmentDate)}}
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Mode: {{item.PaymentMode}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Cheque Date: {{item.DueDate}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Cheque Date: {{parseDate(item.DueDate)}}</ion-col>
             </ion-row>
           </ion-card>
           <!--  -->
