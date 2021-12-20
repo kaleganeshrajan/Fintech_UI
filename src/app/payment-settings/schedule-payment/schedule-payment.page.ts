@@ -44,8 +44,8 @@ export class SchedulePaymentPage implements OnInit {
 		this.formGroup = this.formBuilder.group({
 			ID: [0],
 			SearchText: [''],
-			FromDate: [''],
-			ToDate: [''],
+			FromDate: ['1970-01-01T13:16:54.999+05:30'],
+			ToDate: ['2069-01-01T13:16:54.999+05:30'],
 			SearchFilterType: [''],
 			DateFilterType: [''],
 		});
@@ -83,14 +83,20 @@ export class SchedulePaymentPage implements OnInit {
 			DateFilterType: this.formGroup.value.DateFilterType,
 		}
 		this.apiService
-			.getApiwithoutauthencticate(
+			.postApiOnlyWithContentType(
 				"api/schedule_payment/GetInvoiceData"
+				, postData
 			).subscribe((result) => {
+				if(result != null){
 				this.InvoiceList = result;
 				this.isSelectInv = true;
 				this.isViewInvDetails = false;
+				}
+				else{
+					this.alertDialogs.alertDialog('Invoice data', 'No data found!')
+				}
 			})
-		console.log("PostData", postData)
+		// console.log("PostData", postData)
 	}
 
 	viewDetailedInvoive(id){

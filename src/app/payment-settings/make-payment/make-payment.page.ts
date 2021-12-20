@@ -46,8 +46,8 @@ export class MakePaymentPage implements OnInit {
 		this.formGroup = this.formBuilder.group({
 			ID: [0],
 			SearchText: [''],
-			FromDate: [''],
-			ToDate: [''],
+			FromDate: ['1970-01-01T13:16:54.999+05:30'],
+			ToDate: ['2069-01-01T13:16:54.999+05:30'],
 			SearchFilterType: [''],
 			DateFilterType: [''],
 		});
@@ -84,8 +84,9 @@ export class MakePaymentPage implements OnInit {
 			DateFilterType: this.formGroup.value.DateFilterType,
 		}
 		this.apiService
-			.getApiwithoutauthencticate(
+			.postApiOnlyWithContentType(
 				"api/make_payment/GetInvoiceData"
+				,postData
 			).subscribe((result) => {
 				this.InvoiceList = result;
 				this.isSelectInv = true;
@@ -176,8 +177,10 @@ export class MakePaymentPage implements OnInit {
 	async verifyandconfirm() {
 		// console.log(this.OTP)
 		for (let i = 0; i < this.ScheduleInvList.length; i++) {
-			this.ScheduleInvList[i].ScheduledOn = new Date().toLocaleDateString();
+			this.ScheduleInvList[i].ScheduledOn = new Date().toISOString();
 			this.ScheduleInvList[i].TransactionID = '' + new Date().getTime();
+			this.ScheduleInvList[i].PaymentMode = 'echeque'
+			this.ScheduleInvList[i].PaymentStatus = 'inprocess'
 		}
 		let postData = this.ScheduleInvList
 		this.apiService

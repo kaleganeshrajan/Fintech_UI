@@ -100,10 +100,11 @@
                 <td><span class="clickable-item"
                     (click)="viewDetailedInvoive(item.ID)"><b>{{item.InvoiceDetails}}</b></span></td>
                 <td>{{parseDate(item.InvoiceDate)}}</td>
-                <td>{{item.OrderNo}}</td>
+                <!-- <td>{{item.OrderNo}}</td> -->
                 <td>{{item.Amount}}</td>
-                <td>{{parseDate(item.LRDate)}}</td>
-                <td>{{parseDate(item.DueDate)}}</td>
+                <td>{{item.PaymentMode}}</td>
+                <td>{{parseDate(item.ScheduledOn)}}</td>
+                <td>{{parseDate(item.ChequeDate)}}</td>
                 <td>{{item.TransactionID}}</td>
                 <td>{{item.PaymentStatus}}</td>
                 <td>
