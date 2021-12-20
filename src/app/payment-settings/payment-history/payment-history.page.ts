@@ -110,14 +110,15 @@ export class PaymentHistoryPage implements OnInit {
 			PaymentStatus: this.formGroup.value.PaymentStatus,
 		}
 		this.apiService
-			.getApiwithoutauthencticate(
+			.postApiOnlyWithContentType(
 				"api/payment_history/GetInvoiceData"
+				,postData
 			).subscribe((result) => {
 				this.InvoiceList = result;
 				this.isSelectInv = true;
 				this.isViewInvDetails = false;
 			})
-		console.log("PostData", postData)
+		// console.log("PostData", postData)
 	}
 
 	viewDetailedInvoive(id) {
