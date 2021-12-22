@@ -114,7 +114,7 @@ export class AddLeadPage implements OnInit {
   async getaccounttypelist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/company_setting/GetAccountType'
+      'api/masters/GetAccountType'
     )
     .subscribe((result) => {        
       if (result!== null) {       
