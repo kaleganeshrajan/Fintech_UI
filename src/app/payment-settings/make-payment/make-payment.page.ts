@@ -25,6 +25,8 @@ export class MakePaymentPage implements OnInit {
 	public isScheduleInv = false;
 	public isOTPSent = false;
 	public scheduleSuccess = false;
+	public totalInvoiceAmt = 0;
+	public balanceAmt: 0;
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -76,6 +78,7 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async searchInvoice() {
+		this.InvoiceList = [];
 		let postData = {
 			SearchText: this.formGroup.value.SearchText,
 			FromDate: this.formGroup.value.FromDate,
@@ -86,13 +89,15 @@ export class MakePaymentPage implements OnInit {
 		this.apiService
 			.postApiOnlyWithContentType(
 				"api/make_payment/GetInvoiceData"
-				,postData
+				, postData
 			).subscribe((result) => {
-				this.InvoiceList = result;
-				this.isSelectInv = true;
-				this.isScheduleInv = false;
-				this.isOTPSent = false;
-				this.scheduleSuccess = false;
+				if (result != null) {
+					this.InvoiceList = result;
+					this.isSelectInv = true;
+					this.isScheduleInv = false;
+					this.isOTPSent = false;
+					this.scheduleSuccess = false;
+				}
 			})
 		// console.log("PostData", postData)
 	}
@@ -108,6 +113,8 @@ export class MakePaymentPage implements OnInit {
 
 	async schedulePayment() {
 		this.ScheduleInvList = []
+		this.totalInvoiceAmt = 0
+		let sum = 0
 		let flag = 0
 		let flag_selected = 0
 		if (this.InvoiceList.length > 0) {
@@ -116,6 +123,7 @@ export class MakePaymentPage implements OnInit {
 					flag_selected = 1
 					if (this.InvoiceList[i].DueDate != '' && typeof (this.InvoiceList[i].DueDate) != 'undefined' && this.InvoiceList[i].DueDate != null) {
 						this.ScheduleInvList.push(this.InvoiceList[i])
+						sum = sum + this.InvoiceList[i].Amount
 					}
 					else {
 						flag = 1
@@ -143,6 +151,7 @@ export class MakePaymentPage implements OnInit {
 			this.ScheduleInvList = []
 			this.alertDialogs.alertDialog('No invoice selected', 'Please select a Invoice!')
 		}
+		this.totalInvoiceAmt = sum
 	}
 
 	// OTP Controller
@@ -204,5 +213,13 @@ export class MakePaymentPage implements OnInit {
 	// Parse Date
 	parseDate(dateStr) {
 		return new Date(dateStr).toLocaleDateString()
+	}
+
+	// back click
+	backClick() {
+		this.isSelectInv = true;
+		this.isScheduleInv = false;
+		this.isOTPSent = false;
+		this.scheduleSuccess = false;
 	}
 }

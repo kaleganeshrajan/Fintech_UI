@@ -146,4 +146,9 @@ export class PaymentHistoryPage implements OnInit {
 		return new Date(dateStr).toLocaleDateString()
 	}
 
+	backClick(){
+		this.isSelectInv = true;
+		this.isViewInvDetails = false;
+	}
+
 }

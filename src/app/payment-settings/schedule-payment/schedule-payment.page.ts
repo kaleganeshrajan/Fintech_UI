@@ -122,4 +122,9 @@ export class SchedulePaymentPage implements OnInit {
 	parseDate(dateStr) {
 		return new Date(dateStr).toLocaleDateString()
 	}
+
+	backClick(){
+		this.isSelectInv = true;
+		this.isViewInvDetails = false;
+	}
 }
