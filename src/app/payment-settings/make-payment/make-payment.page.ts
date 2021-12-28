@@ -103,12 +103,20 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	updateInvoiceList(id, valueOf, value) {
+		this.totalInvoiceAmt = 0
+		let sum = 0
 		if (valueOf == 'DueDate') {
 			value = new Date(value).toLocaleDateString()
 			// console.log(value)
 		}
 		let index = this.InvoiceList.findIndex((obj => obj.ID == id))
 		this.InvoiceList[index][valueOf] = value
+		for (let i = 0; i < this.InvoiceList.length; i++) {
+			if (this.InvoiceList[i].IsScheduled == true) {
+				sum = sum + this.InvoiceList[i].Amount
+			}
+		}
+		this.totalInvoiceAmt = sum
 	}
 
 	async schedulePayment() {
