@@ -27,6 +27,7 @@ export class MakePaymentPage implements OnInit {
 	public scheduleSuccess = false;
 	public totalInvoiceAmt = 0;
 	public balanceAmt: 0;
+	public d = new Date();
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -48,14 +49,23 @@ export class MakePaymentPage implements OnInit {
 		this.formGroup = this.formBuilder.group({
 			ID: [0],
 			SearchText: [''],
-			FromDate: ['1970-01-01T13:16:54.999+05:30'],
-			ToDate: ['2069-01-01T13:16:54.999+05:30'],
+			FromDate: [''],
+			ToDate: [''],
 			SearchFilterType: [''],
 			DateFilterType: [''],
 		});
 	}
 
 	async getAllList() {
+		let mm = this.d.getMonth() + 1;
+		let dd = this.d.getDate();
+		let yy = this.d.getFullYear();
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.d.setMonth(this.d.getMonth() - 1)
+		mm = this.d.getMonth() + 1;
+		dd = this.d.getDate();
+		yy = this.d.getFullYear();
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -99,7 +109,7 @@ export class MakePaymentPage implements OnInit {
 					this.scheduleSuccess = false;
 				}
 			})
-		// console.log("PostData", postData)
+		console.log("PostData", postData)
 	}
 
 	updateInvoiceList(id, valueOf, value) {
@@ -221,6 +231,13 @@ export class MakePaymentPage implements OnInit {
 	// Parse Date
 	parseDate(dateStr) {
 		return new Date(dateStr).toLocaleDateString()
+	}
+
+	getMonth(mm) {
+		if (mm < 10) {
+			return "0" + mm
+		}
+		return "" + mm
 	}
 
 	// back click
