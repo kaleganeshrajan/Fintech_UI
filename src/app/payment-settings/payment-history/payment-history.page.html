@@ -18,8 +18,7 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Select Company</ion-label>
-                <ion-select value="formGroup['Company']" formControlName="Company"
-                  interface="popover" class="pb-34">
+                <ion-select value="formGroup['Company']" formControlName="Company" interface="popover" class="pb-34">
                   <ion-select-option *ngFor="let item of CompanyList" value="{{item.CompanyCode}}">
                     {{ item.CompanyName }}
                   </ion-select-option>
@@ -29,14 +28,20 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">From Date</ion-label>
-                <ion-datetime [value]="formGroup.FromDate" formControlName="FromDate" display-timezone="ist">
-                </ion-datetime>
+                <ion-input [value]="formGroup.FromDate" formControlName="FromDate" type="date" placeholder=""
+                  class="input-padding-btm">
+                </ion-input>
+                <!-- <ion-datetime [value]="formGroup.FromDate" formControlName="FromDate" display-timezone="ist">
+                </ion-datetime> -->
               </ion-item>
             </ion-col>
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding mt-13">
               <ion-item>
                 <ion-label position="floating">To Date</ion-label>
-                <ion-datetime [value]="formGroup.ToDate" formControlName="ToDate" display-timezone="ist"></ion-datetime>
+                <ion-input [value]="formGroup.ToDate" formControlName="ToDate" type="date" placeholder=""
+                  class="input-padding-btm">
+                </ion-input>
+                <!-- <ion-datetime [value]="formGroup.ToDate" formControlName="ToDate" display-timezone="ist"></ion-datetime> -->
               </ion-item>
             </ion-col>
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
@@ -55,7 +60,8 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Select Payment Mode</ion-label>
-                <ion-select value="formGroup['PaymentMode']" formControlName="PaymentMode" interface="popover" class="pb-34">
+                <ion-select value="formGroup['PaymentMode']" formControlName="PaymentMode" interface="popover"
+                  class="pb-34">
                   <ion-select-option *ngFor="let item of PaymentModeList" value="{{item.Code}}">
                     {{ item.Name }}
                   </ion-select-option>
@@ -65,7 +71,8 @@
             <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
               <ion-item>
                 <ion-label position="floating">Select Payment Status</ion-label>
-                <ion-select value="formGroup['PaymentStatus']" formControlName="PaymentStatus" interface="popover" class="pb-34">
+                <ion-select value="formGroup['PaymentStatus']" formControlName="PaymentStatus" interface="popover"
+                  class="pb-34">
                   <ion-select-option *ngFor="let item of PaymentStatusList" value="{{item.Code}}">
                     {{ item.Name }}
                   </ion-select-option>
@@ -187,12 +194,14 @@
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Transaction ID: {{item.TransactionID}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Status: {{item.PaymentStatus}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date: {{parseDate(item.SettelmentDate)}}
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date:
+                {{parseDate(item.SettelmentDate)}}
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Mode: {{item.PaymentMode}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Cheque Date: {{parseDate(item.DueDate)}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Cheque Date: {{parseDate(item.DueDate)}}
+              </ion-col>
             </ion-row>
           </ion-card>
           <!--  -->

@@ -26,6 +26,7 @@ export class PaymentHistoryPage implements OnInit {
 	public OTP: string = '';
 	public isSelectInv = true;
 	public isViewInvDetails = false;
+	public d = new Date();
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -58,6 +59,16 @@ export class PaymentHistoryPage implements OnInit {
 
 
 	async getAllList() {
+		let mm = this.d.getMonth() + 1;
+		let dd = this.d.getDate();
+		let yy = this.d.getFullYear();
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.d.setMonth(this.d.getMonth() - 1)
+		mm = this.d.getMonth() + 1;
+		dd = this.d.getDate();
+		yy = this.d.getFullYear();
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		
 		this.apiService
 			.getApiwithoutauthencticate(
 				"api/master_payment_setting/CompanyList"
@@ -149,6 +160,13 @@ export class PaymentHistoryPage implements OnInit {
 	backClick(){
 		this.isSelectInv = true;
 		this.isViewInvDetails = false;
+	}
+
+	getMonth(mm) {
+		if (mm < 10) {
+			return "0" + mm
+		}
+		return "" + mm
 	}
 
 }

@@ -23,6 +23,7 @@ export class SchedulePaymentPage implements OnInit {
 	public OTP: string = '';
 	public isSelectInv = true;
 	public isViewInvDetails = false;
+	public d = new Date();
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -52,6 +53,15 @@ export class SchedulePaymentPage implements OnInit {
 	}
 
 	async getAllList() {
+		let mm = this.d.getMonth() + 1;
+		let dd = this.d.getDate();
+		let yy = this.d.getFullYear();
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.d.setMonth(this.d.getMonth() - 1)
+		mm = this.d.getMonth() + 1;
+		dd = this.d.getDate();
+		yy = this.d.getFullYear();
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -87,19 +97,19 @@ export class SchedulePaymentPage implements OnInit {
 				"api/schedule_payment/GetInvoiceData"
 				, postData
 			).subscribe((result) => {
-				if(result != null){
-				this.InvoiceList = result;
-				this.isSelectInv = true;
-				this.isViewInvDetails = false;
+				if (result != null) {
+					this.InvoiceList = result;
+					this.isSelectInv = true;
+					this.isViewInvDetails = false;
 				}
-				else{
+				else {
 					this.alertDialogs.alertDialog('Invoice data', 'No data found!')
 				}
 			})
 		// console.log("PostData", postData)
 	}
 
-	viewDetailedInvoive(id){
+	viewDetailedInvoive(id) {
 		// console.log(id)
 		this.InvoiceDetails = []
 		this.InvoiceDetails.push(this.InvoiceList.find(ele => ele.ID == id))
@@ -107,23 +117,30 @@ export class SchedulePaymentPage implements OnInit {
 		this.isViewInvDetails = true;
 	}
 
-	modifyDate(){
+	modifyDate() {
 		this.alertDialogs.alertDialog("Clicked", "Modify Date")
 	}
 
-	cancelCheque(){
+	cancelCheque() {
 		this.alertDialogs.alertDialog("Clicked", "Cancel Cheque")
 	}
 
-	downloadReport(){
+	downloadReport() {
 		this.alertDialogs.alertDialog("Clicked", "Download Report")
 	}
-	
+
 	parseDate(dateStr) {
 		return new Date(dateStr).toLocaleDateString()
 	}
 
-	backClick(){
+	getMonth(mm) {
+		if (mm < 10) {
+			return "0" + mm
+		}
+		return "" + mm
+	}
+	
+	backClick() {
 		this.isSelectInv = true;
 		this.isViewInvDetails = false;
 	}
