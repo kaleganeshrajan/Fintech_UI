@@ -4,7 +4,7 @@
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
           <ion-item lines="none" class="position-left" color="transparent">
-            <ion-back-button defaultHref="/tabs"></ion-back-button>
+            <ion-back-button (click)="backClick()" defaultHref="/tabs"></ion-back-button>
             <ion-text class="pageTitle">Schedule Payment</ion-text>
           </ion-item>
         </ion-col>
@@ -46,22 +46,27 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding mt-13">
           <ion-item>
             <ion-label position="floating">From Date</ion-label>
-            <ion-datetime [value]="formGroup.FromDate" formControlName="FromDate" display-timezone="ist"></ion-datetime>
+            <!-- <ion-datetime [value]="formGroup.FromDate" formControlName="FromDate" display-timezone="ist"></ion-datetime> -->
+            <ion-input [value]="formGroup.FromDate" formControlName="FromDate" type="date" placeholder=""
+              class="input-padding-btm">
+            </ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="1" class="ion-no-padding mt-13">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding mt-13">
           <ion-item>
             <ion-label position="floating">To Date</ion-label>
-            <ion-datetime [value]="formGroup.ToDate" formControlName="ToDate" display-timezone="ist"></ion-datetime>
+            <!-- <ion-datetime [value]="formGroup.ToDate" formControlName="ToDate" display-timezone="ist"></ion-datetime> -->
+            <ion-input [value]="formGroup.ToDate" formControlName="ToDate" type="date" placeholder=""
+              class="input-padding-btm">
+            </ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="3" class="ion-padding">
-          <br>
-          <ion-button (click)="searchInvoice()" class="">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding">
+          <ion-button (click)="searchInvoice()" class="full-width">
             <ion-icon slot="start" name="search"></ion-icon>
             <small>Search</small>
           </ion-button>
-          <ion-button (click)="downloadReport()" class="">
+          <ion-button (click)="downloadReport()" class="full-width">
             <ion-icon slot="start" name="download"></ion-icon>
             <small>Download Report</small>
           </ion-button>
@@ -99,11 +104,12 @@
               <tr>
                 <td><span class="clickable-item"
                     (click)="viewDetailedInvoive(item.ID)"><b>{{item.InvoiceDetails}}</b></span></td>
-                <td>{{item.InvoiceDate}}</td>
-                <td>{{item.OrderNo}}</td>
+                <td>{{parseDate(item.InvoiceDate)}}</td>
+                <!-- <td>{{item.OrderNo}}</td> -->
                 <td>{{item.Amount}}</td>
-                <td>{{item.LRDate}}</td>
-                <td>{{item.DueDate}}</td>
+                <td>{{item.PaymentMode}}</td>
+                <td>{{parseDate(item.ScheduledOn)}}</td>
+                <td>{{parseDate(item.ChequeDate)}}</td>
                 <td>{{item.TransactionID}}</td>
                 <td>{{item.PaymentStatus}}</td>
                 <td>
@@ -133,14 +139,14 @@
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Distributor:</b></ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">TEST DISTRIBUTOR</ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Inv Date:</b></ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ScheduledOn}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{parseDate(item.ScheduledOn)}}</ion-col>
           </ion-row>
           <!--  -->
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>LR Number:</b></ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.LRNumber}}</ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>LR Date:</b></ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.LRDate}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{parseDate(item.LRDate)}}</ion-col>
           </ion-row>
           <!-- BOX -->
           <ion-card>
@@ -154,7 +160,7 @@
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Payment Mode:</b></ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.PaymentMode}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Scheduled On:</b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ScheduledOn}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{parseDate(item.ScheduledOn)}}</ion-col>
             </ion-row>
           </ion-card>
           <!--  -->
@@ -170,7 +176,7 @@
               </ion-button>
             </ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Cheque Date:</b></ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DueDate}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{parseDate(item.DueDate)}}</ion-col>
           </ion-row>
         </ion-col>
         <hr>

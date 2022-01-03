@@ -15,6 +15,7 @@ import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 export class MakePaymentPage implements OnInit {
 	formGroup!: FormGroup;
 	public DateFilterList: any[]
+	public otp: any[]
 	public SearchFilterList: any[];
 	public InvoiceList: any[];
 	public ScheduleInvList: any[];
@@ -24,6 +25,9 @@ export class MakePaymentPage implements OnInit {
 	public isScheduleInv = false;
 	public isOTPSent = false;
 	public scheduleSuccess = false;
+	public totalInvoiceAmt = 0;
+	public balanceAmt: 0;
+	public d = new Date();
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -53,6 +57,15 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async getAllList() {
+		let mm = this.d.getMonth() + 1;
+		let dd = this.d.getDate();
+		let yy = this.d.getFullYear();
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.d.setMonth(this.d.getMonth() - 1)
+		mm = this.d.getMonth() + 1;
+		dd = this.d.getDate();
+		yy = this.d.getFullYear();
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -75,6 +88,7 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async searchInvoice() {
+		this.InvoiceList = [];
 		let postData = {
 			SearchText: this.formGroup.value.SearchText,
 			FromDate: this.formGroup.value.FromDate,
@@ -83,25 +97,42 @@ export class MakePaymentPage implements OnInit {
 			DateFilterType: this.formGroup.value.DateFilterType,
 		}
 		this.apiService
-			.getApiwithoutauthencticate(
+			.postApiOnlyWithContentType(
 				"api/make_payment/GetInvoiceData"
+				, postData
 			).subscribe((result) => {
-				this.InvoiceList = result;
-				this.isSelectInv = true;
-				this.isScheduleInv = false;
-				this.isOTPSent = false;
-				this.scheduleSuccess = false;
+				if (result != null) {
+					this.InvoiceList = result;
+					this.isSelectInv = true;
+					this.isScheduleInv = false;
+					this.isOTPSent = false;
+					this.scheduleSuccess = false;
+				}
 			})
-		// console.log("PostData", postData)
+		console.log("PostData", postData)
 	}
 
 	updateInvoiceList(id, valueOf, value) {
+		this.totalInvoiceAmt = 0
+		let sum = 0
+		if (valueOf == 'DueDate') {
+			value = new Date(value).toLocaleDateString()
+			// console.log(value)
+		}
 		let index = this.InvoiceList.findIndex((obj => obj.ID == id))
 		this.InvoiceList[index][valueOf] = value
+		for (let i = 0; i < this.InvoiceList.length; i++) {
+			if (this.InvoiceList[i].IsScheduled == true) {
+				sum = sum + this.InvoiceList[i].Amount
+			}
+		}
+		this.totalInvoiceAmt = sum
 	}
 
 	async schedulePayment() {
 		this.ScheduleInvList = []
+		this.totalInvoiceAmt = 0
+		let sum = 0
 		let flag = 0
 		let flag_selected = 0
 		if (this.InvoiceList.length > 0) {
@@ -110,6 +141,7 @@ export class MakePaymentPage implements OnInit {
 					flag_selected = 1
 					if (this.InvoiceList[i].DueDate != '' && typeof (this.InvoiceList[i].DueDate) != 'undefined' && this.InvoiceList[i].DueDate != null) {
 						this.ScheduleInvList.push(this.InvoiceList[i])
+						sum = sum + this.InvoiceList[i].Amount
 					}
 					else {
 						flag = 1
@@ -137,11 +169,18 @@ export class MakePaymentPage implements OnInit {
 			this.ScheduleInvList = []
 			this.alertDialogs.alertDialog('No invoice selected', 'Please select a Invoice!')
 		}
+		this.totalInvoiceAmt = sum
 	}
 
 	// OTP Controller
 	otpController(event, next, prev, index) {
-		if (index == 6) {
+		// if(event.key == "Backspace"){
+		// 	this.otp.pop()
+		// }
+		// else{
+		// 	this.otp.push(event.key)
+		// }
+		if (index == 4) {
 			console.log("submit")
 		}
 		if (event.target.value.length < 1 && prev) {
@@ -163,9 +202,12 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async verifyandconfirm() {
+		// console.log(this.OTP)
 		for (let i = 0; i < this.ScheduleInvList.length; i++) {
 			this.ScheduleInvList[i].ScheduledOn = new Date().toISOString();
 			this.ScheduleInvList[i].TransactionID = '' + new Date().getTime();
+			this.ScheduleInvList[i].PaymentMode = 'echeque'
+			this.ScheduleInvList[i].PaymentStatus = 'inprocess'
 		}
 		let postData = this.ScheduleInvList
 		this.apiService
@@ -184,5 +226,25 @@ export class MakePaymentPage implements OnInit {
 					this.alertDialogs.alertDialog("Payment Not Scheduled", result.Message)
 				}
 			})
+	}
+
+	// Parse Date
+	parseDate(dateStr) {
+		return new Date(dateStr).toLocaleDateString()
+	}
+
+	getMonth(mm) {
+		if (mm < 10) {
+			return "0" + mm
+		}
+		return "" + mm
+	}
+
+	// back click
+	backClick() {
+		this.isSelectInv = true;
+		this.isScheduleInv = false;
+		this.isOTPSent = false;
+		this.scheduleSuccess = false;
 	}
 }

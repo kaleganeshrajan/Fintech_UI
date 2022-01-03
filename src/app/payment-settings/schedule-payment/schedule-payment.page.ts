@@ -3,7 +3,7 @@ import { Network } from '@ionic-native/network/ngx'
 import { NetworkProviderService } from 'src/app/utility/network-provider.service';
 import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 
 @Component({
@@ -23,6 +23,7 @@ export class SchedulePaymentPage implements OnInit {
 	public OTP: string = '';
 	public isSelectInv = true;
 	public isViewInvDetails = false;
+	public d = new Date();
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -44,14 +45,23 @@ export class SchedulePaymentPage implements OnInit {
 		this.formGroup = this.formBuilder.group({
 			ID: [0],
 			SearchText: [''],
-			FromDate: [''],
-			ToDate: [''],
+			FromDate: ['1970-01-01T13:16:54.999+05:30'],
+			ToDate: ['2069-01-01T13:16:54.999+05:30'],
 			SearchFilterType: [''],
 			DateFilterType: [''],
 		});
 	}
 
 	async getAllList() {
+		let mm = this.d.getMonth() + 1;
+		let dd = this.d.getDate();
+		let yy = this.d.getFullYear();
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.d.setMonth(this.d.getMonth() - 1)
+		mm = this.d.getMonth() + 1;
+		dd = this.d.getDate();
+		yy = this.d.getFullYear();
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -83,33 +93,55 @@ export class SchedulePaymentPage implements OnInit {
 			DateFilterType: this.formGroup.value.DateFilterType,
 		}
 		this.apiService
-			.getApiwithoutauthencticate(
+			.postApiOnlyWithContentType(
 				"api/schedule_payment/GetInvoiceData"
+				, postData
 			).subscribe((result) => {
-				this.InvoiceList = result;
-				this.isSelectInv = true;
-				this.isViewInvDetails = false;
+				if (result != null) {
+					this.InvoiceList = result;
+					this.isSelectInv = true;
+					this.isViewInvDetails = false;
+				}
+				else {
+					this.alertDialogs.alertDialog('Invoice data', 'No data found!')
+				}
 			})
-		console.log("PostData", postData)
+		// console.log("PostData", postData)
 	}
 
-	viewDetailedInvoive(id){
-		console.log(id)
+	viewDetailedInvoive(id) {
+		// console.log(id)
 		this.InvoiceDetails = []
 		this.InvoiceDetails.push(this.InvoiceList.find(ele => ele.ID == id))
 		this.isSelectInv = false;
 		this.isViewInvDetails = true;
 	}
 
-	modifyDate(){
+	modifyDate() {
 		this.alertDialogs.alertDialog("Clicked", "Modify Date")
 	}
 
-	cancelCheque(){
+	cancelCheque() {
 		this.alertDialogs.alertDialog("Clicked", "Cancel Cheque")
 	}
 
-	downloadReport(){
+	downloadReport() {
 		this.alertDialogs.alertDialog("Clicked", "Download Report")
+	}
+
+	parseDate(dateStr) {
+		return new Date(dateStr).toLocaleDateString()
+	}
+
+	getMonth(mm) {
+		if (mm < 10) {
+			return "0" + mm
+		}
+		return "" + mm
+	}
+	
+	backClick() {
+		this.isSelectInv = true;
+		this.isViewInvDetails = false;
 	}
 }
