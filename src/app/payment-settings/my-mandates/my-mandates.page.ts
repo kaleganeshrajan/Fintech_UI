@@ -48,13 +48,14 @@ export class MyMandatesPage implements OnInit {
   }
 
   async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no){    
+    
     let postData;
       postData = {
         ID:id,
         NotificationSetting  			      :notificationcheck,						
         PriorDays:parseInt(priorDays),
         SetAsDefault:(type == 1 || type == 3)?setAsDefault:true,
-        CancelMandates:(type == 1 || type == 2)? cancelMandates:true
+        CancelMandates:(type == 1 || type == 2)? cancelMandates:false
       };
       if (type==3){
       this.confirm_box=await this.alertCtrl.create({

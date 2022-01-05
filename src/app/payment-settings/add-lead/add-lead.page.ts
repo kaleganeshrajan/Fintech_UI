@@ -77,8 +77,7 @@ export class AddLeadPage implements OnInit {
     });
   }
 
-  fromDatechange(ids){
-     
+  fromDatechange(ids){     
     this.formGroup['FilterFromDate']=ids;
     this.formGroup.patchValue({
       FilterFromDate: ids
@@ -140,7 +139,7 @@ export class AddLeadPage implements OnInit {
   async getstatuslist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/lead_details/StatusList'
+      'api/masters/GetStatus/Lead'
     )
     .subscribe((result) => {        
       if (result!== null) {       
