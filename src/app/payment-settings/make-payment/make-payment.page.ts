@@ -3,8 +3,9 @@ import { Network } from '@ionic-native/network/ngx'
 import { NetworkProviderService } from 'src/app/utility/network-provider.service';
 import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
+import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
 	selector: 'app-make-payment',
@@ -274,5 +275,14 @@ export class MakePaymentPage implements OnInit {
 		this.isScheduleInv = false;
 		this.isOTPSent = false;
 		this.scheduleSuccess = false;
+	}
+
+	downloadExcel() {
+		TableToExcel.convert(document.getElementById("table-to-xls"), {
+			name: '' + new Date().getTime() + ".xlsx",
+			sheet: {
+				name: "Sheet1"
+			},
+		});
 	}
 }
