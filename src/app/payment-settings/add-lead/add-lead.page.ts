@@ -4,7 +4,7 @@ import { NetworkProviderService } from 'src/app/utility/network-provider.service
 import { ApiService } from 'src/app/utility/api.service';
 import { FormGroup,FormBuilder,Validators} from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
-import { Router } from '@angular/router';
+import { IonicSelectableModule } from 'ionic-selectable';
 
 @Component({
   selector: 'app-add-lead',
@@ -25,27 +25,64 @@ export class AddLeadPage implements OnInit {
   public accounttypeList: any[];
   public scannedFile:any;
   public confirmationFile:any;
-  public pageTitle:any
-  public isAddLead:any
-  public isLeadFilter:any
-  public leadDetails:any
-  public distributornameList:any
+  public pageTitle:any;
+  public isAddLead:any;
+  public isLeadFilter:any;
+  public leadDetails:any[];
+  public distributornameList:any;
+  public currentDate: any;
+  public firstDay:any;
+  public isScannedMandates:boolean;
+  public viewLeadDetails:any;
+  public minDate:any;
 
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
     private alertDialogs: AlertDialogs
-
+    
   ) { }
 
   ngOnInit():void { 
+    this.viewLeadDetails=[]
     this.createForm();
     this.pageTitle="E-cheque/E-nach Leads"
     this.isAddLead=false
     this.isLeadFilter=true
-    this.saveEditButton = 'Save'
-    this.getLeaddetails()
+    this.saveEditButton = 'Save'    
     this.getDistributorList()
+    
+    this.currentDate = new Date();
+    this.firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+    this.setDefaultvalue()
+    this.getLeaddetails()
+  }
+
+  setDefaultvalue(){
+    var currentDateinstring=this.currentDate.toISOString().slice(0,10)
+    this.minDate=currentDateinstring
+    this.formGroup['FilterNoEntry']="10"
+    this.formGroup['FilterToDate']=currentDateinstring;
+    this.formGroup['FilterFromDate']=currentDateinstring//this.firstDay.toISOString();
+    this.formGroup['ApplicationDate']=currentDateinstring
+    this.formGroup['FirstCollectionDate']=currentDateinstring
+    this.formGroup['LastCollectionDate']=currentDateinstring
+    this.formGroup.patchValue({
+      FilterToDate: currentDateinstring, 
+      FilterFromDate:currentDateinstring, //this.firstDay.toISOString(),
+      ApplicationDate:currentDateinstring,
+      FirstCollectionDate:currentDateinstring,
+      LastCollectionDate:currentDateinstring,
+      FilterNoEntry:"10"
+    });
+  }
+
+  fromDatechange(ids){
+     
+    this.formGroup['FilterFromDate']=ids;
+    this.formGroup.patchValue({
+      FilterFromDate: ids
+    });
   }
 
 	ionViewDidEnter() {
@@ -81,7 +118,8 @@ export class AddLeadPage implements OnInit {
       FilterDistributorName:[''],
       FilterNoEntry:[''],
       FilterFromDate:[''],
-      FilterToDate:['']
+      FilterToDate:[''],
+      FilterDownloadFormat:['']
 		});
 
     this.addlead();
@@ -128,29 +166,28 @@ export class AddLeadPage implements OnInit {
       let postData;
       postData = {
         ID:this.leadId,
-        DistributorFirstName: this.formGroup.value.DistributorFirstName,
-        DistributorLastName:this.formGroup.value.DistributorLastName,
-        UserFirstName:this.formGroup.value.UserFirstName,
-        UserLastName:this.formGroup.value.UserLastName,
-        MobileNumber:this.formGroup.value.MobileNumber,
-        Region:this.formGroup.value.Region,
-        Email:this.formGroup.value.Email,
-        MandateType:this.formGroup.value.MandateType,
-        ScannedFilePath:this.formGroup.value.ScannedFilePath,
-        ConfirmationFilePath:this.formGroup.value.ConfirmationFilePath,
-        ApplicationID:this.formGroup.value.ApplicationID,
-        ApplicationDate:this.formGroup.value.ApplicationDate,
-        UMRNNo:this.formGroup.value.UMRNNo,
-        ApprovalStatus:this.formGroup.value.ApprovalStatus,
-        BankAccountNo:this.formGroup.value.BankAccountNo,
-        AccountType:this.formGroup.value.AccountType,
-        BankIFSCCode:this.formGroup.value.BankIFSCCode,
-        Frequency:this.formGroup.value.Frequency,
-        FirstCollectionDate:this.formGroup.value.FirstCollectionDate,
-        LastCollectionDate:this.formGroup.value.LastCollectionDate,
-        CreatedBy:"Ganesh"
+        DistributorFirstName:this.saveEditButton!="Save"? this.formGroup['DistributorFirstName']:this.formGroup.value.DistributorFirstName,
+        DistributorLastName:this.saveEditButton!="Save"? this.formGroup['DistributorLastName'] : this.formGroup.value.DistributorLastName,
+        UserFirstName:this.saveEditButton!="Save"? this.formGroup['UserFirstName'] : this.formGroup.value.UserFirstName,
+        UserLastName:this.saveEditButton!="Save"? this.formGroup['UserLastName'] : this.formGroup.value.UserLastName,
+        MobileNumber:this.saveEditButton!="Save"? this.formGroup['MobileNumber'] : this.formGroup.value.MobileNumber,
+        Region:this.saveEditButton!="Save"? this.formGroup['Region'] :this.formGroup.value.Region,
+        Email:this.saveEditButton!="Save"? this.formGroup['Email'] : this.formGroup.value.Email,
+        MandateType:this.saveEditButton!="Save"? this.formGroup['MandateType'] : this.formGroup.value.MandateType,        
+        ApplicationID:this.saveEditButton!="Save"? this.formGroup['ApplicationID'] : this.formGroup.value.ApplicationID,
+        ApplicationDate:this.saveEditButton!="Save"? this.formGroup['ApplicationDate'] : this.formGroup.value.ApplicationDate,
+        UMRNNo:this.saveEditButton!="Save"? this.formGroup['UMRNNo'] : this.formGroup.value.UMRNNo,
+        ApprovalStatus:this.saveEditButton!="Save"? this.formGroup['ApprovalStatus'] : this.formGroup.value.ApprovalStatus,
+        BankAccountNo:this.saveEditButton!="Save"? this.formGroup['BankAccountNo'] : this.formGroup.value.BankAccountNo,
+        AccountType:this.saveEditButton!="Save"? this.formGroup['AccountType'] : this.formGroup.value.AccountType,
+        BankIFSCCode:this.saveEditButton!="Save"? this.formGroup['BankIFSCCode'] : this.formGroup.value.BankIFSCCode,
+        Frequency:this.saveEditButton!="Save"? this.formGroup['Frequency'] : this.formGroup.value.Frequency,
+        FirstCollectionDate:this.saveEditButton!="Save"? this.formGroup['FirstCollectionDate'] : this.formGroup.value.FirstCollectionDate,
+        LastCollectionDate:this.saveEditButton!="Save"? this.formGroup['LastCollectionDate'] : this.formGroup.value.LastCollectionDate,
+        CreatedBy:"Ganesh",
+        IsActive:true
       };
-
+      
       let formData = new FormData();
       
       formData.append("scanned_file", this.scannedFile);    
@@ -183,13 +220,12 @@ export class AddLeadPage implements OnInit {
   async getLeaddetails() {  
 		  let postData;      
       postData = {
-        recordLimit      :parseInt(this.formGroup.value.FilterNoEntry==""?0:this.formGroup.value.FilterNoEntry),
-        approvadStatus  			      :this.formGroup.value.FilterApproveStatus,						
-        distributorName              :this.formGroup.value.FilterDistributorName,  
-        fromDate                    :this.formGroup.value.FilterFromDate==""?"":this.formGroup.value.FilterFromDate.split("T")[0],  
-        toDate                  :this.formGroup.value.FilterToDate==""?"":this.formGroup.value.FilterToDate.split("T")[0],  
-      }      
-      
+        recordLimit       :parseInt(this.formGroup.value.FilterNoEntry==""?0:this.formGroup.value.FilterNoEntry),
+        approvadStatus    :this.formGroup.value.FilterApproveStatus,						
+        distributorName   :this.formGroup.value.FilterDistributorName,  
+        fromDate          :this.formGroup.value.FilterFromDate==""?"":this.formGroup.value.FilterFromDate,  
+        toDate            :this.formGroup.value.FilterToDate==""?"":this.formGroup.value.FilterToDate,  
+      }
       this.apiService
         .postApiOnlyWithContentType(
           'api/lead_details/GetLeads',
@@ -222,8 +258,9 @@ export class AddLeadPage implements OnInit {
 
   oneditClick(clickevent){    
     this.isAddLead=true
+    this.isScannedMandates=false
     this.isLeadFilter=false
-    this.pageTitle="Add Lead"
+    this.pageTitle="Edit Lead"
     this.saveEditButton="Update"
     var filterleadDetails = this.leadDetails.filter(obj => obj.ID === clickevent)
 
@@ -249,7 +286,7 @@ export class AddLeadPage implements OnInit {
       FirstCollectionDate:filterleadDetails[0].FirstCollectionDate,
       LastCollectionDate:filterleadDetails[0].LastCollectionDate
     });
-      
+          
     this.formGroup['DistributorFirstName']=filterleadDetails[0].DistributorFirstName
     this.formGroup['DistributorLastName']=filterleadDetails[0].DistributorLastName
     this.formGroup['UserFirstName']=filterleadDetails[0].UserFirstName
@@ -259,26 +296,107 @@ export class AddLeadPage implements OnInit {
     this.formGroup['Email']=filterleadDetails[0].Email
     this.formGroup['MandateType']=filterleadDetails[0].MandateType
     this.formGroup['ApplicationID']=filterleadDetails[0].ApplicationID
-    this.formGroup['ApplicationDate']=filterleadDetails[0].ApplicationDate
+    this.formGroup['ApplicationDate']=filterleadDetails[0].ApplicationDate.split("T")[0]
     this.formGroup['UMRNNo']=filterleadDetails[0].UMRNNo
     this.formGroup['ApprovalStatus']=filterleadDetails[0].ApprovalStatus
     this.formGroup['BankAccountNo']=filterleadDetails[0].BankAccountNo
     this.formGroup['AccountType']=filterleadDetails[0].AccountType
     this.formGroup['BankIFSCCode']=filterleadDetails[0].BankIFSCCode
     this.formGroup['Frequency']=filterleadDetails[0].Frequency
-    this.formGroup['FirstCollectionDate']=filterleadDetails[0].FirstCollectionDate
-    this.formGroup['LastCollectionDate']=filterleadDetails[0].LastCollectionDate
+    this.formGroup['FirstCollectionDate']=filterleadDetails[0].FirstCollectionDate.split("T")[0]
+    this.formGroup['LastCollectionDate']=filterleadDetails[0].LastCollectionDate.split("T")[0]
+
+    this.disabledControl()
+  }
+
+  disabledControl(){
+    this.formGroup.controls['DistributorFirstName'].disable()
+    this.formGroup.controls['DistributorLastName'].disable()
+    this.formGroup.controls['UserFirstName'].disable()
+    this.formGroup.controls['UserLastName'].disable()
+    this.formGroup.controls['MobileNumber'].disable()
+    this.formGroup.controls['Region'].disable()
+    this.formGroup.controls['Email'].disable()
+    this.formGroup.controls['MandateType'].disable()
+    this.formGroup.controls['ApplicationID'].disable()
+    this.formGroup.controls['ApplicationDate'].disable()
+    this.formGroup.controls['UMRNNo'].disable()
+    this.formGroup.controls['ApprovalStatus'].disable()
+    this.formGroup.controls['BankAccountNo'].disable()
+    this.formGroup.controls['AccountType'].disable()
+    this.formGroup.controls['BankIFSCCode'].disable()
+    this.formGroup.controls['Frequency'].disable()
+    this.formGroup.controls['FirstCollectionDate'].disable()
+    this.formGroup.controls['LastCollectionDate'].disable()
+  }
+
+  enabledControl(){
+    this.formGroup.controls['DistributorFirstName'].enable()
+    this.formGroup.controls['DistributorLastName'].enable()
+    this.formGroup.controls['UserFirstName'].enable()
+    this.formGroup.controls['UserLastName'].enable()
+    this.formGroup.controls['MobileNumber'].enable()
+    this.formGroup.controls['Region'].enable()
+    this.formGroup.controls['Email'].enable()
+    this.formGroup.controls['MandateType'].enable()
+    this.formGroup.controls['ApplicationID'].enable()
+    this.formGroup.controls['ApplicationDate'].enable()
+    this.formGroup.controls['UMRNNo'].enable()
+    this.formGroup.controls['ApprovalStatus'].enable()
+    this.formGroup.controls['BankAccountNo'].enable()
+    this.formGroup.controls['AccountType'].enable()
+    this.formGroup.controls['BankIFSCCode'].enable()
+    this.formGroup.controls['Frequency'].enable()
+    this.formGroup.controls['FirstCollectionDate'].enable()
+    this.formGroup.controls['LastCollectionDate'].enable()
+  }
+
+  onviewClick(id){
+    this.viewLeadDetails = this.leadDetails.filter(obj => obj.ID === id)
+    this.isAddLead=false
+    this.isLeadFilter=false
+    this.pageTitle="View Leads"
+  }
+  
+  ondeleteClick(id){
+    this.apiService
+			.getApiwithoutauthencticate(
+				'api/lead_details/DeleteLead/'+Number(id)
+			)
+			.subscribe((result) => {        
+				if (result!== null) {          
+          if (result===true){
+            this.alertDialogs.alertDialog('Success', "Lead has been deleted!");     
+            this.getLeaddetails()
+          }
+				} 
+			});
+  }
+
+  clearFilter(){
+    this.formGroup['FilterApproveStatus']='';
+    this.formGroup['FilterDistributorName']='';
+    this.formGroup['FilterDownloadFormat']='';
+    this.formGroup.patchValue({
+      FilterApproveStatus: '', 
+      FilterDistributorName: '',
+      FilterDownloadFormat:''
+    });
+    this.getLeaddetails();
   }
   
   onaddLead() {
     this.isAddLead=true
     this.isLeadFilter=false
     this.pageTitle="Add Lead"
+    this.isScannedMandates=true
+    this.enabledControl()
   }
 
   backClick(){
     this.isAddLead=false
     this.isLeadFilter=true
+    this.viewLeadDetails=[]
     this.pageTitle="E-cheque/E-nach Leads"
   }
 }

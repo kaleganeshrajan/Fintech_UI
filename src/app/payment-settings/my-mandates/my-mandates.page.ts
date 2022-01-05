@@ -33,9 +33,7 @@ export class MyMandatesPage implements OnInit {
   }
 
   /*same as resume */
-	ionViewDidEnter() {
-	
-	}  
+	ionViewDidEnter() {}  
 
   async getmandatelist(){    
     this.apiService

@@ -18,6 +18,7 @@ export class DistributorSettingsPage implements OnInit {
   public paymentSettingId = 0;
   public DistributorCode: String;
   public distributorList: any[];
+  
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
@@ -54,22 +55,22 @@ export class DistributorSettingsPage implements OnInit {
 
   async getdistributorsetting() {
     if (this.formGroup.value.DistributorCode != "") {
-      this.apiService
-        .getApiwithoutauthencticate(
+      this.apiService.getApiwithoutauthencticate(
           'api/payment_setting/' + this.formGroup.value.DistributorCode
-        )
-        .subscribe((result) => {
+        ).subscribe((result) => {
           if (result !== null) {
-            this.saveEditButton = result.ID == 0 ? 'Save' : 'Update';
-            this.formGroup['AccountNumber'] = result.AccountNumber == 0 ? "" : result.AccountNumber;
-            this.formGroup['BankName'] = result.BankName;
-            this.formGroup['BankAccountName'] = result.BankAccountName;
-            this.formGroup['IFSCCode'] = result.IFSCCode;
-            this.formGroup['UPI'] = result.UPI;
-            this.paymentSettingId = result.ID
-
+            this.formGroup.patchValue({
+              AccountNumber: result.AccountNumber == 0 ? "" : result.AccountNumber,
+              BankName:result.BankName,
+              BankAccountName:result.BankAccountName,
+              IFSCCode:result.IFSCCode,
+              UPI:result.UPI
+            });
+            this.saveEditButton = result.ID == 0 ? 'Save' : 'Update';      
+            this.paymentSettingId = result.ID;
           }
-        });
+        }
+      );
     }
   }
 
@@ -80,7 +81,6 @@ export class DistributorSettingsPage implements OnInit {
       )
       .subscribe((result) => {
         if (result !== null) {
-          //  debugger
           this.distributorList = result
         }
       });
@@ -112,7 +112,6 @@ export class DistributorSettingsPage implements OnInit {
             else {
               this.alertDialogs.alertDialogwithreload('', "Record Updated successfully...!");
             }
-            // this.ngOnInit()            
           }
         });
     }
