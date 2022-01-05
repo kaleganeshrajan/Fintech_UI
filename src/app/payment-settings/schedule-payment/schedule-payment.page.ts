@@ -56,12 +56,13 @@ export class SchedulePaymentPage implements OnInit {
 		let mm = this.d.getMonth() + 1;
 		let dd = this.d.getDate();
 		let yy = this.d.getFullYear();
-		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
 		this.d.setMonth(this.d.getMonth() - 1)
 		mm = this.d.getMonth() + 1;
 		dd = this.d.getDate();
 		yy = this.d.getFullYear();
-		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
+		// this.formGroup['FromDate'] = '2021-12-01'
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(

@@ -26,7 +26,9 @@ export class MakePaymentPage implements OnInit {
 	public isOTPSent = false;
 	public scheduleSuccess = false;
 	public totalInvoiceAmt = 0;
-	public balanceAmt: 0;
+	public balanceAmt = 0;
+	public transactionId = '';
+	public scheduledOn = '';
 	public d = new Date();
 	constructor(
 		private apiService: ApiService,
@@ -60,12 +62,13 @@ export class MakePaymentPage implements OnInit {
 		let mm = this.d.getMonth() + 1;
 		let dd = this.d.getDate();
 		let yy = this.d.getFullYear();
-		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
 		this.d.setMonth(this.d.getMonth() - 1)
 		mm = this.d.getMonth() + 1;
 		dd = this.d.getDate();
 		yy = this.d.getFullYear();
-		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
+		// this.formGroup['FromDate'] = '2021-12-01'
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -88,6 +91,10 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async searchInvoice() {
+		this.totalInvoiceAmt = 0
+		this.balanceAmt = 0
+		let invSum = 0
+		let balSum = 0
 		this.InvoiceList = [];
 		let postData = {
 			SearchText: this.formGroup.value.SearchText,
@@ -107,26 +114,44 @@ export class MakePaymentPage implements OnInit {
 					this.isScheduleInv = false;
 					this.isOTPSent = false;
 					this.scheduleSuccess = false;
+
+					for (let i = 0; i < this.InvoiceList.length; i++) {
+						if (this.InvoiceList[i].IsScheduled == true) {
+							invSum = invSum + this.InvoiceList[i].Amount
+						}
+						else {
+							balSum = balSum + this.InvoiceList[i].Amount
+						}
+					}
+					this.totalInvoiceAmt = invSum
+					this.balanceAmt = balSum
 				}
 			})
 		console.log("PostData", postData)
 	}
 
 	updateInvoiceList(id, valueOf, value) {
+		// console.log(id, valueOf, value)
 		this.totalInvoiceAmt = 0
-		let sum = 0
-		if (valueOf == 'DueDate') {
-			value = new Date(value).toLocaleDateString()
-			// console.log(value)
-		}
+		this.balanceAmt = 0
+		let invSum = 0
+		let balSum = 0
+		// if (valueOf == 'DueDate') {
+		// 	value = new Date(value).toLocaleDateString()
+		// 	// console.log(value)
+		// }
 		let index = this.InvoiceList.findIndex((obj => obj.ID == id))
 		this.InvoiceList[index][valueOf] = value
 		for (let i = 0; i < this.InvoiceList.length; i++) {
 			if (this.InvoiceList[i].IsScheduled == true) {
-				sum = sum + this.InvoiceList[i].Amount
+				invSum = invSum + this.InvoiceList[i].Amount
+			}
+			else {
+				balSum = balSum + this.InvoiceList[i].Amount
 			}
 		}
-		this.totalInvoiceAmt = sum
+		this.totalInvoiceAmt = invSum
+		this.balanceAmt = balSum
 	}
 
 	async schedulePayment() {
@@ -203,11 +228,14 @@ export class MakePaymentPage implements OnInit {
 
 	async verifyandconfirm() {
 		// console.log(this.OTP)
+		this.transactionId = '' + new Date().getTime();
+		this.scheduledOn = new Date().toISOString()
 		for (let i = 0; i < this.ScheduleInvList.length; i++) {
-			this.ScheduleInvList[i].ScheduledOn = new Date().toISOString();
-			this.ScheduleInvList[i].TransactionID = '' + new Date().getTime();
+			this.ScheduleInvList[i].ScheduledOn = this.scheduledOn;
+			this.ScheduleInvList[i].TransactionID = this.transactionId;
 			this.ScheduleInvList[i].PaymentMode = 'echeque'
 			this.ScheduleInvList[i].PaymentStatus = 'inprocess'
+			this.ScheduleInvList[i].DueDate = new Date(this.ScheduleInvList[i].DueDate).toISOString();
 		}
 		let postData = this.ScheduleInvList
 		this.apiService

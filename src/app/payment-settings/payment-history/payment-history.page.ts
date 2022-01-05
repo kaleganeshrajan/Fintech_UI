@@ -62,13 +62,15 @@ export class PaymentHistoryPage implements OnInit {
 		let mm = this.d.getMonth() + 1;
 		let dd = this.d.getDate();
 		let yy = this.d.getFullYear();
-		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
 		this.d.setMonth(this.d.getMonth() - 1)
 		mm = this.d.getMonth() + 1;
 		dd = this.d.getDate();
 		yy = this.d.getFullYear();
-		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + dd
+		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
+		// this.formGroup['FromDate'] = '2021-12-01'
 		
+		// Get Company List
 		this.apiService
 			.getApiwithoutauthencticate(
 				"api/master_payment_setting/CompanyList"
@@ -87,20 +89,10 @@ export class PaymentHistoryPage implements OnInit {
 				}
 			}
 			)
-		// Get Payment Mode Lists
+		// Get Payment Status Lists
 		this.apiService
 			.getApiwithoutauthencticate(
-				"api/masters/GetPaymentMode"
-			).subscribe((result) => {
-				if (result != null) {
-					this.PaymentModeList = result
-				}
-			}
-			)
-		// Get Payment Mode Lists
-		this.apiService
-			.getApiwithoutauthencticate(
-				"api/masters/GetStatus"
+				"api/masters/GetStatus/Payment"
 			).subscribe((result) => {
 				if (result != null) {
 					this.PaymentStatusList = result

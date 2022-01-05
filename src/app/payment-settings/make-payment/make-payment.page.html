@@ -84,7 +84,7 @@
           Invoice Amount: {{totalInvoiceAmt}}
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
-          Balance Amount:
+          Balance Amount: {{balanceAmt}}
         </ion-col>
       </ion-row>
       <ion-grid class="ion-margin">
@@ -130,15 +130,15 @@
     <!-- Selected Invoices -->
     <ion-grid class="form-card margin-large-top" *ngIf="isScheduleInv || isOTPSent">
       <ion-row class="bg-theme-blue">
-        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
           Invoices Selected: {{ScheduleInvList.length}}
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
           Invoice Amount: {{totalInvoiceAmt}}
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
+        <!-- <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4" class="ion-padding">
           Balance Amount: {{balanceAmt}}
-        </ion-col>
+        </ion-col> -->
       </ion-row>
       <ion-row class="padding-mini">
         <table class="table">
@@ -188,17 +188,17 @@
       <ion-row>
         <ion-col size-lg="1"></ion-col>
         <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Amount:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">₹12000/-</ion-col>
+        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">₹{{totalInvoiceAmt}}/-</ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-lg="1"></ion-col>
         <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Receipt ID:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">248422675</ion-col>
+        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">{{transactionId}}</ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-lg="1"></ion-col>
         <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Transaction Time:</b></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">2021-11-01</ion-col>
+        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">{{parseDate(scheduledOn)}}</ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-lg="1"></ion-col>
