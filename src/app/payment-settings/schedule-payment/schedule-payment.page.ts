@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
+import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
 	selector: 'app-schedule-payment',
@@ -126,10 +127,6 @@ export class SchedulePaymentPage implements OnInit {
 		this.alertDialogs.alertDialog("Clicked", "Cancel Cheque")
 	}
 
-	downloadReport() {
-		this.alertDialogs.alertDialog("Clicked", "Download Report")
-	}
-
 	parseDate(dateStr) {
 		return new Date(dateStr).toLocaleDateString()
 	}
@@ -144,5 +141,14 @@ export class SchedulePaymentPage implements OnInit {
 	backClick() {
 		this.isSelectInv = true;
 		this.isViewInvDetails = false;
+	}
+
+	downloadExcel() {
+		TableToExcel.convert(document.getElementById("table-to-xls"), {
+			name: '' + new Date().getTime() + ".xlsx",
+			sheet: {
+				name: "Sheet1"
+			},
+		});
 	}
 }

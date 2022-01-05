@@ -66,7 +66,7 @@
             <ion-icon slot="start" name="search"></ion-icon>
             <small>Search</small>
           </ion-button>
-          <ion-button (click)="download()" class="full-width">
+          <ion-button (click)="downloadExcel()" class="full-width">
             <ion-icon slot="start" name="download"></ion-icon>
             <small>Download Report</small>
           </ion-button>
@@ -89,32 +89,33 @@
       </ion-row>
       <ion-grid class="ion-margin">
         <ion-row>
-          <table class="table">
+          <table class="table" id="table-to-xls">
             <thead>
               <tr>
-                <th>
+                <th data-exclude="true">
                   Select
                 </th>
-                <th>Invoice Details</th>
-                <th>Invoice Date</th>
-                <th>Order No</th>
-                <th>Amount</th>
-                <th>LR Date</th>
-                <th>Due Date</th>
+                <th data-b-a-s="thin" >Invoice Details</th>
+                <th data-b-a-s="thin" >Invoice Date</th>
+                <th data-b-a-s="thin" >Order No</th>
+                <th data-b-a-s="thin" >Amount</th>
+                <th data-b-a-s="thin" >LR Date</th>
+                <th data-b-a-s="thin" >Due Date</th>
               </tr>
             </thead>
             <tbody *ngFor="let item of InvoiceList">
               <tr>
-                <td>
+                <td data-exclude="true">
                   <ion-checkbox [checked]="item.IsScheduled"
                     (ionChange)="updateInvoiceList(item.ID, 'IsScheduled', $event.target.checked)"></ion-checkbox>
                 </td>
-                <td>{{item.InvoiceDetails}}</td>
-                <td>{{parseDate(item.InvoiceDate)}}</td>
-                <td>{{item.OrderNo}}</td>
-                <td>{{item.Amount}}</td>
-                <td>{{parseDate(item.LRDate)}}</td>
-                <td class="ion-no-padding">
+                <td data-b-a-s="thin" >{{item.InvoiceDetails}}</td>
+                <td data-b-a-s="thin" >{{parseDate(item.InvoiceDate)}}</td>
+                <td data-b-a-s="thin" >{{item.OrderNo}}</td>
+                <td data-b-a-s="thin" data-num-fmt="0" >{{item.Amount}}</td>
+                <td data-b-a-s="thin" >{{parseDate(item.LRDate)}}</td>
+                <td data-b-a-s="thin" class="ion-no-padding">
+                  <span hidden>{{item.DueDate}}</span>
                   <ion-item>
                     <ion-input [value]="item.DueDate"
                       (ionChange)="updateInvoiceList(item.ID, 'DueDate', $event.target.value)" placeholder=""
@@ -141,7 +142,7 @@
         </ion-col> -->
       </ion-row>
       <ion-row class="padding-mini">
-        <table class="table">
+        <table class="table" id="table-to-xls">
           <thead>
             <tr>
               <th>Invoice Details</th>
