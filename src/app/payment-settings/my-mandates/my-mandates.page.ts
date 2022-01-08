@@ -47,7 +47,7 @@ export class MyMandatesPage implements OnInit {
     });
   }
 
-  async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no){    
+  async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no,distributorCode){    
     
     let postData;
       postData = {
@@ -55,7 +55,8 @@ export class MyMandatesPage implements OnInit {
         NotificationSetting  			      :notificationcheck,						
         PriorDays:parseInt(priorDays),
         SetAsDefault:(type == 1 || type == 3)?setAsDefault:true,
-        CancelMandates:(type == 1 || type == 2)? cancelMandates:false
+        CancelMandates:(type == 1 || type == 2)? cancelMandates:false,
+        DistributorCode:distributorCode
       };
       if (type==3){
       this.confirm_box=await this.alertCtrl.create({
