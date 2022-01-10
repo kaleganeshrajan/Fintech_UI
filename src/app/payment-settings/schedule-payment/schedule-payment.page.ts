@@ -26,6 +26,7 @@ export class SchedulePaymentPage implements OnInit {
 	public isViewInvDetails = false;
 	public modifyButton = false;
 	public d = new Date();
+	public totalInvoiceAmt = 0
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -103,8 +104,13 @@ export class SchedulePaymentPage implements OnInit {
 			).subscribe((result) => {
 				if (result != null) {
 					this.InvoiceList = result;
+					let sum = 0
 					this.isSelectInv = true;
 					this.isViewInvDetails = false;
+					for (let i = 0; i < this.InvoiceList.length; i++) {
+						sum = sum + this.InvoiceList[i].Amount
+					}
+					this.totalInvoiceAmt = sum
 				}
 				else {
 					this.alertDialogs.alertDialog('Invoice data', 'No data found!')
@@ -131,13 +137,14 @@ export class SchedulePaymentPage implements OnInit {
 		this.InvoiceList[index]['DueDate'] = this.formGroup.value['UpdatedDate']
 		this.InvoiceDetails[0]['DueDate'] = this.formGroup.value['UpdatedDate']
 		this.apiService
-			.postApiOnlyWithContentType(
-				'',
-				this.InvoiceList
-			)
-			.subscribe((result) => {
-				console.log(result)
-			})
+		// .postApiOnlyWithContentType(
+		// 	'',
+		// 	this.InvoiceList
+		// )
+		// .subscribe((result) => {
+		// 	console.log(result)
+		// })
+		this.alertDialogs.alertDialog("Date changed!", "Cheque date updated!")
 	}
 
 	cancelCheque() {

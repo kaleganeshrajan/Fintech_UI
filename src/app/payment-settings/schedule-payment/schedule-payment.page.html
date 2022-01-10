@@ -78,10 +78,10 @@
     <ion-grid class="form-card margin-large-top" *ngIf="isSelectInv && InvoiceList?.length > 0">
       <ion-row class="bg-theme-blue">
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
-          Total Invoices:
+          Total Invoices:{{InvoiceList.length}}
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
-          Invoice Amount:
+          Invoice Amount:{{totalInvoiceAmt}}
         </ion-col>
       </ion-row>
       <ion-grid class="ion-margin">
