@@ -24,7 +24,9 @@ export class SchedulePaymentPage implements OnInit {
 	public OTP: string = '';
 	public isSelectInv = true;
 	public isViewInvDetails = false;
+	public modifyButton = false;
 	public d = new Date();
+	public totalInvoiceAmt = 0
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -50,6 +52,7 @@ export class SchedulePaymentPage implements OnInit {
 			ToDate: ['2069-01-01T13:16:54.999+05:30'],
 			SearchFilterType: [''],
 			DateFilterType: [''],
+			UpdatedDate: [''],
 		});
 	}
 
@@ -63,7 +66,7 @@ export class SchedulePaymentPage implements OnInit {
 		dd = this.d.getDate();
 		yy = this.d.getFullYear();
 		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
-		// this.formGroup['FromDate'] = '2021-12-01'
+
 		// Get Search Filter Lists
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -101,8 +104,13 @@ export class SchedulePaymentPage implements OnInit {
 			).subscribe((result) => {
 				if (result != null) {
 					this.InvoiceList = result;
+					let sum = 0
 					this.isSelectInv = true;
 					this.isViewInvDetails = false;
+					for (let i = 0; i < this.InvoiceList.length; i++) {
+						sum = sum + this.InvoiceList[i].Amount
+					}
+					this.totalInvoiceAmt = sum
 				}
 				else {
 					this.alertDialogs.alertDialog('Invoice data', 'No data found!')
@@ -120,7 +128,23 @@ export class SchedulePaymentPage implements OnInit {
 	}
 
 	modifyDate() {
-		this.alertDialogs.alertDialog("Clicked", "Modify Date")
+		this.modifyButton = true
+	}
+
+	updateDate(id) {
+		// console.log(id, ":", this.formGroup.value['UpdatedDate']) ekch object rahil sagli kade asa code karayacha...
+		let index = this.InvoiceList.findIndex(ele => ele.ID == id)
+		this.InvoiceList[index]['DueDate'] = this.formGroup.value['UpdatedDate']
+		this.InvoiceDetails[0]['DueDate'] = this.formGroup.value['UpdatedDate']
+		this.apiService
+		// .postApiOnlyWithContentType(
+		// 	'',
+		// 	this.InvoiceList
+		// )
+		// .subscribe((result) => {
+		// 	console.log(result)
+		// })
+		this.alertDialogs.alertDialog("Date changed!", "Cheque date updated!")
 	}
 
 	cancelCheque() {
@@ -137,7 +161,7 @@ export class SchedulePaymentPage implements OnInit {
 		}
 		return "" + mm
 	}
-	
+
 	backClick() {
 		this.isSelectInv = true;
 		this.isViewInvDetails = false;

@@ -78,41 +78,41 @@
     <ion-grid class="form-card margin-large-top" *ngIf="isSelectInv && InvoiceList?.length > 0">
       <ion-row class="bg-theme-blue">
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
-          Total Invoices:
+          Total Invoices:{{InvoiceList.length}}
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" class="ion-padding">
-          Invoice Amount:
+          Invoice Amount:{{totalInvoiceAmt}}
         </ion-col>
       </ion-row>
       <ion-grid class="ion-margin">
         <ion-row>
-          <table class="table"  id="table-to-xls">
+          <table class="table" id="table-to-xls">
             <thead>
               <tr>
-                <th data-b-a-s="thin" >Invoice No</th>
-                <th data-b-a-s="thin" >Invoice Date</th>
-                <th data-b-a-s="thin" >Amount</th>
-                <th data-b-a-s="thin" >Payment Mode</th>
-                <th data-b-a-s="thin" >Scheduled On</th>
-                <th data-b-a-s="thin" >Cheque Date</th>
-                <th data-b-a-s="thin" >Transaction ID</th>
-                <th data-b-a-s="thin" >Payment Status</th>
+                <th data-b-a-s="thin">Invoice No</th>
+                <th data-b-a-s="thin">Invoice Date</th>
+                <th data-b-a-s="thin">Amount</th>
+                <th data-b-a-s="thin">Payment Mode</th>
+                <th data-b-a-s="thin">Scheduled On</th>
+                <th data-b-a-s="thin">Cheque Date</th>
+                <th data-b-a-s="thin">Transaction ID</th>
+                <th data-b-a-s="thin">Payment Status</th>
                 <th data-exclude="true"></th>
               </tr>
             </thead>
             <tbody *ngFor="let item of InvoiceList">
               <tr>
-                <td data-b-a-s="thin" ><span class="clickable-item"
+                <td data-b-a-s="thin"><span class="clickable-item"
                     (click)="viewDetailedInvoive(item.ID)"><b>{{item.InvoiceDetails}}</b></span></td>
-                <td data-b-a-s="thin" >{{parseDate(item.InvoiceDate)}}</td>
+                <td data-b-a-s="thin">{{parseDate(item.InvoiceDate)}}</td>
                 <!-- <td>{{item.OrderNo}}</td> -->
-                <td data-b-a-s="thin" >{{item.Amount}}</td>
-                <td data-b-a-s="thin" >{{item.PaymentMode}}</td>
-                <td data-b-a-s="thin" >{{parseDate(item.ScheduledOn)}}</td>
-                <td data-b-a-s="thin" >{{parseDate(item.DueDate)}}</td>
-                <td data-b-a-s="thin" >{{item.TransactionID}}</td>
-                <td data-b-a-s="thin" >{{item.PaymentStatus}}</td>
-                <td data-exclude="true" >
+                <td data-b-a-s="thin">{{item.Amount}}</td>
+                <td data-b-a-s="thin">{{item.PaymentMode}}</td>
+                <td data-b-a-s="thin">{{parseDate(item.ScheduledOn)}}</td>
+                <td data-b-a-s="thin">{{parseDate(item.DueDate)}}</td>
+                <td data-b-a-s="thin">{{item.TransactionID}}</td>
+                <td data-b-a-s="thin">{{item.PaymentStatus}}</td>
+                <td data-exclude="true">
                   <span>
                     <ion-icon class="download-icon" slot="start" name="download"></ion-icon>
                   </span>
@@ -165,15 +165,26 @@
           </ion-card>
           <!--  -->
           <ion-row>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6">
+            <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="3">
               <ion-button color="danger" (click)="cancelCheque()">
                 <ion-icon slot="start" name="close-circle"></ion-icon>
                 <small>Cancel Cheque</small>
               </ion-button>
-              <ion-button (click)="modifyDate()">
+              <ion-button *ngIf="!modifyButton" (click)="modifyDate()">
                 <ion-icon slot="start" name="create"></ion-icon>
                 <small>Modify Date</small>
               </ion-button>
+              <ion-button color="warning" *ngIf="modifyButton" (click)="updateDate(item.ID)">
+                <ion-icon slot="start" name="create"></ion-icon>
+                <small style="color: black;">Update Date</small>
+              </ion-button>
+            </ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="2">
+              <ion-item>
+                <ion-input [value]="formGroup.UpdatedDate" formControlName="UpdatedDate" *ngIf="modifyButton" type="date"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size-lg="1">
             </ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Cheque Date:</b></ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{parseDate(item.DueDate)}}</ion-col>
