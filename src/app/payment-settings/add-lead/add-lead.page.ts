@@ -4,7 +4,7 @@ import { NetworkProviderService } from 'src/app/utility/network-provider.service
 import { ApiService } from 'src/app/utility/api.service';
 import { FormGroup,FormBuilder,Validators} from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { DatePipe } from '@angular/common'
 
 @Component({
   selector: 'app-add-lead',
@@ -39,7 +39,8 @@ export class AddLeadPage implements OnInit {
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
-    private alertDialogs: AlertDialogs
+    private alertDialogs: AlertDialogs,
+    public datepipe: DatePipe
     
   ) { }
 
@@ -53,23 +54,24 @@ export class AddLeadPage implements OnInit {
     this.getDistributorList()
     
     this.currentDate = new Date();
-    this.firstDay = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1);
+    this.firstDay =this.datepipe.transform(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1), 'yyyy-MM-dd') //.toString("yyyy-MM-dd").slice(0,10);
+    
     this.setDefaultvalue()
     this.getLeaddetails()
   }
 
   setDefaultvalue(){
-    var currentDateinstring=this.currentDate.toISOString().slice(0,10)
+    var currentDateinstring=this.datepipe.transform(this.currentDate, 'yyyy-MM-dd')//.toISOString().slice(0,10)
     this.minDate=currentDateinstring
     this.formGroup['FilterNoEntry']="10"
     this.formGroup['FilterToDate']=currentDateinstring;
-    this.formGroup['FilterFromDate']=currentDateinstring//this.firstDay.toISOString();
+    this.formGroup['FilterFromDate']=this.firstDay//this.firstDay.toISOString();
     this.formGroup['ApplicationDate']=currentDateinstring
     this.formGroup['FirstCollectionDate']=currentDateinstring
     this.formGroup['LastCollectionDate']=currentDateinstring
     this.formGroup.patchValue({
       FilterToDate: currentDateinstring, 
-      FilterFromDate:currentDateinstring, //this.firstDay.toISOString(),
+      FilterFromDate:this.firstDay, //this.firstDay.toISOString(),
       ApplicationDate:currentDateinstring,
       FirstCollectionDate:currentDateinstring,
       LastCollectionDate:currentDateinstring,
@@ -78,7 +80,16 @@ export class AddLeadPage implements OnInit {
   }
 
   fromDatechange(ids){     
+    var from_date=new Date(ids)
+    var to_date=new Date(this.formGroup['FilterToDate'])
     this.formGroup['FilterFromDate']=ids;
+    if (from_date.getDate()>to_date.getDate()){
+      this.formGroup['FilterToDate']=ids;
+      this.formGroup.patchValue({
+        FilterToDate:ids
+      });
+    }
+    
     this.formGroup.patchValue({
       FilterFromDate: ids
     });
