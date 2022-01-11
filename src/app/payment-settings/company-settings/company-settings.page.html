@@ -11,6 +11,7 @@
       </ion-row>
     </ion-grid>
 
+    <!-- Select Box -->
     <ion-grid>
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="8" class="ion-no-padding">
@@ -83,15 +84,6 @@
       </ion-row>
 
       <ion-row>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
-          <ion-item>
-            <ion-label position="floating">Payment Period (for Pull based only)</ion-label>
-            <ion-input [value]="formGroup.PaymentPeriod" formControlName="PaymentPeriod" type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="margin-small-top">
           <ion-item>
             <ion-label>Is Beneficiary Active</ion-label>
@@ -120,7 +112,9 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
           <ion-item>
             <ion-label>E-Cheque Collection Type</ion-label>
-            <ion-select value="{{formGroup['ECCollType']}}" formControlName="ECCollType" interface="popover">
+            <ion-select value="{{formGroup['ECCollType']}}"
+              disabled="{{formGroup.value.EnableECheque===true ? false : true}}" formControlName="ECCollType"
+              interface="popover">
               <ion-select-option *ngFor="let item of EChequeCT" value="{{item.Code}}">{{item.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -128,9 +122,23 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
             <ion-label position="floating">E-Cheque Collection settlement Value</ion-label>
-            <ion-input [value]="formGroup.ECCollValue" formControlName="ECCollValue" type="text"
-              autocapitalize="characters"></ion-input>
+            <ion-input [value]="formGroup.ECCollValue"
+              disabled="{{formGroup.value.EnableECheque===true ? false : true}}" formControlName="ECCollValue"
+              type="text" autocapitalize="characters"></ion-input>
           </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
+          <ion-item>
+            <ion-label position="floating">Payment Period (for Pull based only)</ion-label>
+            <ion-input [value]="formGroup.PaymentPeriod" formControlName="PaymentPeriod" type="number"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="8" size-lg="7" style="padding-top: 20px !important">
+          <span class="small">"For example: If you put the payment period as 7 Days, the system will schedule the
+            payment for the distributors on the 7th Working Day from the invoice / LR Date ”
+          </span>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -144,7 +152,9 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
           <ion-item>
             <ion-label>UPI Collection Type</ion-label>
-            <ion-select value="{{formGroup['UCollType']}}" formControlName="UCollType" interface="popover">
+            <ion-select value="{{formGroup['UCollType']}}"
+              disabled="{{formGroup.value.EnableUPIColl===true ? false : true}}" formControlName="UCollType"
+              interface="popover">
               <ion-select-option *ngFor="let item of UpiCT" value="{{item.Code}}">{{item.Name}}
               </ion-select-option>
             </ion-select>
@@ -153,8 +163,8 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
             <ion-label position="floating">UPI Collection settlement Value</ion-label>
-            <ion-input [value]="formGroup.UCollValue" formControlName="UCollValue" type="text"
-              autocapitalize="characters"></ion-input>
+            <ion-input [value]="formGroup.UCollValue" disabled="{{formGroup.value.EnableUPIColl===true ? false : true}}"
+              formControlName="UCollValue" type="text" autocapitalize="characters"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -169,7 +179,9 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
           <ion-item>
             <ion-label>Net-banking Collection Type</ion-label>
-            <ion-select value="{{formGroup['NBCollType']}}" formControlName="NBCollType" interface="popover">
+            <ion-select value="{{formGroup['NBCollType']}}"
+              disabled="{{formGroup.value.EnableNetBanking===true ? false : true}}" formControlName="NBCollType"
+              interface="popover">
               <ion-select-option *ngFor="let item of NBCT" value="{{item.Code}}">{{item.Name}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -177,8 +189,9 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
             <ion-label position="floating">Net-banking Collection settlement Value</ion-label>
-            <ion-input [value]="formGroup.NBCollValue" formControlName="NBCollValue" type="text"
-              autocapitalize="characters"></ion-input>
+            <ion-input [value]="formGroup.NBCollValue"
+              disabled="{{formGroup.value.EnableNetBanking===true ? false : true}}" formControlName="NBCollValue"
+              type="text" autocapitalize="characters"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>

@@ -62,7 +62,7 @@ export class MakePaymentPage implements OnInit {
 		let dd = this.d.getDate();
 		let yy = this.d.getFullYear();
 		this.formGroup['ToDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
-		this.d.setMonth(this.d.getMonth() - 1)
+		this.d.setMonth(this.d.getMonth() - 3)
 		mm = this.d.getMonth() + 1;
 		dd = this.d.getDate();
 		yy = this.d.getFullYear();
@@ -124,6 +124,10 @@ export class MakePaymentPage implements OnInit {
 					}
 					this.totalInvoiceAmt = invSum
 					this.balanceAmt = balSum
+				}
+				else {
+					this.InvoiceList = [];
+					this.alertDialogs.alertDialog("No record", "No record found!")
 				}
 			})
 		console.log("PostData", postData)

@@ -117,9 +117,15 @@ export class PaymentHistoryPage implements OnInit {
 				"api/payment_history/GetInvoiceData"
 				,postData
 			).subscribe((result) => {
+				if(result != null){
 				this.InvoiceList = result;
 				this.isSelectInv = true;
 				this.isViewInvDetails = false;
+				}
+				else{
+					this.InvoiceList = [];
+					this.alertDialogs.alertDialog("No record","No record found!")
+				}
 			})
 		// console.log("PostData", postData)
 	}
