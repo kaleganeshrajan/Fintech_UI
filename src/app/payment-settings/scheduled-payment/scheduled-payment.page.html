@@ -13,7 +13,7 @@
     <!-- Search Box -->
     <ion-grid *ngIf="!isViewInvDetails">
       <ion-row>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
+        <!-- <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Select Search Filter</ion-label>
             <ion-select value="formGroup['SearchFilterType']" formControlName="SearchFilterType" interface="popover"
@@ -23,7 +23,7 @@
               </ion-select-option>
             </ion-select>
           </ion-item>
-        </ion-col>
+        </ion-col> -->
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Search Invoice</ion-label>
@@ -61,11 +61,15 @@
             </ion-input>
           </ion-item>
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
+          <br>
           <ion-button (click)="searchInvoice()" class="full-width">
             <ion-icon slot="start" name="search"></ion-icon>
             <small>Search</small>
           </ion-button>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
+          <br>
           <ion-button (click)="downloadExcel()" class="full-width">
             <ion-icon slot="start" name="download"></ion-icon>
             <small>Download Report</small>
@@ -181,7 +185,8 @@
             </ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="2">
               <ion-item>
-                <ion-input [value]="formGroup.UpdatedDate" formControlName="UpdatedDate" *ngIf="modifyButton" type="date"></ion-input>
+                <ion-input [value]="formGroup.UpdatedDate" formControlName="UpdatedDate" *ngIf="modifyButton"
+                  type="date"></ion-input>
               </ion-item>
             </ion-col>
             <ion-col size-lg="1">

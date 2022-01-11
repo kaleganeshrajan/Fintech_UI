@@ -132,7 +132,7 @@
         <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
           <ion-item>
             <ion-label position="floating">Payment Period (for Pull based only)</ion-label>
-            <ion-input [value]="formGroup.PaymentPeriod" formControlName="PaymentPeriod" type="number"></ion-input>
+            <ion-input [value]="formGroup.PaymentPeriod" disabled="{{formGroup.value.EnableECheque===true ? false : true}}" formControlName="PaymentPeriod" type="number"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="8" size-lg="7" style="padding-top: 20px !important">
