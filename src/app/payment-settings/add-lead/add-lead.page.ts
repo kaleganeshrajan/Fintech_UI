@@ -35,6 +35,7 @@ export class AddLeadPage implements OnInit {
   public isScannedMandates:boolean;
   public viewLeadDetails:any;
   public minDate:any;
+  public maxDate:any;
 
   constructor(
     private apiService: ApiService,
@@ -50,32 +51,38 @@ export class AddLeadPage implements OnInit {
     this.pageTitle="E-cheque/E-nach Leads"
     this.isAddLead=false
     this.isLeadFilter=true
-    this.saveEditButton = 'Save'    
+    this.saveEditButton = 'Add Lead'    
     this.getDistributorList()
     
     this.currentDate = new Date();
     this.firstDay =this.datepipe.transform(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1), 'yyyy-MM-dd') //.toString("yyyy-MM-dd").slice(0,10);
-    
+    this.scannedFile=""
+    this.confirmationFile=""
     this.setDefaultvalue()
     this.getLeaddetails()
   }
 
   setDefaultvalue(){
     var currentDateinstring=this.datepipe.transform(this.currentDate, 'yyyy-MM-dd')//.toISOString().slice(0,10)
-    this.minDate=currentDateinstring
+    // this.minDate=currentDateinstring
+    this.maxDate=currentDateinstring
     this.formGroup['FilterNoEntry']="10"
     this.formGroup['FilterToDate']=currentDateinstring;
     this.formGroup['FilterFromDate']=this.firstDay//this.firstDay.toISOString();
     this.formGroup['ApplicationDate']=currentDateinstring
     this.formGroup['FirstCollectionDate']=currentDateinstring
     this.formGroup['LastCollectionDate']=currentDateinstring
+    this.formGroup['MandateType']="PY"
+    this.formGroup['Frequency']="As and when presented"
     this.formGroup.patchValue({
       FilterToDate: currentDateinstring, 
       FilterFromDate:this.firstDay, //this.firstDay.toISOString(),
       ApplicationDate:currentDateinstring,
       FirstCollectionDate:currentDateinstring,
       LastCollectionDate:currentDateinstring,
-      FilterNoEntry:"10"
+      FilterNoEntry:"10",
+      Frequency:"As and when presented",
+      MandateType:"PY"
     });
   }
 
@@ -105,6 +112,7 @@ export class AddLeadPage implements OnInit {
 		this.formGroup = this.formBuilder.group({
 			DistributorFirstName: ['', Validators.required],			
       DistributorLastName:['', Validators.required],
+      DistributorCode:['', Validators.required],
       UserFirstName:['', Validators.required],
       UserLastName:['', Validators.required],
       MobileNumber:['', Validators.required],
@@ -171,29 +179,35 @@ export class AddLeadPage implements OnInit {
     });
   }
 
-  async addlead(){    
-    if (this.formGroup.valid){   
+  async addlead(){   
+    if (this.formGroup.valid){
+      if (this.scannedFile==""){
+        this.alertDialogs.alertDialog('Error', "Please upload scanned mandate form");     
+        return
+      }
+       
       let postData;
       postData = {
         ID:this.leadId,
-        DistributorFirstName:this.saveEditButton!="Save"? this.formGroup['DistributorFirstName']:this.formGroup.value.DistributorFirstName,
-        DistributorLastName:this.saveEditButton!="Save"? this.formGroup['DistributorLastName'] : this.formGroup.value.DistributorLastName,
-        UserFirstName:this.saveEditButton!="Save"? this.formGroup['UserFirstName'] : this.formGroup.value.UserFirstName,
-        UserLastName:this.saveEditButton!="Save"? this.formGroup['UserLastName'] : this.formGroup.value.UserLastName,
-        MobileNumber:this.saveEditButton!="Save"? this.formGroup['MobileNumber'] : this.formGroup.value.MobileNumber,
-        Region:this.saveEditButton!="Save"? this.formGroup['Region'] :this.formGroup.value.Region,
-        Email:this.saveEditButton!="Save"? this.formGroup['Email'] : this.formGroup.value.Email,
-        MandateType:this.saveEditButton!="Save"? this.formGroup['MandateType'] : this.formGroup.value.MandateType,        
-        ApplicationID:this.saveEditButton!="Save"? this.formGroup['ApplicationID'] : this.formGroup.value.ApplicationID,
-        ApplicationDate:this.saveEditButton!="Save"? this.formGroup['ApplicationDate'] : this.formGroup.value.ApplicationDate,
-        UMRNNo:this.saveEditButton!="Save"? this.formGroup['UMRNNo'] : this.formGroup.value.UMRNNo,
-        ApprovalStatus:this.saveEditButton!="Save"? this.formGroup['ApprovalStatus'] : this.formGroup.value.ApprovalStatus,
-        BankAccountNo:this.saveEditButton!="Save"? this.formGroup['BankAccountNo'] : this.formGroup.value.BankAccountNo,
-        AccountType:this.saveEditButton!="Save"? this.formGroup['AccountType'] : this.formGroup.value.AccountType,
-        BankIFSCCode:this.saveEditButton!="Save"? this.formGroup['BankIFSCCode'] : this.formGroup.value.BankIFSCCode,
-        Frequency:this.saveEditButton!="Save"? this.formGroup['Frequency'] : this.formGroup.value.Frequency,
-        FirstCollectionDate:this.saveEditButton!="Save"? this.formGroup['FirstCollectionDate'] : this.formGroup.value.FirstCollectionDate,
-        LastCollectionDate:this.saveEditButton!="Save"? this.formGroup['LastCollectionDate'] : this.formGroup.value.LastCollectionDate,
+        DistributorFirstName:this.saveEditButton!="Add Lead"? this.formGroup['DistributorFirstName']:this.formGroup.value.DistributorFirstName,
+        DistributorLastName:this.saveEditButton!="Add Lead"? this.formGroup['DistributorLastName'] : this.formGroup.value.DistributorLastName,
+        DistributorCode:this.saveEditButton!="Add Lead"? this.formGroup['DistributorCode'] : this.formGroup.value.DistributorCode,
+        UserFirstName:this.saveEditButton!="Add Lead"? this.formGroup['UserFirstName'] : this.formGroup.value.UserFirstName,
+        UserLastName:this.saveEditButton!="Add Lead"? this.formGroup['UserLastName'] : this.formGroup.value.UserLastName,
+        MobileNumber:this.saveEditButton!="Add Lead"? this.formGroup['MobileNumber'] : this.formGroup.value.MobileNumber,
+        Region:this.saveEditButton!="Add Lead"? this.formGroup['Region'] :this.formGroup.value.Region,
+        Email:this.saveEditButton!="Add Lead"? this.formGroup['Email'] : this.formGroup.value.Email,
+        MandateType:this.saveEditButton!="Add Lead"? this.formGroup['MandateType'] : this.formGroup.value.MandateType,        
+        ApplicationID:this.saveEditButton!="Add Lead"? this.formGroup['ApplicationID'] : this.formGroup.value.ApplicationID,
+        ApplicationDate:this.saveEditButton!="Add Lead"? this.formGroup['ApplicationDate'] : this.formGroup.value.ApplicationDate,
+        UMRNNo:this.saveEditButton!="Add Lead"? this.formGroup['UMRNNo'] : this.formGroup.value.UMRNNo,
+        ApprovalStatus:this.saveEditButton!="Add Lead"? this.formGroup['ApprovalStatus'] : this.formGroup.value.ApprovalStatus,
+        BankAccountNo:this.saveEditButton!="Add Lead"? this.formGroup['BankAccountNo'] : this.formGroup.value.BankAccountNo,
+        AccountType:this.saveEditButton!="Add Lead"? this.formGroup['AccountType'] : this.formGroup.value.AccountType,
+        BankIFSCCode:this.saveEditButton!="Add Lead"? this.formGroup['BankIFSCCode'] : this.formGroup.value.BankIFSCCode,
+        Frequency:this.saveEditButton!="Add Lead"? this.formGroup['Frequency'] : this.formGroup.value.Frequency,
+        FirstCollectionDate:this.saveEditButton!="Add Lead"? this.formGroup['FirstCollectionDate'] : this.formGroup.value.FirstCollectionDate,
+        LastCollectionDate:this.saveEditButton!="Add Lead"? this.formGroup['LastCollectionDate'] : this.formGroup.value.LastCollectionDate,
         CreatedBy:"Ganesh",
         IsActive:true
       };
@@ -219,7 +233,8 @@ export class AddLeadPage implements OnInit {
                 this.leadId=0
                 this.alertDialogs.alertDialog('Success', "Record Updated successfully...!");     
               }
-                    
+               
+              
               this.ngOnInit()   
               this.getLeaddetails()
             }
@@ -271,7 +286,7 @@ export class AddLeadPage implements OnInit {
     this.isScannedMandates=false
     this.isLeadFilter=false
     this.pageTitle="Edit Lead"
-    this.saveEditButton="Update"
+    this.saveEditButton="Update Lead"
     var filterleadDetails = this.leadDetails.filter(obj => obj.ID === clickevent)
 
     this.leadId=clickevent
@@ -279,6 +294,7 @@ export class AddLeadPage implements OnInit {
     this.formGroup.patchValue({
       DistributorFirstName: filterleadDetails[0].DistributorFirstName, 
       DistributorLastName: filterleadDetails[0].DistributorLastName,
+      DistributorCode: filterleadDetails[0].DistributorCode,
       UserFirstName:filterleadDetails[0].UserFirstName			,
       UserLastName:filterleadDetails[0].UserLastName              ,
       MobileNumber:filterleadDetails[0].MobileNumber              ,
@@ -299,6 +315,7 @@ export class AddLeadPage implements OnInit {
           
     this.formGroup['DistributorFirstName']=filterleadDetails[0].DistributorFirstName
     this.formGroup['DistributorLastName']=filterleadDetails[0].DistributorLastName
+    this.formGroup['DistributorCode']=filterleadDetails[0].DistributorCode
     this.formGroup['UserFirstName']=filterleadDetails[0].UserFirstName
     this.formGroup['UserLastName']=filterleadDetails[0].UserLastName
     this.formGroup['MobileNumber']=filterleadDetails[0].MobileNumber
@@ -322,6 +339,7 @@ export class AddLeadPage implements OnInit {
   disabledControl(){
     this.formGroup.controls['DistributorFirstName'].disable()
     this.formGroup.controls['DistributorLastName'].disable()
+    this.formGroup.controls['DistributorCode'].disable()
     this.formGroup.controls['UserFirstName'].disable()
     this.formGroup.controls['UserLastName'].disable()
     this.formGroup.controls['MobileNumber'].disable()
@@ -343,6 +361,7 @@ export class AddLeadPage implements OnInit {
   enabledControl(){
     this.formGroup.controls['DistributorFirstName'].enable()
     this.formGroup.controls['DistributorLastName'].enable()
+    this.formGroup.controls['DistributorCode'].enable()
     this.formGroup.controls['UserFirstName'].enable()
     this.formGroup.controls['UserLastName'].enable()
     this.formGroup.controls['MobileNumber'].enable()
@@ -396,11 +415,70 @@ export class AddLeadPage implements OnInit {
   }
   
   onaddLead() {
+    var currentDateinstring=this.datepipe.transform(this.currentDate, 'yyyy-MM-dd')//.toISOString().slice(0,10)
     this.isAddLead=true
     this.isLeadFilter=false
     this.pageTitle="Add Lead"
+    this.saveEditButton="Add Lead"
     this.isScannedMandates=true
     this.enabledControl()
+    this.clearField()
+    this.formGroup['ApplicationDate']=currentDateinstring
+    this.formGroup['FirstCollectionDate']=currentDateinstring
+    this.formGroup['LastCollectionDate']=currentDateinstring
+    this.formGroup['MandateType']="PY"
+    this.formGroup['Frequency']="As and when presented"
+    this.formGroup.patchValue({
+      ApplicationDate:currentDateinstring,
+      FirstCollectionDate:currentDateinstring,
+      LastCollectionDate:currentDateinstring,
+      MandateType:"PY",
+      Frequency:"As and when presented"
+    });
+  }
+  
+  clearField(){
+    this.formGroup.patchValue({
+      DistributorFirstName: '', 
+      DistributorLastName: '',
+      DistributorCode:'',
+      UserFirstName:''			,
+      UserLastName:'',
+      MobileNumber:'',
+      Region:'',
+      Email:'',
+      MandateType:'',
+      ApplicationID:'',
+      ApplicationDate:'',
+      UMRNNo:'',
+      ApprovalStatus:'',
+      BankAccountNo:'',
+      AccountType:'',
+      BankIFSCCode:'',
+      Frequency:'',
+      FirstCollectionDate:'',
+      LastCollectionDate:''
+    });
+          
+    this.formGroup['DistributorFirstName']=''
+    this.formGroup['DistributorLastName']=''
+    this.formGroup['DistributorCode']=''    
+    this.formGroup['UserFirstName']=''
+    this.formGroup['UserLastName']=''
+    this.formGroup['MobileNumber']=''
+    this.formGroup['Region']=''
+    this.formGroup['Email']=''
+    this.formGroup['MandateType']=''
+    this.formGroup['ApplicationID']=''
+    this.formGroup['ApplicationDate']=''
+    this.formGroup['UMRNNo']=''
+    this.formGroup['ApprovalStatus']=''
+    this.formGroup['BankAccountNo']=''
+    this.formGroup['AccountType']=''
+    this.formGroup['BankIFSCCode']=''
+    this.formGroup['Frequency']=''
+    this.formGroup['FirstCollectionDate']=''
+    this.formGroup['LastCollectionDate']=''
   }
 
   backClick(){

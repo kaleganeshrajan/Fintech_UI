@@ -38,17 +38,17 @@ export class MyMandatesPage implements OnInit {
   async getmandatelist(){    
     this.apiService
     .getApiwithoutauthencticate(
-      'api/my_mandates/GetMyMandateDetails'
+      'api/my_mandates/GetMyMandateDetails/AIOCD0001'
     )
     .subscribe((result) => {        
       if (result!== null) {       
+        debugger
         this.mandatesDetails=result
       } 
     });
   }
 
-  async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no,distributorCode){    
-    
+  async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no,distributorCode){
     let postData;
       postData = {
         ID:id,
@@ -64,12 +64,12 @@ export class MyMandatesPage implements OnInit {
         message: "You have Initiated mandate cancellation for UMRN "+UMRN_no+" Please confirm if you want to proceed. <b> Note: This action cannot be reversed.</b>",        
         buttons: [
           {
-            text: 'No',
+            text: 'CANCEL',
             handler: (data: any) => {
             }
           },
           {
-            text: 'Yes',
+            text: 'CONFIRM',
             handler: (data: any) => {              
               this.updatemandate(type,postData);
             }
@@ -84,7 +84,7 @@ export class MyMandatesPage implements OnInit {
     }
   }
 
-  async updatemandate(type,postData) { 
+  async updatemandate(type,postData) {
       this.apiService
         .postApiOnlyWithContentType(
           'api/my_mandates/UpdateMandate',
@@ -96,6 +96,8 @@ export class MyMandatesPage implements OnInit {
               this.alertDialogs.alertDialog('', "Your mandate cancellation requet has been submitted. You can check the cancellation status on this page once your cancellation request has been processed.");
             }else if(type==1){
               this.alertDialogs.alertDialog('Success', "Record Updated successfully...!");
+            }else if(type==2){
+              this.alertDialogs.alertDialog('Success', "The mandates set as default...!");
             }
             
             this.getmandatelist()

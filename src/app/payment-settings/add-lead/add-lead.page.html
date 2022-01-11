@@ -166,6 +166,16 @@
         <ion-row>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
+              <ion-label position="floating">Distributor Code *</ion-label>
+              <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
+              <p *ngIf="formGroup.controls['DistributorCode'].errors && formGroup.controls['DistributorCode'].dirty"
+              style="color: red;">Distributor Code is required</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
               <ion-label position="floating">User First Name *</ion-label>
               <ion-input [value]="formGroup.UserFirstName" type="text" formControlName="UserFirstName"></ion-input>
               <p *ngIf="formGroup.controls['UserFirstName'].errors && formGroup.controls['UserFirstName'].dirty"
@@ -226,7 +236,7 @@
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" >    
             <span *ngIf="isScannedMandates">         
               <ion-input [value]="formGroup.MandateForm" type="file" (change)="onscannedFileChange($event)"  formControlName="MandateForm"></ion-input>             
-              <ion-text>Upload scanned mandate form</ion-text>
+              <ion-text>Upload scanned mandate form *</ion-text>
           </span>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">             
@@ -257,7 +267,7 @@
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
               <ion-label position="floating">Application Date *</ion-label>
-              <ion-input [value]="formGroup.ApplicationDate" formControlName="ApplicationDate" placeholder="" display-timezone="ist" type="date"></ion-input>
+              <ion-input [value]="formGroup.ApplicationDate" [max]="maxDate" formControlName="ApplicationDate" placeholder="" display-timezone="ist" type="date"></ion-input>
               <!-- <ion-datetime [value]="formGroup.ApplicationDate" display-timezone="ist" formControlName="ApplicationDate"></ion-datetime> -->
               <p *ngIf="formGroup.controls['ApplicationDate'].errors && formGroup.controls['ApplicationDate'].dirty"
               style="color: red;">Application Date is required</p>
