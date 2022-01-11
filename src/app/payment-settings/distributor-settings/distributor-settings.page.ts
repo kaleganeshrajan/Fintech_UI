@@ -18,6 +18,7 @@ export class DistributorSettingsPage implements OnInit {
   public paymentSettingId = 0;
   public DistributorCode: String;
   public distributorList: any[];
+  public accounttypeList:any[];
   
   constructor(
     private apiService: ApiService,
@@ -46,11 +47,13 @@ export class DistributorSettingsPage implements OnInit {
       BankAccountName: ['', Validators.required],
       IFSCCode: ['', Validators.required],
       UPI: [''],
-      DistributorCode: ['']
+      DistributorCode: [''],
+      AccountType:['', Validators.required]
     });
 
     this.createandupdate(null);
     this.getdistributorsetting();
+    this.getaccounttypelist();
   }
 
   async getdistributorsetting() {
@@ -64,7 +67,8 @@ export class DistributorSettingsPage implements OnInit {
               BankName:result.BankName,
               BankAccountName:result.BankAccountName,
               IFSCCode:result.IFSCCode,
-              UPI:result.UPI
+              UPI:result.UPI,
+              AccountType:result.AccountType
             });
             this.saveEditButton = result.ID == 0 ? 'Save' : 'Update';      
             this.paymentSettingId = result.ID;
@@ -96,7 +100,8 @@ export class DistributorSettingsPage implements OnInit {
         BankAccountName: this.formGroup.value.BankAccountName,
         IFSCCode: this.formGroup.value.IFSCCode,
         UPI: this.formGroup.value.UPI,
-        DistributorCode: this.formGroup.value.DistributorCode
+        DistributorCode: this.formGroup.value.DistributorCode,
+        AccountType: this.formGroup.value.AccountType
       };
 
       this.apiService
@@ -115,5 +120,17 @@ export class DistributorSettingsPage implements OnInit {
           }
         });
     }
+  }
+  
+  async getaccounttypelist(){    
+    this.apiService
+    .getApiwithoutauthencticate(
+      'api/masters/GetAccountType'
+    )
+    .subscribe((result) => {        
+      if (result!== null) {       
+         this.accounttypeList=result
+      } 
+    });
   }
 }

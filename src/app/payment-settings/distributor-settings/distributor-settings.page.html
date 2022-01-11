@@ -30,7 +30,7 @@
         <ion-row>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
-              <ion-label position="floating">Account Number</ion-label>
+              <ion-label position="floating">Account Number *</ion-label>
               <ion-input [value]="formGroup.AccountNumber" type="text" formControlName="AccountNumber"></ion-input>              
               <p *ngIf="formGroup.controls['AccountNumber'].errors && formGroup.controls['AccountNumber'].dirty"
               style="color: red;">Account Number is required</p>
@@ -38,7 +38,7 @@
           </ion-col>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
-              <ion-label position="floating">Bank Name</ion-label>
+              <ion-label position="floating">Bank Name *</ion-label>
               <ion-input [value]="formGroup.BankName" type="text" formControlName="BankName"></ion-input>
               <p *ngIf="formGroup.controls['BankName'].errors && formGroup.controls['BankName'].dirty"
               style="color: red;">Bank Name is required</p>
@@ -48,7 +48,7 @@
         <ion-row>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
-              <ion-label position="floating">Bank Account Name</ion-label>
+              <ion-label position="floating">Bank Account Name *</ion-label>
               <ion-input [value]="formGroup.BankAccountName" type="text" formControlName="BankAccountName"></ion-input>
               <p *ngIf="formGroup.controls['BankAccountName'].errors && formGroup.controls['BankAccountName'].dirty"
               style="color: red;">Bank Account Name is required</p>
@@ -56,7 +56,7 @@
           </ion-col>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
-              <ion-label position="floating">IFSC Code</ion-label>
+              <ion-label position="floating">IFSC Code *</ion-label>
               <ion-input [value]="formGroup.IFSCCode" type="text" formControlName="IFSCCode"></ion-input>
               <p *ngIf="formGroup.controls['IFSCCode'].errors && formGroup.controls['IFSCCode'].dirty"
               style="color: red;">IFSC Code is required</p>
@@ -65,8 +65,20 @@
         </ion-row>
         <ion-row>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item class="dropdown-style">
+              <ion-label position="floating">Account Type *</ion-label>
+              <ion-select value="{{formGroup['AccountType']}}"  interface="popover" formControlName="AccountType">
+                <ion-select-option *ngFor="let item of accounttypeList" value={{item.Code}}>
+                  {{ item.Name }}
+                </ion-select-option>
+              </ion-select>
+              <p *ngIf="formGroup.controls['AccountType'].errors && formGroup.controls['AccountType'].dirty"
+              style="color: red;">Account Type is required</p>
+            </ion-item>
+          </ion-col>   
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
-              <ion-label position="floating">UPI</ion-label>
+              <ion-label position="floating">UPI/VPA</ion-label>
               <ion-input [value]="formGroup.UPI" type="text" formControlName="UPI"></ion-input>
             </ion-item>
           </ion-col>
