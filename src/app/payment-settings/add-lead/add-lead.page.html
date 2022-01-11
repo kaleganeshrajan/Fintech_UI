@@ -119,45 +119,263 @@
     <ion-grid class="form-card margin-large-top" *ngIf="isLeadFilter">
       <ion-grid class="ion-margin">
         <ion-row>
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Distributor Name</th>
-                <th>User Name</th>
-                <th>Region</th>
-                <th>Mobile Number</th>
-                <th>Email</th>
-                <th>Application Id</th>
-                <th>Application Date</th>
-                <th>Approval Status</th>
-                <th>Last Updated Date</th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let item of leadDetails">
-              <tr>
-                <td>{{item.DistributorFirstName}} {{item.DistributorLastName}}</td>
-                <td>{{item.UserFirstName}} {{item.UserLastName}}</td>
-                <td>{{item.Region}}</td>
-                <td>{{item.MobileNumber}}</td>
-                <td>{{item.Email}}</td>
-                <td>{{item.ApplicationID}}</td>
-                <td>{{item.ApplicationDate.split("T")[0]}}</td>
-                <td>{{item.ApprovalStatus}}</td>
-                <td>{{item.UpdatedDate.split("T")[0]}}</td>
-                <td>
-                  <a *ngIf="item.ApprovalStatus!='Approved'" (click)="oneditClick(item.ID)"
-                    class="filter-button">Edit</a>
-                </td>
-                <td>
-                  <a (click)="onviewClick(item.ID)" class="filter-button">View</a>
-                </td>
-                <td>
-                  <a (click)="ondeleteClick(item.ID)" *ngIf="item.ApprovalStatus!='Approved'"
-                    class="filter-button">Delete</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">            
+              <ion-back-button></ion-back-button>
+              <ion-text class="control-name">Distributor Details</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Distributor First Name *</ion-label>
+              <ion-input [value]="formGroup.DistributorFirstName" type="text" formControlName="DistributorFirstName"></ion-input>
+              <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('required') && formGroup.controls['DistributorFirstName'].dirty"
+              style="color: red;">First Name is required</p>
+              <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('maxlength')"
+              style="color: red;">First Name can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Distributor Last Name *</ion-label>
+              <ion-input [value]="formGroup.DistributorLastName" type="text" formControlName="DistributorLastName"></ion-input>
+              <p *ngIf="formGroup.controls['DistributorLastName'].hasError('required') && formGroup.controls['DistributorLastName'].dirty"
+              style="color: red;">Last Name is required</p>
+              <p *ngIf="formGroup.controls['DistributorLastName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['DistributorLastName'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Distributor Code *</ion-label>
+              <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('required') && formGroup.controls['DistributorCode'].dirty"
+              style="color: red;">Distributor Code is required</p>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">User First Name *</ion-label>
+              <ion-input [value]="formGroup.UserFirstName" type="text" formControlName="UserFirstName"></ion-input>
+              <p *ngIf="formGroup.controls['UserFirstName'].hasError('required') && formGroup.controls['UserFirstName'].dirty"
+              style="color: red;">First Name is required</p>
+              <p *ngIf="formGroup.controls['UserFirstName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['UserFirstName'].hasError('maxlength')"
+              style="color: red;">First Name can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">User Last Name *</ion-label>
+              <ion-input [value]="formGroup.UserLastName" type="text" formControlName="UserLastName"></ion-input>
+              <p *ngIf="formGroup.controls['UserLastName'].hasError('required') && formGroup.controls['UserLastName'].dirty"
+              style="color: red;">Last Name is required</p>
+              <p *ngIf="formGroup.controls['UserLastName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['UserLastName'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>       
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Mobile Number *</ion-label>
+              <ion-input [value]="formGroup.MobileNumber" type="text" formControlName="MobileNumber"></ion-input>
+              <p *ngIf="formGroup.controls['MobileNumber'].hasError('required') && formGroup.controls['MobileNumber'].dirty"
+              style="color: red;">Mobile Number is required</p>
+              <p *ngIf="formGroup.controls['MobileNumber'].hasError('pattern')"
+              style="color: red;">Please enter number only</p>
+              <p *ngIf="formGroup.controls['MobileNumber'].hasError('maxlength')"
+              style="color: red;">Mobile Number can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Region *</ion-label>
+              <ion-input [value]="formGroup.Region" type="text" formControlName="Region"></ion-input>
+              <p *ngIf="formGroup.controls['Region'].hasError('required') && formGroup.controls['Region'].dirty"
+              style="color: red;">Region is required</p>
+              <p *ngIf="formGroup.controls['Region'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['Region'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 20 digit</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">E-mail *</ion-label>
+              <ion-input [value]="formGroup.Email" type="text" formControlName="Email"></ion-input>
+              <p *ngIf="formGroup.controls['Email'].hasError('required') && formGroup.controls['Email'].dirty"
+              style="color: red;">Email is required</p>
+              <p *ngIf="formGroup.controls['Email'].hasError('email')"
+              style="color: red;">Please enter valid E-mail Id</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item class="dropdown-style">
+              <ion-label position="floating">Mandate Type *</ion-label>
+              <ion-select  value="{{formGroup['MandateType']}}"  interface="popover" formControlName="MandateType">
+                <ion-select-option *ngFor="let item of mandateList" value={{item.Code}}>
+                  {{ item.Name }}
+                </ion-select-option>
+                </ion-select>
+                <p *ngIf="formGroup.controls['MandateType'].errors && formGroup.controls['MandateType'].dirty"
+              style="color: red;">Mandate Type is required</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>  
+        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>   
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" >    
+            <span *ngIf="isScannedMandates">         
+              <ion-input [value]="formGroup.MandateForm" type="file" (change)="onscannedFileChange($event)"  formControlName="MandateForm"></ion-input>             
+              <ion-text>Upload scanned mandate form *</ion-text>
+          </span>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">             
+              <ion-input [value]="formGroup.MailConfirmation" type="file" (change)="onconfirmationFileChange($event)" accept="application/pdf" formControlName="MailConfirmation"></ion-input>             
+            <ion-text>Upload mail confirmation (pdf only)</ion-text>
+          </ion-col>
+        </ion-row>   
+        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
+        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
+        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
+        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
+        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">            
+              <ion-back-button></ion-back-button>
+              <ion-text class="control-name">Mandate Details</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Application ID *</ion-label>
+              <ion-input [value]="formGroup.ApplicationID" type="text" formControlName="ApplicationID"></ion-input>
+              <p *ngIf="formGroup.controls['ApplicationID'].hasError('required') && formGroup.controls['ApplicationID'].dirty"
+              style="color: red;">Application ID is required</p>
+              <p *ngIf="formGroup.controls['ApplicationID'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['ApplicationID'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Application Date *</ion-label>
+              <ion-input [value]="formGroup.ApplicationDate" [max]="maxDate" formControlName="ApplicationDate" placeholder="" display-timezone="ist" type="date"></ion-input>
+              <!-- <ion-datetime [value]="formGroup.ApplicationDate" display-timezone="ist" formControlName="ApplicationDate"></ion-datetime> -->
+              <p *ngIf="formGroup.controls['ApplicationDate'].errors && formGroup.controls['ApplicationDate'].dirty"
+              style="color: red;">Application Date is required</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">UMRN No</ion-label>
+              <ion-input [value]="formGroup.UMRNNo" type="text" formControlName="UMRNNo"></ion-input>
+              <p *ngIf="formGroup.controls['UMRNNo'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 10 digit</p>
+              <p *ngIf="formGroup.controls['UMRNNo'].hasError('pattern')"
+              style="color: red;">Please enter number only</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item class="dropdown-style">
+              <ion-label position="floating">Approval Status *</ion-label>
+              <ion-select value="{{formGroup['ApprovalStatus']}}" interface="popover" formControlName="ApprovalStatus">
+                <ion-select-option *ngFor="let item of statusList" value={{item.Code}}>
+                  {{ item.Name }}
+                </ion-select-option>
+              </ion-select>
+              <p *ngIf="formGroup.controls['ApprovalStatus'].errors && formGroup.controls['ApprovalStatus'].dirty"
+              style="color: red;">Approval Status is required</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Bank Account No *</ion-label>
+              <ion-input [value]="formGroup.BankAccountNo" type="number" formControlName="BankAccountNo"></ion-input>
+              <p *ngIf="formGroup.controls['BankAccountNo'].hasError('required') && formGroup.controls['BankAccountNo'].dirty"
+              style="color: red;">Bank Account No is required</p>
+              <p *ngIf="formGroup.controls['BankAccountNo'].hasError('pattern')"
+              style="color: red;">Please enter number only</p>
+              <p *ngIf="formGroup.controls['BankAccountNo'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 20 digit</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item class="dropdown-style">
+              <ion-label position="floating">Account Type *</ion-label>
+              <ion-select value="{{formGroup['AccountType']}}"  interface="popover" formControlName="AccountType">
+                <ion-select-option *ngFor="let item of accounttypeList" value={{item.Code}}>
+                  {{ item.Name }}
+                </ion-select-option>
+              </ion-select>
+              <p *ngIf="formGroup.controls['AccountType'].errors && formGroup.controls['AccountType'].dirty"
+              style="color: red;">Account Type is required</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Bank IFSC Code *</ion-label>
+              <ion-input [value]="formGroup.BankIFSCCode" type="text" formControlName="BankIFSCCode"></ion-input>
+              <p *ngIf="formGroup.controls['BankIFSCCode'].hasError('required') && formGroup.controls['BankIFSCCode'].dirty"
+              style="color: red;">Bank IFSC Code is required</p>
+              <p *ngIf="formGroup.controls['BankIFSCCode'].hasError('pattern') || formGroup.controls['BankIFSCCode'].hasError('maxlength') || formGroup.controls['BankIFSCCode'].hasError('minlength')"
+              style="color: red;">Please enter valid IFSC Code</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Frequency *</ion-label>
+              <ion-input [value]="formGroup.Frequency" type="text" formControlName="Frequency"></ion-input>
+              <p *ngIf="formGroup.controls['Frequency'].errors && formGroup.controls['Frequency'].dirty"
+              style="color: red;">Frequency is required</p>
+            </ion-item>
+          </ion-col>     
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">First Collection Date *</ion-label>
+              <ion-input [value]="formGroup.FirstCollectionDate" formControlName="FirstCollectionDate" placeholder="" display-timezone="ist" type="date"></ion-input>
+              <!-- <ion-datetime [value]="formGroup.FirstCollectionDate" display-timezone="ist" formControlName="FirstCollectionDate"></ion-datetime> -->
+              <p *ngIf="formGroup.controls['FirstCollectionDate'].errors && formGroup.controls['FirstCollectionDate'].dirty"
+              style="color: red;">First Collection Date is required</p>
+            </ion-item>
+          </ion-col>     
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
+              <ion-label position="floating">Last Collection Date *</ion-label>
+              <ion-input [value]="formGroup.LastCollectionDate" formControlName="LastCollectionDate" placeholder="" display-timezone="ist" type="date"></ion-input>
+              <!-- <ion-datetime [value]="formGroup.LastCollectionDate" display-timezone="ist" formControlName="LastCollectionDate"></ion-datetime> -->
+              <p *ngIf="formGroup.controls['LastCollectionDate'].errors && formGroup.controls['LastCollectionDate'].dirty"
+              style="color: red;">Last Collection Date is required</p>
+            </ion-item>
+          </ion-col>     
         </ion-row>
       </ion-grid>
     </ion-grid>
