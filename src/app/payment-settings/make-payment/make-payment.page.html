@@ -27,8 +27,10 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-padding">
           <ion-item>
             <ion-label position="floating">Search Text</ion-label>
-            <ion-input [value]="formGroup.SearchText" formControlName="SearchText" type="text"
-              class="input-padding-btm">
+            <ion-input
+              [disabled]="formGroup.value.SearchFilterType=='invno' || formGroup.value.SearchFilterType=='orderno'? false : true"
+              [value]="formGroup.value.SearchFilterType=='invno' || formGroup.value.SearchFilterType=='orderno'? '' : formGroup.SearchText"
+              formControlName="SearchText" type="text" class="input-padding-btm">
             </ion-input>
           </ion-item>
         </ion-col>
@@ -95,12 +97,12 @@
                 <th data-exclude="true">
                   Select
                 </th>
-                <th data-b-a-s="thin" >Invoice Details</th>
-                <th data-b-a-s="thin" >Invoice Date</th>
-                <th data-b-a-s="thin" >Order No</th>
-                <th data-b-a-s="thin" >Amount</th>
-                <th data-b-a-s="thin" >LR Date</th>
-                <th data-b-a-s="thin" >Due Date</th>
+                <th data-b-a-s="thin">Invoice Details</th>
+                <th data-b-a-s="thin">Invoice Date</th>
+                <th data-b-a-s="thin">Order No</th>
+                <th data-b-a-s="thin">Amount</th>
+                <th data-b-a-s="thin">LR Date</th>
+                <th data-b-a-s="thin">Due Date</th>
               </tr>
             </thead>
             <tbody *ngFor="let item of InvoiceList">
@@ -109,11 +111,11 @@
                   <ion-checkbox [checked]="item.IsScheduled"
                     (ionChange)="updateInvoiceList(item.ID, 'IsScheduled', $event.target.checked)"></ion-checkbox>
                 </td>
-                <td data-b-a-s="thin" >{{item.InvoiceDetails}}</td>
-                <td data-b-a-s="thin" >{{parseDate(item.InvoiceDate)}}</td>
-                <td data-b-a-s="thin" >{{item.OrderNo}}</td>
-                <td data-b-a-s="thin" data-num-fmt="0" >{{item.Amount}}</td>
-                <td data-b-a-s="thin" >{{parseDate(item.LRDate)}}</td>
+                <td data-b-a-s="thin">{{item.InvoiceNo}}</td>
+                <td data-b-a-s="thin">{{parseDate(item.InvoiceDate)}}</td>
+                <td data-b-a-s="thin">{{item.OrderNo}}</td>
+                <td data-b-a-s="thin" data-num-fmt="0">{{item.Amount}}</td>
+                <td data-b-a-s="thin">{{parseDate(item.LRDate)}}</td>
                 <td data-b-a-s="thin" class="ion-no-padding">
                   <span hidden>{{item.DueDate}}</span>
                   <ion-item>
@@ -155,7 +157,7 @@
           </thead>
           <tbody *ngFor="let item of ScheduleInvList">
             <tr>
-              <td>Inv no.{{item.InvoiceDetails}}</td>
+              <td>Inv no.{{item.InvoiceNo}}</td>
               <td>{{parseDate(item.InvoiceDate)}}</td>
               <td>{{item.OrderNo}}</td>
               <td>{{item.Amount}}</td>
@@ -221,7 +223,10 @@
     <!-- Send OTP Button -->
     <ion-grid class="margin-small-top margin-small-left" *ngIf="isScheduleInv && !isOTPSent">
       <ion-row class="padding-mini">
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
+          <a>Accept Terms & Conditions and</a>
+        </ion-col>
+          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
           <ion-button (click)="sendOtp()" class="full-width">
             <ion-icon slot="start" name="phone-portrait"></ion-icon>
             <small>Send OTP for Verification</small>
@@ -233,26 +238,9 @@
     <ion-grid class="margin-small-top margin-small-left" *ngIf="isOTPSent">
       <ion-row class="padding-mini">
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2">
-          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp1 required="true"
-            maxLength="1" [(ngModel)]="OTP[0]" (keyup)="otpController($event,otp2,'')">
-          </ion-input>
-          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp2 required="true"
-            maxLength="1" [(ngModel)]="OTP[1]" (keyup)="otpController($event,otp3,otp1)">
-          </ion-input>
-          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp3 required="true"
-            maxLength="1" [(ngModel)]="OTP[2]" (keyup)="otpController($event,otp4,otp2)">
-          </ion-input>
-          <ion-input class="otp-input" [ngModelOptions]="{standalone: true}" type="number" #otp4 required="true"
-            maxLength="1" [(ngModel)]="OTP[3]" (keyup)="otpController($event,otp5,otp3)">
-          </ion-input>
-
-          <!-- <ion-input class="otp-input" type="number" #otp5 required="true" maxLength="1" [(ngModel)]="OTP[4]"
-            (keyup)="otpController($event,otp6,otp4)">
-          </ion-input>
-
-          <ion-input class="otp-input" type="number" #otp6 required="true" maxLength="1" [(ngModel)]="OTP[5]"
-            (keyup)="otpController($event,'',otp5)">
-          </ion-input> -->
+          <code-input [isCodeHidden]="false" [codeLength]="4" (codeChanged)="onCodeChanged($event)"
+            (codeCompleted)="onCodeCompleted($event)">
+          </code-input>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
           <ion-button (click)="verifyandconfirm()" class="full-width">

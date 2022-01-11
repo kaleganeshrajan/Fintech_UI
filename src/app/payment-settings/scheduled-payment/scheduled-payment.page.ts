@@ -8,12 +8,12 @@ import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
-	selector: 'app-schedule-payment',
-	templateUrl: './schedule-payment.page.html',
-	styleUrls: ['./schedule-payment.page.scss'],
+	selector: 'app-scheduled-payment',
+	templateUrl: './scheduled-payment.page.html',
+	styleUrls: ['./scheduled-payment.page.scss'],
 	providers: [NetworkProviderService, Network]
 })
-export class SchedulePaymentPage implements OnInit {
+export class ScheduledPaymentPage implements OnInit {
 	formGroup!: FormGroup;
 	public DateFilterList: any[]
 	public SearchFilterList: any[];

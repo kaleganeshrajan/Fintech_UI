@@ -30,8 +30,8 @@ const routes: Routes = [
 		loadChildren: './payment-settings/make-payment/make-payment.module#MakePaymentPageModule'
 	},
 	{
-		path: 'schedule-payment',
-		loadChildren: './payment-settings/schedule-payment/schedule-payment.module#SchedulePaymentPageModule',
+		path: 'scheduled-payment',
+		loadChildren: './payment-settings/scheduled-payment/scheduled-payment.module#ScheduledPaymentPageModule',
 
 	},
 	{

@@ -16,12 +16,10 @@ import TableToExcel from "@stanlystark/table-to-excel";
 export class MakePaymentPage implements OnInit {
 	formGroup!: FormGroup;
 	public DateFilterList: any[]
-	public otp: any[]
 	public SearchFilterList: any[];
 	public InvoiceList: any[];
 	public ScheduleInvList: any[];
 	public saveUpdateButton = 'Save';
-	public OTP: string = '';
 	public isSelectInv = true;
 	public isScheduleInv = false;
 	public isOTPSent = false;
@@ -76,7 +74,7 @@ export class MakePaymentPage implements OnInit {
 				"api/masters/GetSearchFilter"
 			).subscribe((result) => {
 				if (result !== null) {
-					this.SearchFilterList = result
+					this.SearchFilterList = result;
 				}
 			})
 
@@ -198,28 +196,6 @@ export class MakePaymentPage implements OnInit {
 		this.totalInvoiceAmt = sum
 	}
 
-	// OTP Controller
-	otpController(event, next, prev, index) {
-		// if(event.key == "Backspace"){
-		// 	this.otp.pop()
-		// }
-		// else{
-		// 	this.otp.push(event.key)
-		// }
-		if (index == 4) {
-			console.log("submit")
-		}
-		if (event.target.value.length < 1 && prev) {
-			prev.setFocus()
-		}
-		else if (next && event.target.value.length > 0) {
-			next.setFocus();
-		}
-		else {
-			return 0;
-		}
-	}
-
 	async sendOtp() {
 		this.isSelectInv = false;
 		this.isScheduleInv = false;
@@ -284,5 +260,22 @@ export class MakePaymentPage implements OnInit {
 				name: "Sheet1"
 			},
 		});
+	}
+
+	onCodeChanged(code: string) {
+		console.log("Changed:", code)
+	}
+
+	// this called only if user entered full code
+	onCodeCompleted(code: string) {
+		let postData = { "otp": code }
+		this.apiService
+			.postApiOnlyWithContentType(
+				'',
+				postData
+			)
+			.subscribe((result) => {
+				console.log(result)
+			})
 	}
 }
