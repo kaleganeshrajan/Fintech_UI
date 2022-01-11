@@ -47,7 +47,7 @@ export class ScheduledPaymentPage implements OnInit {
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
 			ID: [0],
-			SearchText: [''],
+			SearchInvoice: [''],
 			FromDate: ['1970-01-01T13:16:54.999+05:30'],
 			ToDate: ['2069-01-01T13:16:54.999+05:30'],
 			SearchFilterType: [''],
@@ -91,7 +91,7 @@ export class ScheduledPaymentPage implements OnInit {
 
 	async searchInvoice() {
 		let postData = {
-			SearchText: this.formGroup.value.SearchText,
+			SearchInvoice: this.formGroup.value.SearchInvoice,
 			FromDate: this.formGroup.value.FromDate,
 			ToDate: this.formGroup.value.ToDate,
 			SearchFilterType: this.formGroup.value.SearchFilterType,

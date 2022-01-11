@@ -49,7 +49,7 @@ export class CompanySettingsPage implements OnInit {
 			IFSCCode: ['', Validators.required],
 			AccountType: ['', Validators.required],
 			UPI: ['', Validators.required],
-			PaymentPeriod: ['', Validators.required],
+			PaymentPeriod: [''],
 			ECCollType: ['', Validators.required],
 			ECCollValue: ['', Validators.required],
 			UCollType: ['', Validators.required],
@@ -76,6 +76,18 @@ export class CompanySettingsPage implements OnInit {
 		else {
 			this.formGroup.controls['IsBeneficiaryActive'].disable()
 		}
+	}
+
+	fieldEnable(field){
+		console.log(this.formGroup[field])
+		// if (this.formGroup[field]) {
+		// 	this.formGroup.controls[field].enable()
+		// 	this.formGroup.controls[field].enable()
+		// }
+		// else {
+		// 	this.formGroup.controls[field].disable()
+		// 	this.formGroup.controls[field].disable()
+		// }
 	}
 
 	async getAllList() {
