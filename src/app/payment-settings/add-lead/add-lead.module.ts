@@ -6,7 +6,6 @@ import { IonicModule } from '@ionic/angular';
 import { AddLeadPage } from './add-lead.page';
 import { IonicSelectableModule } from 'ionic-selectable';
 
-
 const routes: Routes = [
 	{
 		path: '',

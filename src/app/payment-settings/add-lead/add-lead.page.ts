@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Network } from '@ionic-native/network/ngx'
 import { NetworkProviderService } from 'src/app/utility/network-provider.service';
 import { ApiService } from 'src/app/utility/api.service';
-import { FormGroup,FormBuilder,Validators} from '@angular/forms';
+import { FormGroup,FormBuilder,Validators,FormControl} from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
+import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common'
 
 @Component({
@@ -36,13 +37,14 @@ export class AddLeadPage implements OnInit {
   public viewLeadDetails:any;
   public minDate:any;
   public maxDate:any;
+  public confirm_box:any;
 
   constructor(
     private apiService: ApiService,
     private formBuilder: FormBuilder,
     private alertDialogs: AlertDialogs,
-    public datepipe: DatePipe
-    
+    public datepipe: DatePipe,
+    public alertCtrl: AlertController
   ) { }
 
   ngOnInit():void { 
@@ -119,7 +121,7 @@ export class AddLeadPage implements OnInit {
       Region:['', [Validators.required,Validators.pattern('[a-zA-Z0-9 ]+'),Validators.maxLength(20)]],
       Email:['', [Validators.required,Validators.email]],
       MandateType:['', Validators.required],
-      MandateForm:[''],
+      MandateForm:['',Validators.required],
       MailConfirmation:[''],
       ApplicationID:['', [Validators.required,Validators.pattern('[a-zA-Z0-9]+'),Validators.maxLength(10)]],
       ApplicationDate:['', Validators.required],
@@ -140,7 +142,7 @@ export class AddLeadPage implements OnInit {
       FilterDownloadFormat:['']
 		});
 
-    this.addlead();
+    //this.addlead();
 	}
 
   async getmandatelist(){    
@@ -180,11 +182,12 @@ export class AddLeadPage implements OnInit {
   }
 
   async addlead(){   
+    this.validateForm()
     if (this.formGroup.valid){
-      if (this.scannedFile==""){
-        this.alertDialogs.alertDialog('Error', "Please upload scanned mandate form");     
-        return
-      }
+      // if (this.scannedFile==""){
+      //   this.alertDialogs.alertDialog('Error', "Please upload scanned mandate form");     
+      //   return
+      // }
        
       let postData;
       postData = {
@@ -211,7 +214,7 @@ export class AddLeadPage implements OnInit {
         CreatedBy:"Ganesh",
         IsActive:true
       };
-      
+      debugger
       let formData = new FormData();
       
       formData.append("scanned_file", this.scannedFile);    
@@ -241,6 +244,33 @@ export class AddLeadPage implements OnInit {
           });
     }
   }
+
+  validateForm() {
+    if (this.formGroup.invalid) {
+      this.formGroup.controls['DistributorFirstName'].markAsTouched();
+      this.formGroup.controls['DistributorLastName'].markAsTouched();
+      this.formGroup.controls['DistributorCode'].markAsTouched();
+      this.formGroup.controls['UserFirstName'].markAsTouched();
+      this.formGroup.controls['UserLastName'].markAsTouched();
+      this.formGroup.controls['MobileNumber'].markAsTouched();
+      this.formGroup.controls['Region'].markAsTouched();
+      this.formGroup.controls['Email'].markAsTouched();
+      this.formGroup.controls['MandateType'].markAsTouched();
+      this.formGroup.controls['ApplicationID'].markAsTouched();
+      this.formGroup.controls['ApplicationDate'].markAsTouched();
+      this.formGroup.controls['ApprovalStatus'].markAsTouched();
+      this.formGroup.controls['BankAccountNo'].markAsTouched();
+      this.formGroup.controls['AccountType'].markAsTouched();
+      this.formGroup.controls['BankIFSCCode'].markAsTouched();
+      this.formGroup.controls['Frequency'].markAsTouched();
+      this.formGroup.controls['FirstCollectionDate'].markAsTouched();
+      this.formGroup.controls['LastCollectionDate'].markAsTouched();
+      this.formGroup.controls['MandateForm'].markAsTouched();
+      
+      return;
+    }
+    // do something else
+ }
 
   async getLeaddetails() {  
 		  let postData;      
@@ -387,19 +417,36 @@ export class AddLeadPage implements OnInit {
     this.pageTitle="View Leads"
   }
   
-  ondeleteClick(id){
-    this.apiService
-			.getApiwithoutauthencticate(
-				'api/lead_details/DeleteLead/'+Number(id)
-			)
-			.subscribe((result) => {        
-				if (result!== null) {          
-          if (result===true){
-            this.alertDialogs.alertDialog('Success', "Lead has been deleted!");     
-            this.getLeaddetails()
+  async ondeleteClick(id){
+    this.confirm_box=await this.alertCtrl.create({
+      header: 'Prompt Alert',
+      message: "Are you sure you want to delete?",        
+      buttons: [
+        {
+          text: 'CANCEL',
+          handler: (data: any) => {
           }
-				} 
-			});
+        },
+        {
+          text: 'CONFIRM',
+          handler: (data: any) => {              
+            this.apiService
+              .getApiwithoutauthencticate(
+                'api/lead_details/DeleteLead/'+Number(id)
+              )
+              .subscribe((result) => {        
+                if (result!== null) {          
+                  if (result===true){
+                    // this.alertDialogs.alertDialog('Success', "Lead has been deleted!");     
+                    this.getLeaddetails()
+                  }
+                } 
+              });
+          }
+        }
+      ]
+    }); 
+    await this.confirm_box.present();   
   }
 
   clearFilter(){
@@ -488,3 +535,4 @@ export class AddLeadPage implements OnInit {
     this.pageTitle="E-cheque/E-nach Leads"
   }
 }
+
