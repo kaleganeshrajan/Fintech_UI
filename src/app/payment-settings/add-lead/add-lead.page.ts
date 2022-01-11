@@ -73,13 +73,16 @@ export class AddLeadPage implements OnInit {
     this.formGroup['FirstCollectionDate']=currentDateinstring
     this.formGroup['LastCollectionDate']=currentDateinstring
     this.formGroup['MandateType']="PY"
+    this.formGroup['Frequency']="As and when presented"
     this.formGroup.patchValue({
       FilterToDate: currentDateinstring, 
       FilterFromDate:this.firstDay, //this.firstDay.toISOString(),
       ApplicationDate:currentDateinstring,
       FirstCollectionDate:currentDateinstring,
       LastCollectionDate:currentDateinstring,
-      FilterNoEntry:"10"
+      FilterNoEntry:"10",
+      Frequency:"As and when presented",
+      MandateType:"PY"
     });
   }
 
@@ -177,7 +180,6 @@ export class AddLeadPage implements OnInit {
   }
 
   async addlead(){   
-    debugger
     if (this.formGroup.valid){
       if (this.scannedFile==""){
         this.alertDialogs.alertDialog('Error', "Please upload scanned mandate form");     
@@ -425,11 +427,13 @@ export class AddLeadPage implements OnInit {
     this.formGroup['FirstCollectionDate']=currentDateinstring
     this.formGroup['LastCollectionDate']=currentDateinstring
     this.formGroup['MandateType']="PY"
+    this.formGroup['Frequency']="As and when presented"
     this.formGroup.patchValue({
       ApplicationDate:currentDateinstring,
       FirstCollectionDate:currentDateinstring,
       LastCollectionDate:currentDateinstring,
-      MandateType:"PY"
+      MandateType:"PY",
+      Frequency:"As and when presented"
     });
   }
   

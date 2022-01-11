@@ -48,8 +48,7 @@ export class MyMandatesPage implements OnInit {
     });
   }
 
-  async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no,distributorCode){    
-    
+  async update(type,id,notificationcheck,priorDays,setAsDefault,cancelMandates,UMRN_no,distributorCode){
     let postData;
       postData = {
         ID:id,
@@ -85,8 +84,7 @@ export class MyMandatesPage implements OnInit {
     }
   }
 
-  async updatemandate(type,postData) { 
-    debugger
+  async updatemandate(type,postData) {
       this.apiService
         .postApiOnlyWithContentType(
           'api/my_mandates/UpdateMandate',
