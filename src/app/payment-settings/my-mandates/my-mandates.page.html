@@ -17,19 +17,19 @@
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>UMRN No : </b></ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UMRNNo}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Account Number : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.AccountNumber}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.BankAccountNo}}</ion-col>
             </ion-row>
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Account Holder's Name : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.AccountHolderName}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DistributorFirstName}} {{item.DistributorLastName}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Bank Name : </b></ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.BankName}}</ion-col>
             </ion-row>
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>IFSC Code : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.IFSCCode}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.BankIFSCCode}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Enabled On (Date) : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.EnabledOn.split("T")[0]}}</ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ApplicationDate.split("T")[0]}}</ion-col>
             </ion-row>   
             <ion-row>
                 <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Max Amount : </b></ion-col>
@@ -39,9 +39,9 @@
             </ion-row>    
             <ion-row>
                 <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Status : </b></ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Status}}</ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ApprovalStatusName}}</ion-col>
                 <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Mandate Registration Mode : </b></ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.RegistrationMode}}</ion-col>
+                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.MandateTypeName}}</ion-col>
             </ion-row>    
             <ion-row>
                 <ion-col size-xs="6" size-sm="6" size-md="1" size-lg="1"><b><ion-checkbox #notificationSetting checked="{{item.NotificationSetting}}" color="primary" slot="start"></ion-checkbox></b></ion-col>
