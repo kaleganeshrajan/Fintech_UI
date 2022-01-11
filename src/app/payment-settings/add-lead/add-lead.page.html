@@ -1,32 +1,35 @@
-<ion-content padding="true" class="background-white">    
-    <ion-grid class="ion-no-padding">
+<ion-content padding="true" class="background-white">
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+        <ion-item lines="none" class="position-left" color="transparent">
+          <ion-back-button (click)="backClick()" defaultHref="/"></ion-back-button>
+          <ion-text class="pageTitle">{{pageTitle}}</ion-text>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <form [formGroup]="formGroup" class="panel-body">
+    <ion-grid *ngIf="isLeadFilter">
       <ion-row>
-        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
-          <ion-item lines="none" class="position-left" color="transparent">
-            <ion-back-button (click)="backClick()" defaultHref="/"></ion-back-button>
-            <ion-text class="pageTitle">{{pageTitle}}</ion-text>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <form [formGroup]="formGroup" class="panel-body" > 
-      <ion-grid *ngIf="isLeadFilter">
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="3" class="ion-no-padding">
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">Approval Status</ion-label>
-              <ion-select [value]="formGroup.FilterApproveStatus" formControlName="FilterApproveStatus" interface="popover">
-                <ion-select-option value="">
-                  Select All
-                </ion-select-option>
-                <ion-select-option *ngFor="let item of statusList" value={{item.Code}}>
-                  {{ item.Name }}
-                </ion-select-option>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="8" class="ion-no-padding">
+          <ion-row>
+            <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="4" class="ion-no-padding">
+              <ion-item class="dropdown-style">
+                <ion-label position="floating">Approval Status</ion-label>
+                <ion-select [value]="formGroup.FilterApproveStatus" formControlName="FilterApproveStatus"
+                  interface="popover">
+                  <ion-select-option value="">
+                    Select All
+                  </ion-select-option>
+                  <ion-select-option *ngFor="let item of statusList" value={{item.Code}}>
+                    {{ item.Name }}
+                  </ion-select-option>
                 </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="3" class="ion-no-padding">
-            <!-- <ion-item class="dropdown-style">
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="4" class="ion-no-padding">
+              <!-- <ion-item class="dropdown-style">
               <ion-label position="floating">Distributor Name</ion-label> 
               <ionic-selectable                                 
                 [items]="distributornameList"
@@ -36,373 +39,415 @@
                 [canSearch]="true" interface="popover">
               </ionic-selectable>
             </ion-item> -->
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">Distributor Name</ion-label>              
-              <ion-select [value]="formGroup.FilterDistributorName" formControlName="FilterDistributorName" interface="popover">
-                <ion-select-option value="">
-                  Select All
-                </ion-select-option>
-                <ion-select-option *ngFor="let item of distributornameList" value={{item.DistributorFirstName}}>
-                  {{ item.DistributorFirstName }} {{item.DistributorLastName}}
-                </ion-select-option>
+              <ion-item class="dropdown-style">
+                <ion-label position="floating">Distributor Name</ion-label>
+                <ion-select [value]="formGroup.FilterDistributorName" formControlName="FilterDistributorName"
+                  interface="popover">
+                  <ion-select-option value="">
+                    Select All
+                  </ion-select-option>
+                  <ion-select-option *ngFor="let item of distributornameList" value={{item.DistributorFirstName}}>
+                    {{ item.DistributorFirstName }} {{item.DistributorLastName}}
+                  </ion-select-option>
                 </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="3" class="ion-no-padding">
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">No. Of Entries</ion-label>
-              <ion-select [value]="formGroup.FilterNoEntry" formControlName="FilterNoEntry" interface="popover">
-                <ion-select-option value="10">10</ion-select-option>
-                <ion-select-option value="20">20</ion-select-option>
-                <ion-select-option value="30">30</ion-select-option>
-                <ion-select-option value="40">40</ion-select-option>
-                <ion-select-option value="50">50</ion-select-option>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="4" class="ion-no-padding">
+              <ion-item class="dropdown-style">
+                <ion-label position="floating">No. Of Entries</ion-label>
+                <ion-select [value]="formGroup.FilterNoEntry" formControlName="FilterNoEntry" interface="popover">
+                  <ion-select-option value="10">10</ion-select-option>
+                  <ion-select-option value="20">20</ion-select-option>
+                  <ion-select-option value="30">30</ion-select-option>
+                  <ion-select-option value="40">40</ion-select-option>
+                  <ion-select-option value="50">50</ion-select-option>
                 </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="3" class="ion-no-padding">
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">Download Format</ion-label>
-              <ion-select [value]="formGroup.FilterDownloadFormat" formControlName="FilterDownloadFormat" interface="popover">
-                <ion-select-option value="">
-                  Select All
-                </ion-select-option>
-                <ion-select-option value="pdf">PDF</ion-select-option>
-                <ion-select-option value="elsx">EXCEL</ion-select-option>
-                <ion-select-option value="csv">CSV</ion-select-option>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="4" class="ion-no-padding">
+              <ion-item class="dropdown-style">
+                <ion-label position="floating">Download Format</ion-label>
+                <ion-select [value]="formGroup.FilterDownloadFormat" formControlName="FilterDownloadFormat"
+                  interface="popover">
+                  <ion-select-option value="">
+                    Select All
+                  </ion-select-option>
+                  <ion-select-option value="pdf">PDF</ion-select-option>
+                  <ion-select-option value="elsx">EXCEL</ion-select-option>
+                  <ion-select-option value="csv">CSV</ion-select-option>
                 </ion-select>
-            </ion-item>
-          </ion-col>
-          <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="3">          
-            <ion-item>
-              <ion-label position="floating">From Date</ion-label>
-              <ion-input [value]="formGroup.FilterFromDate"  (change)="fromDatechange($event.target.value)" formControlName="FilterFromDate" display-timezone="ist" type="date"></ion-input>
-              <!--[min]="minDate" <ion-datetime [value]="formGroup.FilterFromDate" locale="fr-FR" formControlName="FilterFromDate" display-timezone="ist"></ion-datetime>             -->
-            </ion-item>
-          </ion-col>
-          <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="3">
-            <ion-item>
-              <ion-label position="floating">To Date</ion-label>
-              <ion-input [value]="formGroup.FilterToDate" [min]="formGroup.FilterFromDate" formControlName="FilterToDate" display-timezone="ist" type="date"></ion-input>
-              <!-- <ion-datetime [value]="formGroup.FilterToDate" formControlName="FilterToDate" display-timezone="ist"></ion-datetime>             -->
-            </ion-item>
-          </ion-col>   
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-button (click)="getLeaddetails()" class="filter-button">Search</ion-button>    
-            <ion-button class="filter-button">Download</ion-button>   
-            <ion-button (click)="onaddLead()" class="filter-button">Add Lead</ion-button> 
-            <ion-button (click)="clearFilter()" class="filter-button">Clear Filter</ion-button>
-          </ion-col>
-        </ion-row>        
-      </ion-grid> 
-      <ion-grid class="form-card margin-large-top" *ngIf="isLeadFilter">        
-        <ion-grid class="ion-margin">
-          <ion-row>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Distributor Name</th>
-                  <th>User Name</th>
-                  <th>Region</th>
-                  <th>Mobile Number</th>
-                  <th>Email</th>
-                  <th>Application Id</th>
-                  <th>Application Date</th>
-                  <th>Approval Status</th>
-                  <th>Last Updated Date</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let item of leadDetails">
-                <tr>
-                  <td>{{item.DistributorFirstName}} {{item.DistributorLastName}}</td>
-                  <td>{{item.UserFirstName}} {{item.UserLastName}}</td>
-                  <td>{{item.Region}}</td>
-                  <td>{{item.MobileNumber}}</td>
-                  <td>{{item.Email}}</td>  
-                  <td>{{item.ApplicationID}}</td>
-                  <td>{{item.ApplicationDate.split("T")[0]}}</td>                
-                  <td>{{item.ApprovalStatus}}</td>
-                  <td>{{item.UpdatedDate.split("T")[0]}}</td>
-                  <td>
-                    <a *ngIf="item.ApprovalStatus!='Approved'" (click)="oneditClick(item.ID)"  class="filter-button">Edit</a>
-                  </td>
-                  <td>
-                    <a (click)="onviewClick(item.ID)" class="filter-button">View</a>
-                  </td>
-                  <td>
-                    <a (click)="ondeleteClick(item.ID)" *ngIf="item.ApprovalStatus!='Approved'" class="filter-button">Delete</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="4">
+              <ion-item>
+                <ion-label position="floating">From Date</ion-label>
+                <ion-input [value]="formGroup.FilterFromDate" (change)="fromDatechange($event.target.value)"
+                  formControlName="FilterFromDate" display-timezone="ist" type="date"></ion-input>
+                <!--[min]="minDate" <ion-datetime [value]="formGroup.FilterFromDate" locale="fr-FR" formControlName="FilterFromDate" display-timezone="ist"></ion-datetime>             -->
+              </ion-item>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="3" size-lg="4">
+              <ion-item>
+                <ion-label position="floating">To Date</ion-label>
+                <ion-input [value]="formGroup.FilterToDate" [min]="formGroup.FilterFromDate"
+                  formControlName="FilterToDate" display-timezone="ist" type="date"></ion-input>
+                <!-- <ion-datetime [value]="formGroup.FilterToDate" formControlName="FilterToDate" display-timezone="ist"></ion-datetime>             -->
+              </ion-item>
+            </ion-col>
           </ion-row>
-        </ion-grid>
-      </ion-grid>   
-      <ion-grid class="form-card margin-large-top" *ngIf="isAddLead">
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="ion-padding">
+          <ion-row>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+              <ion-button (click)="getLeaddetails()" class="full-width filter-button">Search</ion-button>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+              <ion-button class="full-width filter-button">Download </ion-button>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+              <br>
+              <ion-button (click)="onaddLead()" class="full-width filter-button">Add Lead</ion-button>
+            </ion-col>
+            <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+              <br>
+              <ion-button (click)="clearFilter()" class="full-width filter-button">Clear Filter</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="form-card margin-large-top" *ngIf="isLeadFilter">
+      <ion-grid class="ion-margin">
         <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">            
-              <ion-back-button></ion-back-button>
-              <ion-text class="control-name">Distributor Details</ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Distributor First Name *</ion-label>
-              <ion-input [value]="formGroup.DistributorFirstName" type="text" formControlName="DistributorFirstName"></ion-input>
-              <p *ngIf="formGroup.controls['DistributorFirstName'].errors && formGroup.controls['DistributorFirstName'].dirty"
-              style="color: red;">First Name is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Distributor Last Name *</ion-label>
-              <ion-input [value]="formGroup.DistributorLastName" type="text" formControlName="DistributorLastName"></ion-input>
-              <p *ngIf="formGroup.controls['DistributorLastName'].errors && formGroup.controls['DistributorLastName'].dirty"
-              style="color: red;">Last Name is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Distributor Code *</ion-label>
-              <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
-              <p *ngIf="formGroup.controls['DistributorCode'].errors && formGroup.controls['DistributorCode'].dirty"
-              style="color: red;">Distributor Code is required</p>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">User First Name *</ion-label>
-              <ion-input [value]="formGroup.UserFirstName" type="text" formControlName="UserFirstName"></ion-input>
-              <p *ngIf="formGroup.controls['UserFirstName'].errors && formGroup.controls['UserFirstName'].dirty"
-              style="color: red;">First Name is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">User Last Name *</ion-label>
-              <ion-input [value]="formGroup.UserLastName" type="text" formControlName="UserLastName"></ion-input>
-              <p *ngIf="formGroup.controls['UserLastName'].errors && formGroup.controls['UserLastName'].dirty"
-              style="color: red;">Last Name is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>       
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Mobile Number *</ion-label>
-              <ion-input [value]="formGroup.MobileNumber" type="text" formControlName="MobileNumber"></ion-input>
-              <p *ngIf="formGroup.controls['MobileNumber'].errors && formGroup.controls['MobileNumber'].dirty"
-              style="color: red;">Mobile Number is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Region *</ion-label>
-              <ion-input [value]="formGroup.Region" type="text" formControlName="Region"></ion-input>
-              <p *ngIf="formGroup.controls['Region'].errors && formGroup.controls['Region'].dirty"
-              style="color: red;">Region is required</p>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">E-mail *</ion-label>
-              <ion-input [value]="formGroup.Email" type="text" formControlName="Email"></ion-input>
-              <p *ngIf="formGroup.controls['Email'].errors && formGroup.controls['Email'].dirty"
-              style="color: red;">Email is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">Mandate Type *</ion-label>
-              <ion-select  value="{{formGroup['MandateType']}}"  interface="popover" formControlName="MandateType">
-                <ion-select-option *ngFor="let item of mandateList" value={{item.Code}}>
-                  {{ item.Name }}
-                </ion-select-option>
-                </ion-select>
-                <p *ngIf="formGroup.controls['MandateType'].errors && formGroup.controls['MandateType'].dirty"
-              style="color: red;">Mandate Type is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>  
-        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>   
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6" >    
-            <span *ngIf="isScannedMandates">         
-              <ion-input [value]="formGroup.MandateForm" type="file" (change)="onscannedFileChange($event)"  formControlName="MandateForm"></ion-input>             
-              <ion-text>Upload scanned mandate form *</ion-text>
-          </span>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">             
-              <ion-input [value]="formGroup.MailConfirmation" type="file" (change)="onconfirmationFileChange($event)" accept="application/pdf" formControlName="MailConfirmation"></ion-input>             
-            <ion-text>Upload mail confirmation (pdf only)</ion-text>
-          </ion-col>
-        </ion-row>   
-        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
-        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
-        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
-        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
-        <ion-row><ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col></ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">            
-              <ion-back-button></ion-back-button>
-              <ion-text class="control-name">Mandate Details</ion-text>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Application ID *</ion-label>
-              <ion-input [value]="formGroup.ApplicationID" type="text" formControlName="ApplicationID"></ion-input>
-              <p *ngIf="formGroup.controls['ApplicationID'].errors && formGroup.controls['ApplicationID'].dirty"
-              style="color: red;">Application ID is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Application Date *</ion-label>
-              <ion-input [value]="formGroup.ApplicationDate" [max]="maxDate" formControlName="ApplicationDate" placeholder="" display-timezone="ist" type="date"></ion-input>
-              <!-- <ion-datetime [value]="formGroup.ApplicationDate" display-timezone="ist" formControlName="ApplicationDate"></ion-datetime> -->
-              <p *ngIf="formGroup.controls['ApplicationDate'].errors && formGroup.controls['ApplicationDate'].dirty"
-              style="color: red;">Application Date is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">UMRN No</ion-label>
-              <ion-input [value]="formGroup.UMRNNo" type="text" formControlName="UMRNNo"></ion-input>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">Approval Status *</ion-label>
-              <ion-select value="{{formGroup['ApprovalStatus']}}" interface="popover" formControlName="ApprovalStatus">
-                <ion-select-option *ngFor="let item of statusList" value={{item.Code}}>
-                  {{ item.Name }}
-                </ion-select-option>
-              </ion-select>
-              <p *ngIf="formGroup.controls['ApprovalStatus'].errors && formGroup.controls['ApprovalStatus'].dirty"
-              style="color: red;">Approval Status is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Bank Account No *</ion-label>
-              <ion-input [value]="formGroup.BankAccountNo" type="number" formControlName="BankAccountNo"></ion-input>
-              <p *ngIf="formGroup.controls['BankAccountNo'].errors && formGroup.controls['BankAccountNo'].dirty"
-              style="color: red;">Bank Account No is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item class="dropdown-style">
-              <ion-label position="floating">Account Type *</ion-label>
-              <ion-select value="{{formGroup['AccountType']}}"  interface="popover" formControlName="AccountType">
-                <ion-select-option *ngFor="let item of accounttypeList" value={{item.Code}}>
-                  {{ item.Name }}
-                </ion-select-option>
-              </ion-select>
-              <p *ngIf="formGroup.controls['AccountType'].errors && formGroup.controls['AccountType'].dirty"
-              style="color: red;">Account Type is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Bank IFSC Code *</ion-label>
-              <ion-input [value]="formGroup.BankIFSCCode" type="text" formControlName="BankIFSCCode"></ion-input>
-              <p *ngIf="formGroup.controls['BankIFSCCode'].errors && formGroup.controls['BankIFSCCode'].dirty"
-              style="color: red;">Bank IFSC Code is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Frequency *</ion-label>
-              <ion-input [value]="formGroup.Frequency" type="text" formControlName="Frequency"></ion-input>
-              <p *ngIf="formGroup.controls['Frequency'].errors && formGroup.controls['Frequency'].dirty"
-              style="color: red;">Frequency is required</p>
-            </ion-item>
-          </ion-col>     
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">First Collection Date *</ion-label>
-              <ion-input [value]="formGroup.FirstCollectionDate" formControlName="FirstCollectionDate" placeholder="" display-timezone="ist" type="date"></ion-input>
-              <!-- <ion-datetime [value]="formGroup.FirstCollectionDate" display-timezone="ist" formControlName="FirstCollectionDate"></ion-datetime> -->
-              <p *ngIf="formGroup.controls['FirstCollectionDate'].errors && formGroup.controls['FirstCollectionDate'].dirty"
-              style="color: red;">First Collection Date is required</p>
-            </ion-item>
-          </ion-col>     
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Last Collection Date *</ion-label>
-              <ion-input [value]="formGroup.LastCollectionDate" formControlName="LastCollectionDate" placeholder="" display-timezone="ist" type="date"></ion-input>
-              <!-- <ion-datetime [value]="formGroup.LastCollectionDate" display-timezone="ist" formControlName="LastCollectionDate"></ion-datetime> -->
-              <p *ngIf="formGroup.controls['LastCollectionDate'].errors && formGroup.controls['LastCollectionDate'].dirty"
-              style="color: red;">Last Collection Date is required</p>
-            </ion-item>
-          </ion-col>     
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Distributor Name</th>
+                <th>User Name</th>
+                <th>Region</th>
+                <th>Mobile Number</th>
+                <th>Email</th>
+                <th>Application Id</th>
+                <th>Application Date</th>
+                <th>Approval Status</th>
+                <th>Last Updated Date</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let item of leadDetails">
+              <tr>
+                <td>{{item.DistributorFirstName}} {{item.DistributorLastName}}</td>
+                <td>{{item.UserFirstName}} {{item.UserLastName}}</td>
+                <td>{{item.Region}}</td>
+                <td>{{item.MobileNumber}}</td>
+                <td>{{item.Email}}</td>
+                <td>{{item.ApplicationID}}</td>
+                <td>{{item.ApplicationDate.split("T")[0]}}</td>
+                <td>{{item.ApprovalStatus}}</td>
+                <td>{{item.UpdatedDate.split("T")[0]}}</td>
+                <td>
+                  <a *ngIf="item.ApprovalStatus!='Approved'" (click)="oneditClick(item.ID)"
+                    class="filter-button">Edit</a>
+                </td>
+                <td>
+                  <a (click)="onviewClick(item.ID)" class="filter-button">View</a>
+                </td>
+                <td>
+                  <a (click)="ondeleteClick(item.ID)" *ngIf="item.ApprovalStatus!='Approved'"
+                    class="filter-button">Delete</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </ion-row>
       </ion-grid>
-      <ion-grid class="margin-large-top margin-small-left" *ngIf="isAddLead">
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="1" size-lg="1">
-            <ion-button (click)="addlead()"><ion-icon slot="start" name="Save"></ion-icon>{{saveEditButton}}</ion-button>            
-          </ion-col>
-          <!-- <ion-col size-xs="12" size-sm="12" size-md="1" size-lg="1">
+    </ion-grid>
+    <ion-grid class="form-card margin-large-top" *ngIf="isAddLead">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+          <ion-back-button></ion-back-button>
+          <ion-text class="control-name">Distributor Details</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Distributor First Name *</ion-label>
+            <ion-input [value]="formGroup.DistributorFirstName" type="text" formControlName="DistributorFirstName">
+            </ion-input>
+            <p *ngIf="formGroup.controls['DistributorFirstName'].errors && formGroup.controls['DistributorFirstName'].dirty"
+              style="color: red;">First Name is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Distributor Last Name *</ion-label>
+            <ion-input [value]="formGroup.DistributorLastName" type="text" formControlName="DistributorLastName">
+            </ion-input>
+            <p *ngIf="formGroup.controls['DistributorLastName'].errors && formGroup.controls['DistributorLastName'].dirty"
+              style="color: red;">Last Name is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Distributor Code *</ion-label>
+            <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
+            <p *ngIf="formGroup.controls['DistributorCode'].errors && formGroup.controls['DistributorCode'].dirty"
+              style="color: red;">Distributor Code is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">User First Name *</ion-label>
+            <ion-input [value]="formGroup.UserFirstName" type="text" formControlName="UserFirstName"></ion-input>
+            <p *ngIf="formGroup.controls['UserFirstName'].errors && formGroup.controls['UserFirstName'].dirty"
+              style="color: red;">First Name is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">User Last Name *</ion-label>
+            <ion-input [value]="formGroup.UserLastName" type="text" formControlName="UserLastName"></ion-input>
+            <p *ngIf="formGroup.controls['UserLastName'].errors && formGroup.controls['UserLastName'].dirty"
+              style="color: red;">Last Name is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Mobile Number *</ion-label>
+            <ion-input [value]="formGroup.MobileNumber" type="text" formControlName="MobileNumber"></ion-input>
+            <p *ngIf="formGroup.controls['MobileNumber'].errors && formGroup.controls['MobileNumber'].dirty"
+              style="color: red;">Mobile Number is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Region *</ion-label>
+            <ion-input [value]="formGroup.Region" type="text" formControlName="Region"></ion-input>
+            <p *ngIf="formGroup.controls['Region'].errors && formGroup.controls['Region'].dirty" style="color: red;">
+              Region is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">E-mail *</ion-label>
+            <ion-input [value]="formGroup.Email" type="text" formControlName="Email"></ion-input>
+            <p *ngIf="formGroup.controls['Email'].errors && formGroup.controls['Email'].dirty" style="color: red;">Email
+              is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item class="dropdown-style">
+            <ion-label position="floating">Mandate Type *</ion-label>
+            <ion-select value="{{formGroup['MandateType']}}" interface="popover" formControlName="MandateType">
+              <ion-select-option *ngFor="let item of mandateList" value={{item.Code}}>
+                {{ item.Name }}
+              </ion-select-option>
+            </ion-select>
+            <p *ngIf="formGroup.controls['MandateType'].errors && formGroup.controls['MandateType'].dirty"
+              style="color: red;">Mandate Type is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <span *ngIf="isScannedMandates">
+            <ion-input [value]="formGroup.MandateForm" type="file" (change)="onscannedFileChange($event)"
+              formControlName="MandateForm"></ion-input>
+            <ion-text>Upload scanned mandate form *</ion-text>
+          </span>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-input [value]="formGroup.MailConfirmation" type="file" (change)="onconfirmationFileChange($event)"
+            accept="application/pdf" formControlName="MailConfirmation"></ion-input>
+          <ion-text>Upload mail confirmation (pdf only)</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12"></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" class="ion-no-padding">
+          <ion-back-button></ion-back-button>
+          <ion-text class="control-name">Mandate Details</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Application ID *</ion-label>
+            <ion-input [value]="formGroup.ApplicationID" type="text" formControlName="ApplicationID"></ion-input>
+            <p *ngIf="formGroup.controls['ApplicationID'].errors && formGroup.controls['ApplicationID'].dirty"
+              style="color: red;">Application ID is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Application Date *</ion-label>
+            <ion-input [value]="formGroup.ApplicationDate" [max]="maxDate" formControlName="ApplicationDate"
+              placeholder="" display-timezone="ist" type="date"></ion-input>
+            <!-- <ion-datetime [value]="formGroup.ApplicationDate" display-timezone="ist" formControlName="ApplicationDate"></ion-datetime> -->
+            <p *ngIf="formGroup.controls['ApplicationDate'].errors && formGroup.controls['ApplicationDate'].dirty"
+              style="color: red;">Application Date is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">UMRN No</ion-label>
+            <ion-input [value]="formGroup.UMRNNo" type="text" formControlName="UMRNNo"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item class="dropdown-style">
+            <ion-label position="floating">Approval Status *</ion-label>
+            <ion-select value="{{formGroup['ApprovalStatus']}}" interface="popover" formControlName="ApprovalStatus">
+              <ion-select-option *ngFor="let item of statusList" value={{item.Code}}>
+                {{ item.Name }}
+              </ion-select-option>
+            </ion-select>
+            <p *ngIf="formGroup.controls['ApprovalStatus'].errors && formGroup.controls['ApprovalStatus'].dirty"
+              style="color: red;">Approval Status is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Bank Account No *</ion-label>
+            <ion-input [value]="formGroup.BankAccountNo" type="number" formControlName="BankAccountNo"></ion-input>
+            <p *ngIf="formGroup.controls['BankAccountNo'].errors && formGroup.controls['BankAccountNo'].dirty"
+              style="color: red;">Bank Account No is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item class="dropdown-style">
+            <ion-label position="floating">Account Type *</ion-label>
+            <ion-select value="{{formGroup['AccountType']}}" interface="popover" formControlName="AccountType">
+              <ion-select-option *ngFor="let item of accounttypeList" value={{item.Code}}>
+                {{ item.Name }}
+              </ion-select-option>
+            </ion-select>
+            <p *ngIf="formGroup.controls['AccountType'].errors && formGroup.controls['AccountType'].dirty"
+              style="color: red;">Account Type is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Bank IFSC Code *</ion-label>
+            <ion-input [value]="formGroup.BankIFSCCode" type="text" formControlName="BankIFSCCode"></ion-input>
+            <p *ngIf="formGroup.controls['BankIFSCCode'].errors && formGroup.controls['BankIFSCCode'].dirty"
+              style="color: red;">Bank IFSC Code is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Frequency *</ion-label>
+            <ion-input [value]="formGroup.Frequency" type="text" formControlName="Frequency"></ion-input>
+            <p *ngIf="formGroup.controls['Frequency'].errors && formGroup.controls['Frequency'].dirty"
+              style="color: red;">Frequency is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">First Collection Date *</ion-label>
+            <ion-input [value]="formGroup.FirstCollectionDate" formControlName="FirstCollectionDate" placeholder=""
+              display-timezone="ist" type="date"></ion-input>
+            <!-- <ion-datetime [value]="formGroup.FirstCollectionDate" display-timezone="ist" formControlName="FirstCollectionDate"></ion-datetime> -->
+            <p *ngIf="formGroup.controls['FirstCollectionDate'].errors && formGroup.controls['FirstCollectionDate'].dirty"
+              style="color: red;">First Collection Date is required</p>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="floating">Last Collection Date *</ion-label>
+            <ion-input [value]="formGroup.LastCollectionDate" formControlName="LastCollectionDate" placeholder=""
+              display-timezone="ist" type="date"></ion-input>
+            <!-- <ion-datetime [value]="formGroup.LastCollectionDate" display-timezone="ist" formControlName="LastCollectionDate"></ion-datetime> -->
+            <p *ngIf="formGroup.controls['LastCollectionDate'].errors && formGroup.controls['LastCollectionDate'].dirty"
+              style="color: red;">Last Collection Date is required</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="margin-large-top margin-small-left" *ngIf="isAddLead">
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="1" size-lg="1">
+          <ion-button (click)="addlead()">
+            <ion-icon slot="start" name="Save"></ion-icon>{{saveEditButton}}
+          </ion-button>
+        </ion-col>
+        <!-- <ion-col size-xs="12" size-sm="12" size-md="1" size-lg="1">
             <ion-button (click)="redirectURL()"><ion-icon slot="start" name="Save"></ion-icon>Update</ion-button>            
           </ion-col> -->
-        </ion-row>        
-      </ion-grid>
-      <ion-grid class="form-card margin-large-top" *ngFor="let item of viewLeadDetails">
-        <ion-row class="padding-mini" >
-          <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
-            <ion-row>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Distributor First Name : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DistributorFirstName}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Distributor Last Name : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DistributorLastName}}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>User First Name : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UserFirstName}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>User Last Name : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UserLastName}}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Mobile Number : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.MobileNumber}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Region : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Region}}</ion-col>
-            </ion-row>   
-            <ion-row>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Email : </b></ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Email}}</ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Mandate Type : </b></ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.MandateTypeName}}</ion-col>
-            </ion-row>    
-            <ion-row>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Application Id : </b></ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ApplicationID}}</ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Application Date : </b></ion-col>
-                <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" *ngIf="item.ApplicationDate.includes('T')">{{item.ApplicationDate.split("T")[0]}}</ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>UMRN Number : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UMRNNo}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Approval Status : </b></ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ApprovalStatusName}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid class="form-card margin-large-top" *ngFor="let item of viewLeadDetails">
+      <ion-row class="padding-mini">
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Distributor First Name : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DistributorFirstName}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Distributor Last Name : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.DistributorLastName}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>User First Name : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UserFirstName}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>User Last Name : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UserLastName}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Mobile Number : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.MobileNumber}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Region : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Region}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Email : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.Email}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Mandate Type : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.MandateTypeName}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Application Id : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ApplicationID}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Application Date : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" *ngIf="item.ApplicationDate.includes('T')">
+              {{item.ApplicationDate.split("T")[0]}}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>UMRN Number : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.UMRNNo}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Approval Status : </b></ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">{{item.ApprovalStatusName}}</ion-col>
           </ion-row>
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Bank Account Number : </b></ion-col>
@@ -418,9 +463,11 @@
           </ion-row>
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>First Collection Date : </b></ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" *ngIf="item.FirstCollectionDate.includes('T')">{{item.FirstCollectionDate.split("T")[0]}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" *ngIf="item.FirstCollectionDate.includes('T')">
+              {{item.FirstCollectionDate.split("T")[0]}}</ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Last Collection Date : </b></ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" *ngIf="item.LastCollectionDate.includes('T')">{{item.LastCollectionDate.split("T")[0]}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" *ngIf="item.LastCollectionDate.includes('T')">
+              {{item.LastCollectionDate.split("T")[0]}}</ion-col>
           </ion-row>
           <!-- <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2"><b>Scanned mandate form : </b></ion-col>

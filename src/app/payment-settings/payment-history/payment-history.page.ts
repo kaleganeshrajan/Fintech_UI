@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
+import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
 	selector: 'app-payment-history',
@@ -167,4 +168,12 @@ export class PaymentHistoryPage implements OnInit {
 		return "" + mm
 	}
 
+	downloadExcel() {
+		TableToExcel.convert(document.getElementById("table-to-xls"), {
+			name: '' + new Date().getTime() + ".xlsx",
+			sheet: {
+				name: "Sheet1"
+			},
+		});
+	}
 }

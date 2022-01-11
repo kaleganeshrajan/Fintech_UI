@@ -78,18 +78,6 @@ export class CompanySettingsPage implements OnInit {
 		}
 	}
 
-	fieldEnable(field){
-		console.log(this.formGroup[field])
-		// if (this.formGroup[field]) {
-		// 	this.formGroup.controls[field].enable()
-		// 	this.formGroup.controls[field].enable()
-		// }
-		// else {
-		// 	this.formGroup.controls[field].disable()
-		// 	this.formGroup.controls[field].disable()
-		// }
-	}
-
 	async getAllList() {
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -193,7 +181,7 @@ export class CompanySettingsPage implements OnInit {
 			IFSCCode: this.formGroup.value.IFSCCode,
 			AccountType: this.formGroup.value.AccountType,
 			UPI: this.formGroup.value.UPI,
-			PaymentPeriod: this.formGroup.value.PaymentPeriod,
+			PaymentPeriod: '' + this.formGroup.value.PaymentPeriod,
 			ECCollType: this.formGroup.value.ECCollType,
 			ECCollValue: this.formGroup.value.ECCollValue,
 			UCollType: this.formGroup.value.UCollType,

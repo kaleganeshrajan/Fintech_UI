@@ -94,7 +94,7 @@ export class ScheduledPaymentPage implements OnInit {
 			SearchInvoice: this.formGroup.value.SearchInvoice,
 			FromDate: this.formGroup.value.FromDate,
 			ToDate: this.formGroup.value.ToDate,
-			SearchFilterType: this.formGroup.value.SearchFilterType,
+			SearchFilterType: '',
 			DateFilterType: this.formGroup.value.DateFilterType,
 		}
 		this.apiService
