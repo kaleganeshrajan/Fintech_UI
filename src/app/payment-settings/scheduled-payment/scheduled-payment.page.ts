@@ -6,6 +6,7 @@ import { AppConstants } from 'src/app/app.constants';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 import { DatePipe } from '@angular/common'
+import { AlertController } from '@ionic/angular';
 import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
@@ -25,6 +26,7 @@ export class ScheduledPaymentPage implements OnInit {
 	public currentDate: any;
 	public firstDay: any;
 	public OTP: string = '';
+	public confirm_box: any
 	public isSelectInv = true;
 	public isViewInvDetails = false;
 	public modifyButton = false;
@@ -36,6 +38,7 @@ export class ScheduledPaymentPage implements OnInit {
 		private formBuilder: FormBuilder,
 		public datepipe: DatePipe,
 		private alertDialogs: AlertDialogs,
+		public alertCtrl: AlertController
 	) { }
 
 
@@ -166,19 +169,36 @@ export class ScheduledPaymentPage implements OnInit {
 	}
 
 	async cancelCheque(id) {
-		this.apiService
-			.getApiwithoutauthencticate(
-				'api/schedule_payment/CancelScheduledInvoice/'+id
-			)
-			.subscribe((result) => {
-				if (result != null) {
-					this.backClick()
-					this.alertDialogs.alertDialog("Cheque Cancelled!", "Cheque Cancelled!")
+		this.confirm_box = await this.alertCtrl.create({
+			header: 'Cancel Cheque',
+			message: "Do you really want to cancel this cheque?",
+			buttons: [
+				{
+					text: 'CANCEL',
+					handler: (data: any) => {
+					}
+				},
+				{
+					text: 'YES',
+					handler: () => {
+						this.apiService
+							.getApiwithoutauthencticate(
+								'api/schedule_payment/CancelScheduledInvoice/' + id
+							)
+							.subscribe((result) => {
+								if (result != null) {
+									this.backClick()
+									this.alertDialogs.alertDialog("Cheque Cancelled!", "Cheque Cancelled!")
+								}
+								else {
+									this.alertDialogs.alertDialog("Error Caught!", "error")
+								}
+							})
+					}
 				}
-				else {
-					this.alertDialogs.alertDialog("Error Caught!", "error")
-				}
-			})
+			]
+		});
+		await this.confirm_box.present();
 	}
 
 	parseDate(dateStr) {
