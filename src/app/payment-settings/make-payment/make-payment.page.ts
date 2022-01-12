@@ -50,6 +50,7 @@ export class MakePaymentPage implements OnInit {
 	/*same as resume */
 	ionViewDidEnter() {
 		this.getAllList()
+		this.searchInvoice()
 	}
 
 	createForm(): any {

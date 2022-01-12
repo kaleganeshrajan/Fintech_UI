@@ -53,6 +53,7 @@ export class ScheduledPaymentPage implements OnInit {
 	/*same as resume */
 	ionViewDidEnter() {
 		this.getAllList()
+		this.searchInvoice()
 	}
 
 	createForm(): any {
@@ -134,28 +135,50 @@ export class ScheduledPaymentPage implements OnInit {
 		this.isViewInvDetails = true;
 	}
 
-	modifyDate() {
+	modifyDate(id) {
 		this.modifyButton = true
+		console.log()
 	}
 
-	updateDate(id) {
+	async updateDate(id) {
 		// console.log(id, ":", this.formGroup.value['UpdatedDate']) ekch object rahil sagli kade asa code karayacha...
 		let index = this.InvoiceList.findIndex(ele => ele.ID == id)
-		this.InvoiceList[index]['DueDate'] = this.formGroup.value['UpdatedDate']
-		this.InvoiceDetails[0]['DueDate'] = this.formGroup.value['UpdatedDate']
+		this.InvoiceList[index]['DueDate'] = new Date(this.formGroup.value['UpdatedDate']).toISOString()
+		this.InvoiceDetails[0]['DueDate'] = new Date(this.formGroup.value['UpdatedDate']).toISOString()
+		this.InvoiceDetails[0]['PaymentMode'] = 'echeque'
+		this.InvoiceDetails[0]['PaymentStatus'] = 'inprocess'
+		let postData = this.InvoiceDetails[0]
 		this.apiService
-		// .postApiOnlyWithContentType(
-		// 	'',
-		// 	this.InvoiceList
-		// )
-		// .subscribe((result) => {
-		// 	console.log(result)
-		// })
-		this.alertDialogs.alertDialog("Date changed!", "Cheque date updated!")
+			.postApiOnlyWithContentType(
+				'api/schedule_payment/ModifyDate',
+				postData
+			)
+			.subscribe((result) => {
+				if (result != null) {
+					this.viewDetailedInvoive(id)
+					this.alertDialogs.alertDialog("Date changed!", "Cheque date updated!")
+				}
+				else {
+					this.alertDialogs.alertDialog("Error Caught!", "error")
+				}
+			})
+		// this.alertDialogs.alertDialog("Date changed!", "Cheque date updated!")
 	}
 
-	cancelCheque() {
-		this.alertDialogs.alertDialog("Clicked", "Cancel Cheque")
+	async cancelCheque(id) {
+		this.apiService
+			.getApiwithoutauthencticate(
+				'api/schedule_payment/CancelScheduledInvoice/'+id
+			)
+			.subscribe((result) => {
+				if (result != null) {
+					this.backClick()
+					this.alertDialogs.alertDialog("Cheque Cancelled!", "Cheque Cancelled!")
+				}
+				else {
+					this.alertDialogs.alertDialog("Error Caught!", "error")
+				}
+			})
 	}
 
 	parseDate(dateStr) {
@@ -172,6 +195,7 @@ export class ScheduledPaymentPage implements OnInit {
 	backClick() {
 		this.isSelectInv = true;
 		this.isViewInvDetails = false;
+		this.searchInvoice()
 	}
 
 	downloadExcel() {
