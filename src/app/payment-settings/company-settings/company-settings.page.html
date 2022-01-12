@@ -16,21 +16,19 @@
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="8" class="ion-no-padding">
           <ion-item>
-            <ion-label>Select Company</ion-label>
+            <ion-label position="floating">Select Company<span style="color: red;"> *</span></ion-label>
             <ion-select value="formGroup['CompanyName']" (ionChange)="getCompanySettings()"
               formControlName="CompanyName" interface="popover">
               <ion-select-option *ngFor="let item of CompanyList" value="{{item.CompanyCode}}">
                 {{ item.CompanyName }}
               </ion-select-option>
             </ion-select>
+            <p *ngIf="formGroup.controls['CompanyName'].errors && formGroup.controls['CompanyName'].touched"
+              style="color: red;">Company selection is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="1" size-sm="1" size-md="1" size-lg="1"></ion-col>
         <ion-col size-xs="2" size-sm="2" size-md="2" size-lg="2">
-          <!-- <ion-button (click)="getCompanySettings()">
-            <ion-icon slot="end" name="search"></ion-icon>
-            <small>Search</small>
-          </ion-button> -->
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -39,21 +37,27 @@
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
-            <ion-label position="floating">Account Number</ion-label>
+            <ion-label position="floating">Account Number<span style="color: red;"> *</span></ion-label>
             <ion-input [value]="formGroup.ID" formControlName="ID" hidden type="number"></ion-input>
             <ion-input [value]="formGroup.AccountNumber" formControlName="AccountNumber" type="number"></ion-input>
+            <p *ngIf="formGroup.controls['AccountNumber'].hasError('required') && formGroup.controls['AccountNumber'].touched"
+              style="color: red;">Account Name is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
-            <ion-label position="floating">Bank Name</ion-label>
+            <ion-label position="floating">Bank Name<span style="color: red;"> *</span></ion-label>
             <ion-input [value]="formGroup.BankName" formControlName="BankName" type="text"></ion-input>
+            <p *ngIf="formGroup.controls['BankName'].hasError('required') && formGroup.controls['BankName'].touched"
+              style="color: red;">Bank Name is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
-            <ion-label position="floating">Bank Account Name</ion-label>
+            <ion-label position="floating">Bank Account Name<span style="color: red;"> *</span></ion-label>
             <ion-input [value]="formGroup.BankAccountName" formControlName="BankAccountName" type="text"></ion-input>
+            <p *ngIf="formGroup.controls['BankAccountName'].hasError('required') && formGroup.controls['BankAccountName'].touched"
+              style="color: red;">Bank Account Name is mandatory.</p>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -61,24 +65,31 @@
       <ion-row>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
-            <ion-label position="floating">IFSC Code</ion-label>
+            <ion-label position="floating">IFSC Code<span style="color: red;"> *</span></ion-label>
             <ion-input [value]="formGroup.IFSCCode" type="text" formControlName="IFSCCode" autocapitalize="characters">
             </ion-input>
+            <p *ngIf="formGroup.controls['IFSCCode'].hasError('required') && formGroup.controls['IFSCCode'].touched"
+              style="color: red;">IFCS Code is mandatory.</p>
           </ion-item>
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-4">
           <ion-item>
-            <ion-label>Select account type</ion-label>
-            <ion-select value="{{formGroup['AccountType']}}" formControlName="AccountType" interface="popover">
-              <ion-select-option *ngFor="let item of AccountType" value="{{item.Code}}">{{item.Name}}
+            <ion-label position="floating">Select Account Type <span style="color: red;"> *</span></ion-label>
+            <ion-select value="{{formGroup['AccountType']}}" interface="popover" formControlName="AccountType">
+              <ion-select-option *ngFor="let item of AccountType" value={{item.Code}}>
+                {{ item.Name }}
               </ion-select-option>
             </ion-select>
+            <p *ngIf="formGroup.controls['AccountType'].errors && formGroup.controls['AccountType'].touched"
+              style="color: red;">Account Type is required</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
-            <ion-label position="floating">UPI</ion-label>
+            <ion-label position="floating">UPI<span style="color: red;"> *</span></ion-label>
             <ion-input [value]="formGroup.UPI" formControlName="UPI" type="text"></ion-input>
+            <p *ngIf="formGroup.controls['UPI'].hasError('required') && formGroup.controls['UPI'].touched"
+              style="color: red;">UPI is mandatory.</p>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -96,6 +107,8 @@
             <ion-label>Allow Collection form digital Payment Mode</ion-label>
             <ion-checkbox [checked]="formGroup.IsAllowCollDigiPay" formControlName="IsAllowCollDigiPay" color="primary"
               slot="start"></ion-checkbox>
+            <p *ngIf="formGroup.controls['IsAllowCollDigiPay'].hasError('required') && formGroup.controls['IsAllowCollDigiPay'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
@@ -107,24 +120,30 @@
             <ion-label>Enable to receive E-Cheque</ion-label>
             <ion-checkbox [checked]="formGroup.EnableECheque" formControlName="EnableECheque" color="primary"
               slot="start"></ion-checkbox>
+            <p *ngIf="formGroup.controls['EnableECheque'].hasError('required') && formGroup.controls['EnableECheque'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
           <ion-item>
             <ion-label>E-Cheque Collection Type</ion-label>
             <ion-select value="{{formGroup['ECCollType']}}"
-              disabled="{{formGroup.value.EnableECheque===true ? false : true}}" formControlName="ECCollType"
+              disabled="{{formGroup.value.EnableECheque==true ? false : true}}" formControlName="ECCollType"
               interface="popover">
               <ion-select-option *ngFor="let item of EChequeCT" value="{{item.Code}}">{{item.Name}}</ion-select-option>
             </ion-select>
+            <p *ngIf="formGroup.controls['EnableECheque'].hasError('required') && formGroup.controls['EnableECheque'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
             <ion-label position="floating">E-Cheque Collection settlement Value</ion-label>
             <ion-input [value]="formGroup.ECCollValue"
-              disabled="{{formGroup.value.EnableECheque===true ? false : true}}" formControlName="ECCollValue"
+              disabled="{{formGroup.value.EnableECheque==true ? false : true}}" formControlName="ECCollValue"
               type="text" autocapitalize="characters"></ion-input>
+            <p *ngIf="formGroup.controls['ECCollValue'].hasError('required') && formGroup.controls['ECCollValue'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -132,12 +151,16 @@
         <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
           <ion-item>
             <ion-label position="floating">Payment Period (for Pull based only)</ion-label>
-            <ion-input [value]="formGroup.PaymentPeriod" disabled="{{formGroup.value.EnableECheque===true ? false : true}}" formControlName="PaymentPeriod" type="number"></ion-input>
+            <ion-input [value]="formGroup.PaymentPeriod"
+              disabled="{{formGroup.value.EnableECheque==true ? false : true}}" formControlName="PaymentPeriod"
+              type="number"></ion-input>
+            <p *ngIf="formGroup.controls['PaymentPeriod'].hasError('required') && formGroup.controls['PaymentPeriod'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="8" size-lg="7" style="padding-top: 20px !important">
-          <span class="small">"For example: If you put the payment period as 7 Days, the system will schedule the
-            payment for the distributors on the 7th Working Day from the invoice / LR Date ”
+          <span *ngIf="formGroup.value.EnableECheque" class="small">For example: If you put the payment period as 7 Days, the system will schedule the
+            payment for the distributors on the 7th Working Day from the invoice / LR Date
           </span>
         </ion-col>
       </ion-row>
@@ -147,24 +170,30 @@
             <ion-label>Enable UPI Collection</ion-label>
             <ion-checkbox [checked]="formGroup.EnableUPIColl" formControlName="EnableUPIColl" color="primary"
               slot="start"></ion-checkbox>
+            <p *ngIf="formGroup.controls['EnableUPIColl'].hasError('required') && formGroup.controls['EnableUPIColl'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
           <ion-item>
             <ion-label>UPI Collection Type</ion-label>
             <ion-select value="{{formGroup['UCollType']}}"
-              disabled="{{formGroup.value.EnableUPIColl===true ? false : true}}" formControlName="UCollType"
+              disabled="{{formGroup.value.EnableUPIColl==true ? false : true}}" formControlName="UCollType"
               interface="popover">
               <ion-select-option *ngFor="let item of UpiCT" value="{{item.Code}}">{{item.Name}}
               </ion-select-option>
             </ion-select>
+            <p *ngIf="formGroup.controls['UCollType'].hasError('required') && formGroup.controls['UCollType'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
             <ion-label position="floating">UPI Collection settlement Value</ion-label>
-            <ion-input [value]="formGroup.UCollValue" disabled="{{formGroup.value.EnableUPIColl===true ? false : true}}"
+            <ion-input [value]="formGroup.UCollValue" disabled="{{formGroup.value.EnableUPIColl==true ? false : true}}"
               formControlName="UCollValue" type="text" autocapitalize="characters"></ion-input>
+            <p *ngIf="formGroup.controls['UCollValue'].hasError('required') && formGroup.controls['UCollValue'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -174,24 +203,30 @@
             <ion-label>Enable To Receive Net-banking Payment</ion-label>
             <ion-checkbox [checked]="formGroup.EnableNetBanking" formControlName="EnableNetBanking" color="primary"
               slot="start"></ion-checkbox>
+            <p *ngIf="formGroup.controls['EnableNetBanking'].hasError('required') && formGroup.controls['EnableNetBanking'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4" class="mt-13">
           <ion-item>
             <ion-label>Net-banking Collection Type</ion-label>
             <ion-select value="{{formGroup['NBCollType']}}"
-              disabled="{{formGroup.value.EnableNetBanking===true ? false : true}}" formControlName="NBCollType"
+              disabled="{{formGroup.value.EnableNetBanking==true ? false : true}}" formControlName="NBCollType"
               interface="popover">
               <ion-select-option *ngFor="let item of NBCT" value="{{item.Code}}">{{item.Name}}</ion-select-option>
             </ion-select>
+            <p *ngIf="formGroup.controls['NBCollType'].hasError('required') && formGroup.controls['NBCollType'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
           <ion-item>
             <ion-label position="floating">Net-banking Collection settlement Value</ion-label>
             <ion-input [value]="formGroup.NBCollValue"
-              disabled="{{formGroup.value.EnableNetBanking===true ? false : true}}" formControlName="NBCollValue"
+              disabled="{{formGroup.value.EnableNetBanking==true ? false : true}}" formControlName="NBCollValue"
               type="text" autocapitalize="characters"></ion-input>
+            <p *ngIf="formGroup.controls['NBCollValue'].hasError('required') && formGroup.controls['NBCollValue'].touched"
+              style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
       </ion-row>

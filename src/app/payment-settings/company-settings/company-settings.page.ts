@@ -42,20 +42,20 @@ export class CompanySettingsPage implements OnInit {
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
 			ID: [0, Validators.required],
-			CompanyName: [''],
-			AccountNumber: ['', Validators.required],
-			BankName: ['', Validators.required],
-			BankAccountName: ['', Validators.required],
-			IFSCCode: ['', Validators.required],
-			AccountType: ['', Validators.required],
-			UPI: ['', Validators.required],
+			CompanyName: ['',Validators.required],
+			AccountNumber: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(13)]],
+			BankName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9\s]+'), Validators.maxLength(10)]],
+			BankAccountName: ['', [Validators.required, Validators.pattern('[a-zA-Z\s]+'), Validators.maxLength(10)]],
+			IFSCCode: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9\s]+'), Validators.maxLength(10)]],
+			AccountType: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+'), Validators.maxLength(20)]],
+			UPI: ['', [Validators.required, Validators.pattern('[a-zA-Z\.\@\-]+'), Validators.maxLength(10)]],
 			PaymentPeriod: [''],
-			ECCollType: ['', Validators.required],
-			ECCollValue: ['', Validators.required],
-			UCollType: ['', Validators.required],
-			UCollValue: ['', Validators.required],
-			NBCollType: ['', Validators.required],
-			NBCollValue: ['', Validators.required],
+			ECCollType: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+'), Validators.maxLength(10)]],
+			ECCollValue: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(10)]],
+			UCollType: ['', [Validators.required, Validators.pattern('[a-zA-Z\s]+'), Validators.maxLength(10)]],
+			UCollValue: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(10)]],
+			NBCollType: ['', [Validators.required, Validators.pattern('[a-zA-Z ]+'), Validators.maxLength(10)]],
+			NBCollValue: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(10)]],
 			IsBeneficiaryActive: [false, Validators.required],
 			IsAllowCollDigiPay: [false, Validators.required],
 			EnableECheque: [false, Validators.required],
@@ -66,6 +66,21 @@ export class CompanySettingsPage implements OnInit {
 			CancelECByDist: [false, Validators.required],
 			CancelECByComp: [false, Validators.required],
 		});
+	}
+
+	validateForm() {
+		if (this.formGroup.invalid) {
+			this.formGroup.controls['CompanyName'].markAsTouched()
+			this.formGroup.controls['AccountNumber'].markAsTouched()
+			this.formGroup.controls['BankName'].markAsTouched()
+			this.formGroup.controls['BankAccountName'].markAsTouched()
+			this.formGroup.controls['IFSCCode'].markAsTouched()
+			this.formGroup.controls['AccountType'].markAsTouched()
+			this.formGroup.controls['UPI'].markAsTouched()
+			this.formGroup.controls['PaymentPeriod'].markAsTouched()
+			return;
+		}
+		// do something else
 	}
 
 	// Beneficiary disabled or enabled
@@ -171,50 +186,52 @@ export class CompanySettingsPage implements OnInit {
 	}
 
 	saveUpdateSetting() {
-		// console.log(this.formGroup.value)
-		let postData = {
-			ID: this.formGroup.value.ID,
-			CompanyName: this.formGroup.value.CompanyName,
-			AccountNumber: this.formGroup.value.AccountNumber,
-			BankName: this.formGroup.value.BankName,
-			BankAccountName: this.formGroup.value.BankAccountName,
-			IFSCCode: this.formGroup.value.IFSCCode,
-			AccountType: this.formGroup.value.AccountType,
-			UPI: this.formGroup.value.UPI,
-			PaymentPeriod: '' + this.formGroup.value.PaymentPeriod,
-			ECCollType: this.formGroup.value.ECCollType,
-			ECCollValue: this.formGroup.value.ECCollValue,
-			UCollType: this.formGroup.value.UCollType,
-			UCollValue: this.formGroup.value.UCollValue,
-			NBCollType: this.formGroup.value.NBCollType,
-			NBCollValue: this.formGroup.value.NBCollValue,
-			IsBeneficiaryActive: this.formGroup.value.IsBeneficiaryActive,
-			IsAllowCollDigiPay: this.formGroup.value.IsAllowCollDigiPay,
-			EnableECheque: this.formGroup.value.EnableECheque,
-			EnableUPIColl: this.formGroup.value.EnableUPIColl,
-			EnableNetBanking: this.formGroup.value.EnableNetBanking,
-			ModifyECByDist: this.formGroup.value.ModifyECByDist,
-			ModifyECByComp: this.formGroup.value.ModifyECByComp,
-			CancelECByDist: this.formGroup.value.CancelECByDist,
-			CancelECByComp: this.formGroup.value.CancelECByComp,
-			CreatedBy: "shubham",
-			UpdatedBy: "shubham",
-			IsActive: true
+		this.validateForm()
+		if (this.formGroup.valid) {
+			let postData = {
+				ID: this.formGroup.value.ID,
+				CompanyName: this.formGroup.value.CompanyName,
+				AccountNumber: this.formGroup.value.AccountNumber,
+				BankName: this.formGroup.value.BankName,
+				BankAccountName: this.formGroup.value.BankAccountName,
+				IFSCCode: this.formGroup.value.IFSCCode,
+				AccountType: this.formGroup.value.AccountType,
+				UPI: this.formGroup.value.UPI,
+				PaymentPeriod: '' + this.formGroup.value.PaymentPeriod,
+				ECCollType: this.formGroup.value.ECCollType,
+				ECCollValue: this.formGroup.value.ECCollValue,
+				UCollType: this.formGroup.value.UCollType,
+				UCollValue: this.formGroup.value.UCollValue,
+				NBCollType: this.formGroup.value.NBCollType,
+				NBCollValue: this.formGroup.value.NBCollValue,
+				IsBeneficiaryActive: this.formGroup.value.IsBeneficiaryActive,
+				IsAllowCollDigiPay: this.formGroup.value.IsAllowCollDigiPay,
+				EnableECheque: this.formGroup.value.EnableECheque,
+				EnableUPIColl: this.formGroup.value.EnableUPIColl,
+				EnableNetBanking: this.formGroup.value.EnableNetBanking,
+				ModifyECByDist: this.formGroup.value.ModifyECByDist,
+				ModifyECByComp: this.formGroup.value.ModifyECByComp,
+				CancelECByDist: this.formGroup.value.CancelECByDist,
+				CancelECByComp: this.formGroup.value.CancelECByComp,
+				CreatedBy: "shubham",
+				UpdatedBy: "shubham",
+				IsActive: true
+			}
+			this.apiService
+				.postApiOnlyWithContentType(
+					"api/company_setting/AddCompanySetting",
+					postData
+				)
+				.subscribe((result) => {
+					if (result.Success == true) {
+						this.alertDialogs.alertDialog('Success', result.Message);
+						this.createForm()
+					}
+					else {
+						this.alertDialogs.alertDialog('Failed', result.Message);
+					}
+				})
+			// this.createForm();
 		}
-		this.apiService
-			.postApiOnlyWithContentType(
-				"api/company_setting/AddCompanySetting",
-				postData
-			)
-			.subscribe((result) => {
-				if (result.Success == true) {
-					this.alertDialogs.alertDialog('Success', result.Message);
-					this.createForm()
-				}
-				else {
-					this.alertDialogs.alertDialog('Failed', result.Message);
-				}
-			})
-		// this.createForm();
 	}
 }
