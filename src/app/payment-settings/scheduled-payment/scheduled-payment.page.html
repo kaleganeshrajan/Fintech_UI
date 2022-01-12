@@ -46,8 +46,7 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding mt-13">
           <ion-item>
             <ion-label position="floating">From Date</ion-label>
-            <!-- <ion-datetime [value]="formGroup.FromDate" formControlName="FromDate" display-timezone="ist"></ion-datetime> -->
-            <ion-input [value]="formGroup.FromDate" formControlName="FromDate" type="date" placeholder=""
+            <ion-input [value]="formGroup.FromDate" (change)="fromDatechange($event.target.value)" formControlName="FromDate" type="date" placeholder=""
               class="input-padding-btm">
             </ion-input>
           </ion-item>
@@ -55,8 +54,7 @@
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding mt-13">
           <ion-item>
             <ion-label position="floating">To Date</ion-label>
-            <!-- <ion-datetime [value]="formGroup.ToDate" formControlName="ToDate" display-timezone="ist"></ion-datetime> -->
-            <ion-input [value]="formGroup.ToDate" formControlName="ToDate" type="date" placeholder=""
+            <ion-input [value]="formGroup.ToDate" formControlName="ToDate" [min]="formGroup.FromDate" type="date" placeholder=""
               class="input-padding-btm">
             </ion-input>
           </ion-item>

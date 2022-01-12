@@ -153,7 +153,7 @@ export class PaymentHistoryPage implements OnInit {
 
 	// Parse Date
 	parseDate(dateStr) {
-		return new Date(dateStr).toLocaleDateString()
+		return new Date(dateStr).toLocaleDateString("es-CL")
 	}
 
 	backClick(){

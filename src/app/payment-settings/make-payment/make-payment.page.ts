@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/utility/api.service';
 import { AppConstants } from 'src/app/app.constants';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
+import { DatePipe } from '@angular/common'
 import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
@@ -19,6 +20,8 @@ export class MakePaymentPage implements OnInit {
 	public SearchFilterList: any[];
 	public InvoiceList: any[];
 	public ScheduleInvList: any[];
+	public currentDate: any;
+	public todayDate: any;
 	public saveUpdateButton = 'Save';
 	public isSelectInv = true;
 	public isScheduleInv = false;
@@ -33,12 +36,15 @@ export class MakePaymentPage implements OnInit {
 		private apiService: ApiService,
 		public appConstants: AppConstants,
 		private formBuilder: FormBuilder,
+		public datepipe: DatePipe,
 		private alertDialogs: AlertDialogs,
 	) { }
 
 
 	ngOnInit(): void {
 		this.createForm();
+		this.currentDate = new Date();
+		this.todayDate = this.datepipe.transform(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()), 'yyyy-MM-dd')
 	}
 
 	/*same as resume */
@@ -239,7 +245,7 @@ export class MakePaymentPage implements OnInit {
 
 	// Parse Date
 	parseDate(dateStr) {
-		return new Date(dateStr).toLocaleDateString()
+		return new Date(dateStr).toLocaleDateString("es-CL")
 	}
 
 	getMonth(mm) {
@@ -281,5 +287,21 @@ export class MakePaymentPage implements OnInit {
 			.subscribe((result) => {
 				console.log(result)
 			})
+	}
+
+	fromDatechange(ids) {
+		var from_date = new Date(ids)
+		var to_date = new Date(this.formGroup['ToDate'])
+		this.formGroup['FromDate'] = ids;
+		if (from_date.getDate() > to_date.getDate()) {
+			this.formGroup['ToDate'] = ids;
+			this.formGroup.patchValue({
+				ToDate: ids
+			});
+		}
+
+		this.formGroup.patchValue({
+			FromDate: ids
+		});
 	}
 }
