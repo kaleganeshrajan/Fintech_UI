@@ -67,9 +67,9 @@
                 <ion-select-option value="">
                   Select All
                 </ion-select-option>
-                <ion-select-option value="pdf">PDF</ion-select-option>
+                <!-- <ion-select-option value="pdf">PDF</ion-select-option> -->
                 <ion-select-option value="elsx">EXCEL</ion-select-option>
-                <ion-select-option value="csv">CSV</ion-select-option>
+                <!-- <ion-select-option value="csv">CSV</ion-select-option> -->
                 </ion-select>
             </ion-item>
           </ion-col>
@@ -89,7 +89,7 @@
           </ion-col>   
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-button (click)="getLeaddetails()" class="filter-button">Search</ion-button>    
-            <ion-button class="filter-button">Download</ion-button>   
+            <ion-button (click)="downloadExcel()" class="filter-button">Download</ion-button>   
             <ion-button (click)="onaddLead()" class="filter-button">Add Lead</ion-button> 
             <ion-button (click)="clearFilter()" class="filter-button">Clear Filter</ion-button>
           </ion-col>
@@ -98,7 +98,7 @@
       <ion-grid class="form-card margin-large-top" *ngIf="isLeadFilter">        
         <ion-grid class="ion-margin">
           <ion-row>
-            <table class="table">
+            <table class="table" id="table-to-xls">
               <thead>
                 <tr>
                   <th>Distributor Name</th>
@@ -123,13 +123,13 @@
                   <td>{{item.ApplicationDate.split("T")[0]}}</td>                
                   <td>{{item.ApprovalStatus}}</td>
                   <td>{{item.UpdatedDate.split("T")[0]}}</td>
-                  <td>
+                  <td data-exclude="true">
                     <a *ngIf="item.ApprovalStatus!='Approved'" (click)="oneditClick(item.ID)"  class="filter-button">Edit</a>
                   </td>
-                  <td>
+                  <td data-exclude="true">
                     <a (click)="onviewClick(item.ID)" class="filter-button">View</a>
                   </td>
-                  <td>
+                  <td data-exclude="true">
                     <a (click)="ondeleteClick(item.ID)" *ngIf="item.ApprovalStatus!='Approved'" class="filter-button">Delete</a>
                   </td>
                 </tr>

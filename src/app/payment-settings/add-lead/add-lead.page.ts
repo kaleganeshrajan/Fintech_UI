@@ -6,6 +6,7 @@ import { FormGroup,FormBuilder,Validators,FormControl} from '@angular/forms';
 import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 import { AlertController } from '@ionic/angular';
 import { DatePipe } from '@angular/common'
+import TableToExcel from "@stanlystark/table-to-excel";
 
 @Component({
   selector: 'app-add-lead',
@@ -184,11 +185,6 @@ export class AddLeadPage implements OnInit {
   async addlead(){   
     this.validateForm()
     if (this.formGroup.valid){
-      // if (this.scannedFile==""){
-      //   this.alertDialogs.alertDialog('Error', "Please upload scanned mandate form");     
-      //   return
-      // }
-       
       let postData;
       postData = {
         ID:this.leadId,
@@ -534,5 +530,14 @@ export class AddLeadPage implements OnInit {
     this.viewLeadDetails=[]
     this.pageTitle="E-cheque/E-nach Leads"
   }
+
+  downloadExcel() {
+		TableToExcel.convert(document.getElementById("table-to-xls"), {
+			name: 'Lead_' + new Date().getTime() + ".xlsx",
+			sheet: {
+				name: "Sheet1"
+			},
+		});
+	}
 }
 
