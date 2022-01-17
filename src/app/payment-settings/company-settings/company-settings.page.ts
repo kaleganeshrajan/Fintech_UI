@@ -14,12 +14,12 @@ import { AlertDialogs } from 'src/app/utility/alert-dialogs';
 })
 export class CompanySettingsPage implements OnInit {
 	formGroup!: FormGroup;
-	public CompanyName: any;
-	public CompanyList: any[];
+	public companyList: any[];
 	public EChequeCT: any[];
 	public UpiCT: any[];
 	public NBCT: any[];
 	public AccountType: any[]
+	public exceptionListFile: any;
 	public saveUpdateButton = 'Save';
 	public activateBeneficiaryOption = false;
 	constructor(
@@ -42,7 +42,7 @@ export class CompanySettingsPage implements OnInit {
 	createForm(): any {
 		this.formGroup = this.formBuilder.group({
 			ID: [0, Validators.required],
-			CompanyName: ['',Validators.required],
+			CompanyName: ['', Validators.required],
 			AccountNumber: ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.maxLength(13)]],
 			BankName: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9\s]+'), Validators.maxLength(10)]],
 			BankAccountName: ['', [Validators.required, Validators.pattern('[a-zA-Z\s]+'), Validators.maxLength(10)]],
@@ -65,6 +65,9 @@ export class CompanySettingsPage implements OnInit {
 			ModifyECByComp: [false, Validators.required],
 			CancelECByDist: [false, Validators.required],
 			CancelECByComp: [false, Validators.required],
+			ExceptionList: [],
+			PaymentPeriodLimit: [],
+			ExceptionType: [],
 		});
 	}
 
@@ -83,6 +86,11 @@ export class CompanySettingsPage implements OnInit {
 		// do something else
 	}
 
+	// File Upload
+	onEcxeptionListUpload(e) {
+		this.exceptionListFile = e.target.files[0];
+	}
+
 	// Beneficiary disabled or enabled
 	setBeneficiary() {
 		if (this.activateBeneficiaryOption) {
@@ -99,7 +107,7 @@ export class CompanySettingsPage implements OnInit {
 				"api/master_payment_setting/CompanyList"
 			).subscribe((result) => {
 				if (result !== null) {
-					this.CompanyList = result
+					this.companyList = result
 				}
 			})
 		// Get Account Type
@@ -185,7 +193,7 @@ export class CompanySettingsPage implements OnInit {
 		}
 	}
 
-	saveUpdateSetting() {
+	async saveUpdateSetting() {
 		this.validateForm()
 		if (this.formGroup.valid) {
 			let postData = {
@@ -217,10 +225,22 @@ export class CompanySettingsPage implements OnInit {
 				UpdatedBy: "shubham",
 				IsActive: true
 			}
+
+			let exceptionListData = {
+				CompanySettingId: this.formGroup.value.CompanyName,
+				CreatedBy: "shubham",
+				ECCollType: this.formGroup.value.ExceptionType,
+				PaymentPeriodLimit: this.formGroup.value.PaymentPeriodLimit,
+			}
+			let formData = new FormData();
+			formData.append("ExceptionListFile", this.exceptionListFile);
+			// const company_settings = JSON.stringify(postData);
+			formData.append("CompanySetting", JSON.stringify(postData));
+			formData.append("ExceptionFileData", JSON.stringify(exceptionListData))
 			this.apiService
-				.postApiOnlyWithContentType(
+				.uploadImagePostApiWithoutAuthentication(
 					"api/company_setting/AddCompanySetting",
-					postData
+					formData
 				)
 				.subscribe((result) => {
 					if (result.Success == true) {
