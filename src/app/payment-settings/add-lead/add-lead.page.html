@@ -152,6 +152,10 @@
               <ion-input [value]="formGroup.DistributorFirstName" type="text" formControlName="DistributorFirstName"></ion-input>
               <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('required') && formGroup.controls['DistributorFirstName'].touched"
               style="color: red;">First Name is required</p>
+              <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('maxlength')"
+              style="color: red;">First Name can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -160,6 +164,10 @@
               <ion-input [value]="formGroup.DistributorLastName" type="text" formControlName="DistributorLastName"></ion-input>
               <p *ngIf="formGroup.controls['DistributorLastName'].hasError('required') && formGroup.controls['DistributorLastName'].touched"
               style="color: red;">Last Name is required</p>
+              <p *ngIf="formGroup.controls['DistributorLastName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['DistributorLastName'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
         </ion-row>
@@ -170,6 +178,10 @@
               <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
               <p *ngIf="formGroup.controls['DistributorCode'].hasError('required') && formGroup.controls['DistributorCode'].touched"
               style="color: red;">Distributor Code is required</p>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -180,6 +192,10 @@
               <ion-input [value]="formGroup.UserFirstName" type="text" formControlName="UserFirstName"></ion-input>
               <p *ngIf="formGroup.controls['UserFirstName'].hasError('required') && formGroup.controls['UserFirstName'].touched"
               style="color: red;">First Name is required</p>
+              <p *ngIf="formGroup.controls['UserFirstName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['UserFirstName'].hasError('maxlength')"
+              style="color: red;">First Name can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -188,6 +204,10 @@
               <ion-input [value]="formGroup.UserLastName" type="text" formControlName="UserLastName"></ion-input>
               <p *ngIf="formGroup.controls['UserLastName'].hasError('required') && formGroup.controls['UserLastName'].touched"
               style="color: red;">Last Name is required</p>
+              <p *ngIf="formGroup.controls['UserLastName'].hasError('pattern')"
+              style="color: red;">Please enter text only</p>
+              <p *ngIf="formGroup.controls['UserLastName'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
         </ion-row>       
@@ -198,6 +218,10 @@
               <ion-input [value]="formGroup.MobileNumber" type="text" formControlName="MobileNumber"></ion-input>
               <p *ngIf="formGroup.controls['MobileNumber'].hasError('required') && formGroup.controls['MobileNumber'].touched"
               style="color: red;">Mobile Number is required</p>
+              <p *ngIf="formGroup.controls['MobileNumber'].hasError('pattern')"
+              style="color: red;">Please enter number only</p>
+              <p *ngIf="formGroup.controls['MobileNumber'].hasError('maxlength')"
+              style="color: red;">Mobile Number can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -206,6 +230,10 @@
               <ion-input [value]="formGroup.Region" type="text" formControlName="Region"></ion-input>
               <p *ngIf="formGroup.controls['Region'].hasError('required') && formGroup.controls['Region'].touched"
               style="color: red;">Region is required</p>
+              <p *ngIf="formGroup.controls['Region'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['Region'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 20 digit</p>
             </ion-item>
           </ion-col>
         </ion-row>
@@ -216,6 +244,8 @@
               <ion-input [value]="formGroup.Email" type="text" formControlName="Email"></ion-input>
               <p *ngIf="formGroup.controls['Email'].hasError('required') && formGroup.controls['Email'].touched"
               style="color: red;">Email is required</p>
+              <p *ngIf="formGroup.controls['Email'].hasError('email')"
+              style="color: red;">Please enter valid E-mail Id</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -264,6 +294,10 @@
               <ion-input [value]="formGroup.ApplicationID" type="text" formControlName="ApplicationID"></ion-input>
               <p *ngIf="formGroup.controls['ApplicationID'].hasError('required') && formGroup.controls['ApplicationID'].touched"
               style="color: red;">Application ID is required</p>
+              <p *ngIf="formGroup.controls['ApplicationID'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['ApplicationID'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -281,6 +315,10 @@
             <ion-item>
               <ion-label position="floating">UMRN No</ion-label>
               <ion-input [value]="formGroup.UMRNNo" type="text" formControlName="UMRNNo"></ion-input>
+              <p *ngIf="formGroup.controls['UMRNNo'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 10 digit</p>
+              <p *ngIf="formGroup.controls['UMRNNo'].hasError('pattern')"
+              style="color: red;">Please enter number only</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -303,6 +341,10 @@
               <ion-input [value]="formGroup.BankAccountNo" type="number" formControlName="BankAccountNo"></ion-input>
               <p *ngIf="formGroup.controls['BankAccountNo'].hasError('required') && formGroup.controls['BankAccountNo'].touched"
               style="color: red;">Bank Account No is required</p>
+              <p *ngIf="formGroup.controls['BankAccountNo'].hasError('pattern')"
+              style="color: red;">Please enter number only</p>
+              <p *ngIf="formGroup.controls['BankAccountNo'].hasError('maxlength')"
+              style="color: red;">Region can not be greater than 20 digit</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -325,6 +367,8 @@
               <ion-input [value]="formGroup.BankIFSCCode" type="text" formControlName="BankIFSCCode"></ion-input>
               <p *ngIf="formGroup.controls['BankIFSCCode'].hasError('required') && formGroup.controls['BankIFSCCode'].touched"
               style="color: red;">Bank IFSC Code is required</p>
+              <p *ngIf="formGroup.controls['BankIFSCCode'].hasError('pattern') || formGroup.controls['BankIFSCCode'].hasError('maxlength') || formGroup.controls['BankIFSCCode'].hasError('minlength')"
+              style="color: red;">Please enter valid IFSC Code</p>
             </ion-item>
           </ion-col>     
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
