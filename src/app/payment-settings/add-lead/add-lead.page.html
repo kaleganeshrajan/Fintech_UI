@@ -148,6 +148,20 @@
         <ion-row>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
             <ion-item>
+              <ion-label position="floating">Distributor Code <span style="color: red;"> *</span></ion-label>
+              <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('required') && formGroup.controls['DistributorCode'].touched"
+              style="color: red;">Distributor Code is required</p>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('pattern')"
+              style="color: red;">Please enter text and number only</p>
+              <p *ngIf="formGroup.controls['DistributorCode'].hasError('maxlength')"
+              style="color: red;">Last Name can not be greater than 10 digit</p>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+            <ion-item>
               <ion-label position="floating">Distributor First Name <span style="color: red;"> *</span></ion-label>
               <ion-input [value]="formGroup.DistributorFirstName" type="text" formControlName="DistributorFirstName"></ion-input>
               <p *ngIf="formGroup.controls['DistributorFirstName'].hasError('required') && formGroup.controls['DistributorFirstName'].touched"
@@ -170,20 +184,6 @@
               style="color: red;">Last Name can not be greater than 10 digit</p>
             </ion-item>
           </ion-col>     
-        </ion-row>
-        <ion-row>
-          <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-            <ion-item>
-              <ion-label position="floating">Distributor Code <span style="color: red;"> *</span></ion-label>
-              <ion-input [value]="formGroup.DistributorCode" type="text" formControlName="DistributorCode"></ion-input>
-              <p *ngIf="formGroup.controls['DistributorCode'].hasError('required') && formGroup.controls['DistributorCode'].touched"
-              style="color: red;">Distributor Code is required</p>
-              <p *ngIf="formGroup.controls['DistributorCode'].hasError('pattern')"
-              style="color: red;">Please enter text and number only</p>
-              <p *ngIf="formGroup.controls['DistributorCode'].hasError('maxlength')"
-              style="color: red;">Last Name can not be greater than 10 digit</p>
-            </ion-item>
-          </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
