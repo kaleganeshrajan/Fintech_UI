@@ -142,6 +142,7 @@ export class MakePaymentPage implements OnInit {
 			ToDate: this.formGroup.value.ToDate,
 			SearchFilterType: this.formGroup.value.SearchFilterType,
 			DateFilterType: this.formGroup.value.DateFilterType,
+			DistributorCode: this.distributorCode
 		}
 		this.apiService
 			.postApiOnlyWithContentType(
