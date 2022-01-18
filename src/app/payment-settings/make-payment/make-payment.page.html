@@ -63,11 +63,11 @@
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="2" class="ion-no-padding">
-          <ion-button (click)="searchInvoice()" class="full-width">
+          <ion-button disabled="{{disableSearchandDownload}}" (click)="searchInvoice()" class="full-width">
             <ion-icon slot="start" name="search"></ion-icon>
             <small>Search</small>
           </ion-button>
-          <ion-button (click)="downloadExcel()" class="full-width">
+          <ion-button disabled="{{disableSearchandDownload}}" (click)="downloadExcel()" class="full-width">
             <ion-icon slot="start" name="download"></ion-icon>
             <small>Download Report</small>
           </ion-button>
@@ -120,7 +120,7 @@
                   <ion-item>
                     <ion-input [value]="item.DueDate"
                       (ionChange)="updateInvoiceList(item.ID, 'DueDate', $event.target.value)" placeholder=""
-                      type="date" min="{{todayDate}}" ></ion-input>
+                      type="date" min="{{minDate}}" max="{{maxDate}}" ></ion-input>
                   </ion-item>
                 </td>
               </tr>
@@ -215,6 +215,12 @@
           <ion-button (click)="schedulePayment()" class="full-width">
             <ion-icon slot="start" name="calendar"></ion-icon>
             <small>Schedule Payment</small>
+          </ion-button>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3">
+          <ion-button (click)="makePayment()" class="full-width">
+            <ion-icon slot="start" name="cash"></ion-icon>
+            <small>Make Payment</small>
           </ion-button>
         </ion-col>
       </ion-row>

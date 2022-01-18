@@ -22,6 +22,8 @@ export class MakePaymentPage implements OnInit {
 	public ScheduleInvList: any[];
 	public currentDate: any;
 	public todayDate: any;
+	public minDate: any;
+	public maxDate: any;
 	public saveUpdateButton = 'Save';
 	public isSelectInv = true;
 	public isScheduleInv = false;
@@ -32,6 +34,10 @@ export class MakePaymentPage implements OnInit {
 	public transactionId = '';
 	public scheduledOn = '';
 	public d = new Date();
+	public distributorCode = "3212145666";
+	public companyCode = "az";
+	public disableSearchandDownload = true;
+	public dueDateLimit = 0;
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -44,13 +50,14 @@ export class MakePaymentPage implements OnInit {
 	ngOnInit(): void {
 		this.createForm();
 		this.currentDate = new Date();
-		this.todayDate = this.datepipe.transform(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()), 'yyyy-MM-dd')
+		this.minDate = this.datepipe.transform(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate()), 'yyyy-MM-dd')
 	}
 
 	/*same as resume */
 	ionViewDidEnter() {
+		this.checkPaymentMethod()
 		this.getAllList()
-		this.searchInvoice()
+		// this.searchInvoice()
 	}
 
 	createForm(): any {
@@ -62,6 +69,33 @@ export class MakePaymentPage implements OnInit {
 			SearchFilterType: [''],
 			DateFilterType: [''],
 		});
+	}
+
+	async checkPaymentMethod() {
+		this.apiService
+			.getApiwithoutauthencticate(
+				"api/make_payment/CheckPaymentMethod/" + this.distributorCode + "/" + this.companyCode
+			)
+			.subscribe((result => {
+				if (result != null) {
+					this.InvoiceList = result;
+					this.isSelectInv = true;
+					this.isScheduleInv = false;
+					this.isOTPSent = false;
+					this.scheduleSuccess = false;
+					this.disableSearchandDownload = false
+					this.dueDateLimit = typeof (result[0]['PaymentPeriodLimit']) != 'undefined' ? parseInt(result[0]['PaymentPeriodLimit']) : 31
+					let tempDate = new Date()
+					tempDate.setDate(tempDate.getDate() + this.dueDateLimit)
+					this.maxDate = this.datepipe.transform(new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate()), 'yyyy-MM-dd')
+				}
+				else {
+					this.alertDialogs.alertDialog("", "No invoices to be scheduled!")
+					this.disableSearchandDownload = true
+					this.dueDateLimit = 31
+				}
+			}))
+
 	}
 
 	async getAllList() {
@@ -162,6 +196,24 @@ export class MakePaymentPage implements OnInit {
 		}
 		this.totalInvoiceAmt = invSum
 		this.balanceAmt = balSum
+	}
+
+	async makePayment() {
+		// let postData = {}
+		// this.apiService
+		// .postApiOnlyWithContentType(
+		// 	'',
+		// 	postData
+		// )
+		// .subscribe((result) => {
+		// 	if(result != null) {
+		// 		console.log(result)
+		// 	}
+		// 	else{
+		// 		this.alertDialogs.alertDialog("","Something to be added")
+		// 	}
+		// })
+		this.alertDialogs.alertDialog("", "Something to be added")
 	}
 
 	async schedulePayment() {
