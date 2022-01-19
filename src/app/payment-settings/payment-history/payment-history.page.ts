@@ -24,6 +24,7 @@ export class PaymentHistoryPage implements OnInit {
 	public DetailedInvoiceList: any[];
 	public InvoiceDetails: any[];
 	public saveUpdateButton = 'Save';
+	public distributorCode = "3212145666";
 	public OTP: string = '';
 	public isSelectInv = true;
 	public isViewInvDetails = false;
@@ -70,7 +71,7 @@ export class PaymentHistoryPage implements OnInit {
 		yy = this.d.getFullYear();
 		this.formGroup['FromDate'] = yy + '-' + this.getMonth(mm) + '-' + this.getMonth(dd)
 		// this.formGroup['FromDate'] = '2021-12-01'
-		
+
 		// Get Company List
 		this.apiService
 			.getApiwithoutauthencticate(
@@ -112,20 +113,21 @@ export class PaymentHistoryPage implements OnInit {
 			SearchByTransactionID: this.formGroup.value.SearchByTransactionID,
 			PaymentMode: this.formGroup.value.PaymentMode,
 			PaymentStatus: this.formGroup.value.PaymentStatus,
+			DistributorCode: this.distributorCode
 		}
 		this.apiService
 			.postApiOnlyWithContentType(
 				"api/payment_history/GetInvoiceData"
-				,postData
+				, postData
 			).subscribe((result) => {
-				if(result != null){
-				this.InvoiceList = result;
-				this.isSelectInv = true;
-				this.isViewInvDetails = false;
+				if (result != null) {
+					this.InvoiceList = result;
+					this.isSelectInv = true;
+					this.isViewInvDetails = false;
 				}
-				else{
+				else {
 					this.InvoiceList = [];
-					this.alertDialogs.alertDialog("No record","No record found!")
+					this.alertDialogs.alertDialog("No record", "No record found!")
 				}
 			})
 		// console.log("PostData", postData)
@@ -156,7 +158,7 @@ export class PaymentHistoryPage implements OnInit {
 		return new Date(dateStr).toLocaleDateString("es-CL")
 	}
 
-	backClick(){
+	backClick() {
 		this.isSelectInv = true;
 		this.isViewInvDetails = false;
 	}

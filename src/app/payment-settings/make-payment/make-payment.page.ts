@@ -55,7 +55,7 @@ export class MakePaymentPage implements OnInit {
 
 	/*same as resume */
 	ionViewDidEnter() {
-		this.checkPaymentMethod()
+		this.checkMandateActive()
 		this.getAllList()
 		// this.searchInvoice()
 	}
@@ -69,6 +69,37 @@ export class MakePaymentPage implements OnInit {
 			SearchFilterType: [''],
 			DateFilterType: [''],
 		});
+	}
+
+	async checkMandateActive() {
+		let postData = {
+			distributorCode: this.distributorCode,
+			companyCode: this.companyCode
+		}
+		this.apiService
+			.postApiOnlyWithContentType(
+				"api/make_payment/CheckMandateActive",
+				postData
+			)
+			.subscribe((result => {
+				if (result != null) {
+					if (result.Success == true) {
+						if (result.Active == true) {
+							this.checkPaymentMethod()
+						}
+						else {
+							this.alertDialogs.alertDialog("", result.Message)
+						}
+					}
+					else {
+						this.alertDialogs.alertDialog("", result.Message)
+					}
+				}
+				else {
+					this.alertDialogs.alertDialog("", "Please refresh!")
+				}
+			}))
+
 	}
 
 	async checkPaymentMethod() {
@@ -95,7 +126,6 @@ export class MakePaymentPage implements OnInit {
 					this.dueDateLimit = 31
 				}
 			}))
-
 	}
 
 	async getAllList() {

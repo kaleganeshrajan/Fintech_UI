@@ -32,6 +32,7 @@ export class ScheduledPaymentPage implements OnInit {
 	public modifyButton = false;
 	public d = new Date();
 	public totalInvoiceAmt = 0;
+	public distributorCode = "3212145666";
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -107,6 +108,7 @@ export class ScheduledPaymentPage implements OnInit {
 			ToDate: this.formGroup.value.ToDate,
 			SearchFilterType: '',
 			DateFilterType: this.formGroup.value.DateFilterType,
+			DistributorCode: this.distributorCode
 		}
 		this.apiService
 			.postApiOnlyWithContentType(
