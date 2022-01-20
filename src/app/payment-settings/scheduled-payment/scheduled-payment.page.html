@@ -110,7 +110,7 @@
                 <!-- <td>{{item.OrderNo}}</td> -->
                 <td data-b-a-s="thin">{{item.Amount}}</td>
                 <td data-b-a-s="thin">{{item.PaymentMode}}</td>
-                <td data-b-a-s="thin">{{parseDate(item.ScheduledOn)}}</td>
+                <td data-b-a-s="thin">{{parseDate(item.CreatedDate)}}</td>
                 <td data-b-a-s="thin">{{parseDate(item.DueDate)}}</td>
                 <td data-b-a-s="thin">{{item.TransactionID}}</td>
                 <td data-b-a-s="thin">{{item.PaymentStatus}}</td>
@@ -168,11 +168,11 @@
           <!--  -->
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="3">
-              <ion-button color="danger" (click)="cancelCheque(item.ID)">
+              <ion-button color="danger" disabled={{!isCancelEcheque}} (click)="cancelCheque(item.ID)">
                 <ion-icon slot="start" name="close-circle"></ion-icon>
                 <small>Cancel Cheque</small>
               </ion-button>
-              <ion-button *ngIf="!modifyButton" (click)="modifyDate(item.ID)">
+              <ion-button *ngIf="!modifyButton" disabled={{!isModifyEcheque}} (click)="changeDateButton()">
                 <ion-icon slot="start" name="create"></ion-icon>
                 <small>Modify Date</small>
               </ion-button>
@@ -182,7 +182,7 @@
               </ion-button>
             </ion-col>
             <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="2">
-              <ion-item>
+              <ion-item *ngIf="modifyButton">
                 <ion-input [value]="formGroup.UpdatedDate" formControlName="UpdatedDate" *ngIf="modifyButton"
                   type="date"></ion-input>
               </ion-item>

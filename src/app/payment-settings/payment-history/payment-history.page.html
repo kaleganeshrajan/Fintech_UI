@@ -122,14 +122,17 @@
                 <td>
                   <ion-text color="primary">Total Amount:{{item.Amount}}</ion-text>
                   <br>
-                  <ion-text color="danger" *ngIf="item.PaymentStatus == 'In Process'">Outstanding:{{item.Amount}}
+                  <ion-text color="danger" *ngIf="item.PaymentStatus == 'Payment Scheduled'">Outstanding:{{item.Amount}}
                   </ion-text>
                 </td>
                 <td>{{item.PaymentMode}}</td>
                 <td>{{item.TransactionID}}</td>
-                <td>{{parseDate(item.ScheduledOn)}}</td>
+                <td>{{parseDate(item.CreatedDate)}}</td>
                 <td>{{item.PaymentStatus}}</td>
-                <td>{{parseDate(item.SettelmentDate)}}</td>
+                <td>
+                  <span *ngIf="item.SettelmentDate == null">-</span>
+                  <span *ngIf="item.SettelmentDate != null">{{parseDate(item.SettelmentDate)}}</span>
+                </td>
                 <td>
                   <span>
                     <ion-icon class="download-icon" slot="start" name="download"></ion-icon>

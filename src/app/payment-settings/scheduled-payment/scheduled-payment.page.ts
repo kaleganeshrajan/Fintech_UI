@@ -33,6 +33,9 @@ export class ScheduledPaymentPage implements OnInit {
 	public d = new Date();
 	public totalInvoiceAmt = 0;
 	public distributorCode = "3212145666";
+	public companyCode = "az";
+	public isCancelEcheque = false;
+	public isModifyEcheque = false;
 	constructor(
 		private apiService: ApiService,
 		public appConstants: AppConstants,
@@ -58,6 +61,7 @@ export class ScheduledPaymentPage implements OnInit {
 	ionViewDidEnter() {
 		this.getAllList()
 		this.searchInvoice()
+		this.checkModificationSettings()
 	}
 
 	createForm(): any {
@@ -101,6 +105,29 @@ export class ScheduledPaymentPage implements OnInit {
 			)
 	}
 
+	async checkModificationSettings(){
+		this.isCancelEcheque = false;
+		this.isModifyEcheque = false;
+		let postData = {
+			DistributorCode: this.distributorCode,
+			CompanyCode: this.companyCode
+		}
+		this.apiService
+		.postApiOnlyWithContentType(
+			'api/schedule_payment/CheckCompanySetting',
+			postData
+		)
+		.subscribe((result) => {
+			if (result != null){
+				this.isCancelEcheque = result.CancelEcheque;
+				this.isModifyEcheque = result.ModifyDate;
+			}
+			else{
+				console.log("No modification settings found!")
+			}
+		})
+	}
+
 	async searchInvoice() {
 		let postData = {
 			SearchInvoice: this.formGroup.value.SearchInvoice,
@@ -126,6 +153,7 @@ export class ScheduledPaymentPage implements OnInit {
 					this.totalInvoiceAmt = sum
 				}
 				else {
+					this.InvoiceList = [];
 					this.alertDialogs.alertDialog('Invoice data', 'No data found!')
 				}
 			})
@@ -140,9 +168,8 @@ export class ScheduledPaymentPage implements OnInit {
 		this.isViewInvDetails = true;
 	}
 
-	modifyDate(id) {
+	changeDateButton() {
 		this.modifyButton = true
-		console.log()
 	}
 
 	async updateDate(id) {
@@ -150,12 +177,16 @@ export class ScheduledPaymentPage implements OnInit {
 		let index = this.InvoiceList.findIndex(ele => ele.ID == id)
 		this.InvoiceList[index]['DueDate'] = new Date(this.formGroup.value['UpdatedDate']).toISOString()
 		this.InvoiceDetails[0]['DueDate'] = new Date(this.formGroup.value['UpdatedDate']).toISOString()
-		this.InvoiceDetails[0]['PaymentMode'] = 'echeque'
-		this.InvoiceDetails[0]['PaymentStatus'] = 'inprocess'
-		let postData = this.InvoiceDetails[0]
+
+		let postData = {
+			DistributorCode: this.distributorCode,
+			CompanyCode: this.companyCode,
+			InvoiceId: id,
+			DueDate: new Date(this.formGroup.value['UpdatedDate']).toISOString()
+		}
 		this.apiService
 			.postApiOnlyWithContentType(
-				'api/schedule_payment/ModifyDate',
+				'api/schedule_payment/ModifyEchequeDetails',
 				postData
 			)
 			.subscribe((result) => {
@@ -183,9 +214,15 @@ export class ScheduledPaymentPage implements OnInit {
 				{
 					text: 'YES',
 					handler: () => {
+						let postData = {
+							DistributorCode: this.distributorCode,
+							CompanyCode: this.companyCode,
+							InvoiceId: id,
+						}
 						this.apiService
-							.getApiwithoutauthencticate(
-								'api/schedule_payment/CancelScheduledInvoice/' + id
+							.postApiOnlyWithContentType(
+								'api/schedule_payment/CancelEchequeDetails',
+								postData
 							)
 							.subscribe((result) => {
 								if (result != null) {

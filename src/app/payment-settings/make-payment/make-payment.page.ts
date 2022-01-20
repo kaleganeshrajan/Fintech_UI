@@ -206,7 +206,7 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	updateInvoiceList(id, valueOf, value) {
-		// console.log(id, valueOf, value)
+		console.log(id, valueOf, value)
 		this.totalInvoiceAmt = 0
 		this.balanceAmt = 0
 		let invSum = 0
@@ -215,7 +215,7 @@ export class MakePaymentPage implements OnInit {
 		// 	value = new Date(value).toLocaleDateString()
 		// 	// console.log(value)
 		// }
-		let index = this.InvoiceList.findIndex((obj => obj.ID == id))
+		let index = this.InvoiceList.findIndex((obj => obj.InvoiceNo == id))
 		this.InvoiceList[index][valueOf] = value
 		for (let i = 0; i < this.InvoiceList.length; i++) {
 			if (this.InvoiceList[i].IsScheduled == true) {
@@ -229,6 +229,7 @@ export class MakePaymentPage implements OnInit {
 		this.balanceAmt = balSum
 	}
 
+	// Under construction
 	async makePayment() {
 		// let postData = {}
 		// this.apiService
@@ -304,14 +305,32 @@ export class MakePaymentPage implements OnInit {
 		for (let i = 0; i < this.ScheduleInvList.length; i++) {
 			this.ScheduleInvList[i].ScheduledOn = this.scheduledOn;
 			this.ScheduleInvList[i].TransactionID = this.transactionId;
-			this.ScheduleInvList[i].PaymentMode = 'echeque'
-			this.ScheduleInvList[i].PaymentStatus = 'inprocess'
+			this.ScheduleInvList[i].ReceiptId = this.transactionId + "" + i;
+			this.ScheduleInvList[i].PaymentMode = 'echeque';
+			this.ScheduleInvList[i].PaymentStatus = 'inprocess';
 			this.ScheduleInvList[i].DueDate = new Date(this.ScheduleInvList[i].DueDate).toISOString();
 		}
-		let postData = this.ScheduleInvList
+		let postData = []
+		for (let i = 0; i < this.ScheduleInvList.length; i++) {
+			postData.push({
+				Amount: this.ScheduleInvList[i].Amount,
+				DistributorCode: this.distributorCode,
+				DueDate: this.ScheduleInvList[i].DueDate,
+				InvoiceId: this.ScheduleInvList[i].ID,
+				// IsScheduled: this.ScheduleInvList[i].IsScheduled,
+				// PaymentMode: this.ScheduleInvList[i].PaymentMode,
+				// PaymentStatus: this.ScheduleInvList[i].PaymentStatus,
+				// TransactionId: this.ScheduleInvList[i].TransactionID,
+				// ReceiptId: this.ScheduleInvList[i].ReceiptId,
+				companyCode: this.companyCode,
+				// CreatedDate: this.ScheduleInvList[i].ScheduledOn,
+				CreatedBy: "Shubham"
+			})
+		}
+		console.log(postData)
 		this.apiService
 			.postApiOnlyWithContentType(
-				"api/make_payment/SchedulePayment",
+				"api/make_payment/SchedulePayment2",
 				postData
 			)
 			.subscribe((result) => {
@@ -325,6 +344,22 @@ export class MakePaymentPage implements OnInit {
 					this.alertDialogs.alertDialog("Payment Not Scheduled", result.Message)
 				}
 			})
+		// this.apiService
+		// 	.postApiOnlyWithContentType(
+		// 		"api/make_payment/SchedulePayment",
+		// 		postData
+		// 	)
+		// 	.subscribe((result) => {
+		// 		if (result.Success == true) {
+		// 			this.isSelectInv = false;
+		// 			this.isScheduleInv = false;
+		// 			this.isOTPSent = false;
+		// 			this.scheduleSuccess = true;
+		// 		}
+		// 		else {
+		// 			this.alertDialogs.alertDialog("Payment Not Scheduled", result.Message)
+		// 		}
+		// 	})
 	}
 
 	// Parse Date
@@ -363,14 +398,15 @@ export class MakePaymentPage implements OnInit {
 	// this called only if user entered full code
 	onCodeCompleted(code: string) {
 		let postData = { "otp": code }
-		this.apiService
-			.postApiOnlyWithContentType(
-				'',
-				postData
-			)
-			.subscribe((result) => {
-				console.log(result)
-			})
+		console.log("OTP:", postData)
+		// this.apiService
+		// 	.postApiOnlyWithContentType(
+		// 		'',
+		// 		postData
+		// 	)
+		// 	.subscribe((result) => {
+		// 		console.log(result)
+		// 	})
 	}
 
 	fromDatechange(ids) {

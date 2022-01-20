@@ -108,7 +108,7 @@
               <tr>
                 <td data-exclude="true">
                   <ion-checkbox [checked]="item.IsScheduled"
-                    (ionChange)="updateInvoiceList(item.ID, 'IsScheduled', $event.target.checked)"></ion-checkbox>
+                    (ionChange)="updateInvoiceList(item.InvoiceNo, 'IsScheduled', $event.target.checked)"></ion-checkbox>
                 </td>
                 <td data-b-a-s="thin">{{item.InvoiceNo}}</td>
                 <td data-b-a-s="thin">{{parseDate(item.InvoiceDate)}}</td>
@@ -119,7 +119,7 @@
                   <span hidden>{{item.DueDate}}</span>
                   <ion-item>
                     <ion-input [value]="item.DueDate"
-                      (ionChange)="updateInvoiceList(item.ID, 'DueDate', $event.target.value)" placeholder=""
+                      (ionChange)="updateInvoiceList(item.InvoiceNo, 'DueDate', $event.target.value)" placeholder=""
                       type="date" min="{{minDate}}" max="{{maxDate}}" ></ion-input>
                   </ion-item>
                 </td>
@@ -194,12 +194,12 @@
       </ion-row>
       <ion-row>
         <ion-col size-lg="1"></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Receipt ID:</b></ion-col>
+        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Transaction ID:</b></ion-col>
         <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">{{transactionId}}</ion-col>
       </ion-row>
       <ion-row>
         <ion-col size-lg="1"></ion-col>
-        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Transaction Time:</b></ion-col>
+        <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2"><b>Transaction Date:</b></ion-col>
         <ion-col size-xs="6" size-sm="6" size-md="4" size-lg="2">{{parseDate(scheduledOn)}}</ion-col>
       </ion-row>
       <ion-row>
