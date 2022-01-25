@@ -160,8 +160,8 @@
           <!--  -->
           <ion-row>
             <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Distributor: TEST DISTRIBUTOR</ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Order Status: Completely Processed</ion-col>
-            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Inv Date: {{parseDate(item.ScheduledOn)}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Order Status: {{item.PaymentStatus}}</ion-col>
+            <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Inv Date: {{parseDate(item.CreatedDate)}}</ion-col>
           </ion-row>
           <!--  -->
           <ion-row>
@@ -174,8 +174,9 @@
             <ion-row>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Transaction ID: {{item.TransactionID}}</ion-col>
               <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Payment Status: {{item.PaymentStatus}}</ion-col>
-              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date:
-                {{parseDate(item.SettelmentDate)}}
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4">Settelment Date:<span
+                  *ngIf="item.SettelmentDate == null">-</span>
+                <span *ngIf="item.SettelmentDate != null">{{parseDate(item.SettelmentDate)}}</span>
               </ion-col>
             </ion-row>
             <ion-row>

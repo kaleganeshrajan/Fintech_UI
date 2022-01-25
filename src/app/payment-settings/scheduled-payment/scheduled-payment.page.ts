@@ -129,6 +129,7 @@ export class ScheduledPaymentPage implements OnInit {
 	}
 
 	async searchInvoice() {
+		this.InvoiceList = []
 		let postData = {
 			SearchInvoice: this.formGroup.value.SearchInvoice,
 			FromDate: this.formGroup.value.FromDate,
