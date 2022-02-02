@@ -103,6 +103,8 @@ export class MakePaymentPage implements OnInit {
 	}
 
 	async checkPaymentMethod() {
+		let invSum = 0
+		let balSum = 0
 		this.apiService
 			.getApiwithoutauthencticate(
 				"api/make_payment/CheckPaymentMethod/" + this.distributorCode + "/" + this.companyCode
@@ -110,6 +112,16 @@ export class MakePaymentPage implements OnInit {
 			.subscribe((result => {
 				if (result != null) {
 					this.InvoiceList = result;
+					for (let i = 0; i < this.InvoiceList.length; i++) {
+						if (this.InvoiceList[i].IsScheduled == true) {
+							invSum = invSum + this.InvoiceList[i].Amount
+						}
+						else {
+							balSum = balSum + this.InvoiceList[i].Amount
+						}
+					}
+					this.totalInvoiceAmt = invSum
+					this.balanceAmt = balSum
 					this.isSelectInv = true;
 					this.isScheduleInv = false;
 					this.isOTPSent = false;
