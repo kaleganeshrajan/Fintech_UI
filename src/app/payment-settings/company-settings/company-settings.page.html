@@ -184,15 +184,15 @@
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="4">
-          <ion-item>
-            <ion-label position="floating">Payment Period (for exceptional {{formGroup.value.ExceptionType}} based only)
+          <ion-item  style="display: none;" >
+            <ion-label style="display: none;" position="floating">Payment Period (for exceptional {{formGroup.value.ExceptionType}} based only)
             </ion-label>
             <!-- disabled="{{formGroup.value.EnableECheque==true && formGroup.value.ECCollType=='PUSH' ? false : true}}" -->
-            <ion-input [value]="formGroup.PaymentPeriodLimit"
+            <ion-input style="display: none;"  [value]="formGroup.PaymentPeriodLimit"
               disabled="{{formGroup.value.ExceptionType=='PUSH' || formGroup.value.ExceptionType=='PULL' ? false : true}}"
               formControlName="PaymentPeriodLimit" type="number">
             </ion-input>
-            <p *ngIf="formGroup.controls['PaymentPeriodLimit'].hasError('required') && formGroup.controls['PaymentPeriodLimit'].touched"
+            <p  style="display: none;" *ngIf="formGroup.controls['PaymentPeriodLimit'].hasError('required') && formGroup.controls['PaymentPeriodLimit'].touched"
               style="color: red;">This field is mandatory.</p>
           </ion-item>
         </ion-col>
